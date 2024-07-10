@@ -1,38 +1,44 @@
-import dagre from "@dagrejs/dagre";
+import ELK, { type ElkNode } from 'elkjs/lib/elk.bundled.js';
 import { type Node, type Edge, Position } from "@xyflow/svelte";
 
-const dagreGraph = new dagre.graphlib.Graph();
-dagreGraph.setDefaultEdgeLabel(() => ({}));
+const elk = new ELK();
 
-export function getLayoutedElements(nodes: Node[], edges: Edge[], direction = 'LR') {
-    const nodeWidth = 500;
-    const nodeHeight = 150;
+const elkOptions = {
+    'elk.algorithm': 'layered',
+    'elk.layered.spacing.nodeNodeBetweenLayers': '200',
+    'elk.spacing.nodeNode': '80'
+}
 
-    const isHorizontal = direction === 'LR';
-    dagreGraph.setGraph({ rankdir: direction });
+export async function getLayoutedElements(nodes: Node[], edges: Edge[], options: Record<string, string> = {}) {
+    options = { ...options, ...elkOptions }
+    const isHorizontal = options?.['elk.direction'] === 'RIGHT';
+    const graph: ElkNode = {
+        id: 'root',
+        layoutOptions: options,
+        children: nodes.map((node) => ({
+            ...node,
+            // Adjust the target and source handle positions based on the layout
+            // direction.
+            targetPosition: isHorizontal ? Position.Left : Position.Top,
+            sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
 
-    nodes.forEach((node) => {
-        dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
+            // Hardcode a width and height for elk to use when layouting.
+            width: 400,
+            height: 100
+        })),
+        edges: edges
+    };
+
+    const layoutedGraph = await elk
+        .layout(graph);
+    return ({
+        nodes: layoutedGraph.children.map((node_1) => ({
+            ...node_1,
+            // React Flow expects a position property on the node instead of `x`
+            // and `y` fields.
+            position: { x: node_1.x, y: node_1.y }
+        })),
+
+        edges: layoutedGraph.edges
     });
-
-    edges.forEach((edge) => {
-        dagreGraph.setEdge(edge.source, edge.target);
-    });
-
-    dagre.layout(dagreGraph);
-
-    nodes.forEach((node) => {
-        const nodeWithPosition = dagreGraph.node(node.id);
-        node.targetPosition = isHorizontal ? Position.Left : Position.Top;
-        node.sourcePosition = isHorizontal ? Position.Right : Position.Bottom;
-
-        // We are shifting the dagre node position (anchor=center center) to the top left
-        // so it matches the React Flow node anchor point (top left).
-        node.position = {
-            x: nodeWithPosition.x - nodeWidth / 2,
-            y: nodeWithPosition.y - nodeHeight / 2
-        };
-    });
-
-    return { nodes, edges };
 }

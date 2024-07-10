@@ -29,34 +29,40 @@
         } as Edge))
     );
 
-    const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-        initialNodes,
-        initialEdges
-    )
-
     const nodesStore = writable<Node[]>()
-    nodesStore.set(layoutedNodes)
     const edgesStore = writable<Edge[]>()
-    edgesStore.set(layoutedEdges)
+
+    let promise = getLayoutedElements(
+        initialNodes,
+        initialEdges,
+        { 'elk.direction': "RIGHT" }
+    ).then(({ nodes: layoutedNodes, edges: layoutedEdges }) => {
+        $nodesStore = layoutedNodes
+        $edgesStore = layoutedEdges
+    })
 </script>
 
-<SvelteFlow proOptions={{hideAttribution: true}}
-            colorMode="dark"
-            {nodeTypes}
-            {edgeTypes}
-            nodes={nodesStore}
-            edges={edgesStore}
-            fitView={true}
-            defaultEdgeOptions={{
-                type: DISPOSE_EDGE,
-                markerEnd: {
-                    type: MarkerType.Arrow,
-                    width: 25,
-                    height: 25
-                }
-            }}
-            class="svelte-flow">
-    <Background/>
-    <Controls/>
-    <MiniMap/>
-</SvelteFlow>
+{#await promise}
+    Loading...
+{:then _}
+    <SvelteFlow proOptions={{hideAttribution: true}}
+                colorMode="dark"
+                {nodeTypes}
+                {edgeTypes}
+                nodes={nodesStore}
+                edges={edgesStore}
+                fitView={true}
+                defaultEdgeOptions={{
+                    type: DISPOSE_EDGE,
+                    markerEnd: {
+                        type: MarkerType.Arrow,
+                        width: 25,
+                        height: 25
+                    }
+                }}
+                class="svelte-flow">
+        <Background/>
+        <Controls/>
+        <MiniMap/>
+    </SvelteFlow>
+{/await}

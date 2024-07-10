@@ -13,6 +13,7 @@
     const metadata = getNodeMetadata(example_node_metadata, data.descriptor)
 </script>
 
+<div>
 {#if metadata?.input != null}
     <Handle type="target" position={Position.Left}/>
 {/if}
@@ -29,3 +30,4 @@
 {#if metadata?.output != null}
     <Handle type="source" position={Position.Right}/>
 {/if}
+</div>
