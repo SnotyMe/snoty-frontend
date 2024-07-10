@@ -4,6 +4,7 @@
     import { writable } from "svelte/store";
     import type { FlowNode } from "$lib/model/nodes";
     import { DISPOSE_EDGE, edgeTypes, FLOW_NODE, nodeTypes } from "$lib/model/svelte_flow";
+    import { getLayoutedElements } from "$lib/components/flow/flow_utils";
 
     type Props = {
         rootNode: FlowNode,
@@ -11,33 +12,41 @@
     }
     const { rootNode, involved }: Props = $props()
 
-    const nodes = writable<Node[]>()
-    nodes.set(involved.map(node => {
+    const initialNodes = involved.map(node => {
         return ({
             id: node.id,
             position: { x: 0, y: 0 },
             data: node,
             type: FLOW_NODE
         } as Node)
-    }))
+    });
 
-    const edges = writable<Edge[]>()
-    const value = involved.flatMap(node =>
+    const initialEdges = involved.flatMap(node =>
         (node.next ?? []).map(next => ({
             id: `${node.id}:${next}`,
             source: node.id,
             target: next
         } as Edge))
     );
-    edges.set(value)
+
+    const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+        initialNodes,
+        initialEdges
+    )
+
+    const nodesStore = writable<Node[]>()
+    nodesStore.set(layoutedNodes)
+    const edgesStore = writable<Edge[]>()
+    edgesStore.set(layoutedEdges)
 </script>
 
 <SvelteFlow proOptions={{hideAttribution: true}}
             colorMode="dark"
             {nodeTypes}
             {edgeTypes}
-            {nodes}
-            {edges}
+            nodes={nodesStore}
+            edges={edgesStore}
+            fitView={true}
             defaultEdgeOptions={{
                 type: DISPOSE_EDGE,
                 markerEnd: {
