@@ -1,9 +1,9 @@
 <script lang="ts">
     import '@xyflow/svelte/dist/style.css';
-    import { Background, Controls, type Edge, type Node, SvelteFlow } from "@xyflow/svelte";
+    import { Background, Controls, type Edge, MarkerType, MiniMap, type Node, SvelteFlow } from "@xyflow/svelte";
     import { writable } from "svelte/store";
     import type { FlowNode } from "$lib/model/nodes";
-    import { FLOW_NODE, nodeTypes } from "$lib/model/svelte_flow";
+    import { DISPOSE_EDGE, edgeTypes, FLOW_NODE, nodeTypes } from "$lib/model/svelte_flow";
 
     type Props = {
         rootNode: FlowNode,
@@ -32,7 +32,22 @@
     edges.set(value)
 </script>
 
-<SvelteFlow proOptions={{hideAttribution: true}} colorMode="dark" {nodeTypes} {nodes} {edges} class="svelte-flow">
+<SvelteFlow proOptions={{hideAttribution: true}}
+            colorMode="dark"
+            {nodeTypes}
+            {edgeTypes}
+            {nodes}
+            {edges}
+            defaultEdgeOptions={{
+                type: DISPOSE_EDGE,
+                markerEnd: {
+                    type: MarkerType.Arrow,
+                    width: 25,
+                    height: 25
+                }
+            }}
+            class="svelte-flow">
     <Background/>
     <Controls/>
+    <MiniMap/>
 </SvelteFlow>

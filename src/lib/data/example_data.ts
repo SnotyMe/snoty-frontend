@@ -2,7 +2,7 @@ import { descriptorAsString, type FlowNode, type NodeMetadata } from "$lib/model
 
 export const example_nodes: FlowNode[] = [
     {
-        id: '668457aae3d25a0343c02a65',
+        id: 'discord',
         descriptor: {
             subsystem: "integration",
             type: "discord"
@@ -13,7 +13,7 @@ export const example_nodes: FlowNode[] = [
         next: []
     },
     {
-        id: '66845c03684ce914b6653899',
+        id: 'moodle',
         descriptor: {
             subsystem: "integration",
             type: "moodle"
@@ -24,11 +24,11 @@ export const example_nodes: FlowNode[] = [
             appSecret: "dfklsdjflkajdöflkajsdflkajsdkfjdafl"
         },
         next: [
-            '668b126698c89f798550d004'
+            'mapper'
         ]
     },
     {
-        id: '668b126698c89f798550d004',
+        id: 'mapper',
         descriptor: {
             subsystem: "processor",
             type: "mapper"
@@ -40,7 +40,7 @@ export const example_nodes: FlowNode[] = [
             }
         },
         next: [
-            '668457aae3d25a0343c02a65'
+            'discord'
         ]
     }
 ]

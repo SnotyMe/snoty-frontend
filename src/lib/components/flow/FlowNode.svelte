@@ -17,14 +17,14 @@
 <div class="cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 block max-w-md divide-y-4 overflow-hidden border">
     {#if metadata}
         {#if metadata.input != null}
-            <Handle type="source" position={Position.Left}/>
+            <Handle type="target" position={Position.Left}/>
         {/if}
         {metadata.displayName}
         <div class="flow-node-options table-wrap">
             <FlowNodeSettings config={data.config}/>
         </div>
         {#if metadata.output != null}
-            <Handle type="target" position={Position.Right}/>
+            <Handle type="source" position={Position.Right}/>
         {/if}
     {:else}
         <div class="text-center">Unknown node type</div>
