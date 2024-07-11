@@ -21,7 +21,7 @@
         {#if metadata}
             <p class="drag-handle cursor-pointer">{metadata.displayName}</p>
             <div class="flow-node-options table-wrap">
-                <FlowNodeSettings config={data.config}/>
+                <FlowNodeSettings config={data.config} {metadata}/>
             </div>
         {:else}
             <div class="text-center">Unknown node type</div>

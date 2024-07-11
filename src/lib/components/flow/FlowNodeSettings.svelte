@@ -1,13 +1,16 @@
 <script lang="ts">
 
     import SettingsField from "$lib/components/node/SettingsField.svelte";
+    import type { NodeMetadata } from "$lib/model/nodes";
 
     interface Props {
         config: Record<string, any>
+        metadata: NodeMetadata | undefined
     }
 
     const {
         config,
+        metadata
     }: Props = $props();
 </script>
 
@@ -25,7 +28,7 @@
             <tr>
                 <th>{key}</th>
                 <th>
-                    <SettingsField value={value}/>
+                    <SettingsField value={value} metadata={metadata?.settings.find(field => field.name === key)}/>
                 </th>
             </tr>
         {/if}

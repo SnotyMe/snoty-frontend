@@ -99,6 +99,12 @@ function createExampleNodeMetadata() {
                     hidden: false,
                     censored: false,
                     descriptive: true
+                },
+                {
+                    name: "appSecret",
+                    hidden: false,
+                    censored: true,
+                    descriptive: false
                 }
             ],
             displayName: "Moodle"
