@@ -17,6 +17,7 @@
             id: node.id,
             position: { x: 0, y: 0 },
             data: node,
+            dragHandle: '.drag-handle',
             type: FLOW_NODE
         } as Node)
     });

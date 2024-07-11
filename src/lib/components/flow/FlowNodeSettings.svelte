@@ -1,5 +1,7 @@
 <script lang="ts">
 
+    import SettingsField from "$lib/components/node/SettingsField.svelte";
+
     interface Props {
         config: Record<string, any>
     }
@@ -14,7 +16,7 @@
     {#each Object.entries(config) as [key, value]}
         {#if typeof value == "object"}
             <tr>
-                <th>
+                <th colspan="2">
                     {key}
                     <svelte:self config={value}></svelte:self>
                 </th>
@@ -22,7 +24,9 @@
         {:else}
             <tr>
                 <th>{key}</th>
-                <th>{value}</th>
+                <th>
+                    <SettingsField value={value}/>
+                </th>
             </tr>
         {/if}
     {/each}
