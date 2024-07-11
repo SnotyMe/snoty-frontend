@@ -56,10 +56,20 @@ function createExampleNodeMetadata() {
             type: "discord"
         }),
         {
+            position: "END",
+            settings: [
+                {
+                    name: "webhookUrl",
+                    hidden: false,
+                    censored: true,
+                    descriptive: true
+                }
+            ],
             input: [
                 {
                     name: "content",
                     hidden: true,
+                    descriptive: true,
                     censored: false
                 }
             ],
@@ -73,12 +83,22 @@ function createExampleNodeMetadata() {
             type: "moodle"
         }),
         {
+            position: "START",
             input: null,
             output: [
                 {
                     name: "name",
                     censored: false,
-                    hidden: false
+                    hidden: false,
+                    descriptive: false
+                }
+            ],
+            settings: [
+                {
+                    name: "baseUrl",
+                    hidden: false,
+                    censored: false,
+                    descriptive: true
                 }
             ],
             displayName: "Moodle"
@@ -90,8 +110,17 @@ function createExampleNodeMetadata() {
             type: "mapper"
         }),
         {
+            position: "MIDDLE",
             input: [],
             output: [],
+            settings: [
+                {
+                    name: "engine",
+                    hidden: false,
+                    censored: false,
+                    descriptive: true
+                }
+            ],
             displayName: "Mapper"
         }
     )

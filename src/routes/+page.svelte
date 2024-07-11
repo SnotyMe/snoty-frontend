@@ -1,2 +1,17 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+    import type { LayoutServerData } from "./$types";
+    import Page from "$lib/components/Page.svelte";
+
+    interface Props {
+        data: LayoutServerData
+    }
+    const { data }: Props = $props();
+</script>
+
+<Page>
+    {#if data.user?.name}
+        Welcome {data.user.name}.
+    {:else}
+        Welcome.
+    {/if}
+</Page>

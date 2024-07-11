@@ -15,12 +15,17 @@ export interface NodeDescriptor {
 export interface NodeField {
     name: string,
     hidden: boolean,
-    censored: boolean
+    censored: boolean,
+    descriptive: boolean
 }
+
+type NodePosition = "START" | "MIDDLE" | "END"
 
 // static metadata that describes a node
 export interface NodeMetadata {
     displayName: string
+    position: NodePosition
+    settings: NodeField[]
     input: NodeField[] | null
     output: NodeField[] | null
 }

@@ -3,6 +3,7 @@
     import Flow from "$lib/components/flow/Flow.svelte";
     import { page } from "$app/stores";
     import { SvelteFlowProvider } from "@xyflow/svelte";
+    import Page from "$lib/components/Page.svelte";
 
     const startNode = example_nodes.find(node => node.id == $page.params.id)
 </script>
@@ -13,7 +14,7 @@
     }
 </style>
 
-<main>
+<Page title="Flow">
     {#if startNode}
         <SvelteFlowProvider>
             <Flow rootNode={startNode} involved={example_nodes}/>
@@ -21,4 +22,4 @@
     {:else}
         No node with this id:(
     {/if}
-</main>
+</Page>
