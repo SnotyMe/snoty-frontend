@@ -8,12 +8,6 @@
     const startNode = example_nodes.find(node => node.id == $page.params.id)
 </script>
 
-<style>
-    main {
-        height: 100vh;
-    }
-</style>
-
 <Page title="Flow">
     {#if startNode}
         <SvelteFlowProvider>

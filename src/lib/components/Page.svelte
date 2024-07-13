@@ -13,7 +13,6 @@
 
     const {
         pageName,
-        showPageName = true,
         class: classes = "",
     }: Props = $props();
 

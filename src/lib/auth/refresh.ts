@@ -5,13 +5,13 @@ export function shouldRefreshToken(token: {exp: number | undefined, iat: number 
     }
 
     // if the expiration is in the past, the token is invalid and should be refreshed
-    if (Date.now() > token.exp) {
+    if (Date.now() > token.exp * 1000) {
         return true;
     }
 
     // if the token lifetime is 66% over, refresh it
     const tokenLifetime = token.exp - token.iat;
-    const tokenElapsed = Date.now() - token.iat;
+    const tokenElapsed = Date.now() / 1000 - token.iat;
     return tokenElapsed > 0.66 * tokenLifetime;
 }
 

@@ -5,6 +5,7 @@
     import IconHome from "lucide-svelte/icons/house";
     import IconWorkflow from "lucide-svelte/icons/workflow";
     import IconMenu from "lucide-svelte/icons/menu";
+    import UserMenu from "./UserMenu.svelte";
 
     // BLOCKED until @skeletonlabs/skeleton-svelte@1.0.0-next.4 is released
     // see https://github.com/skeletonlabs/skeleton/pull/2750
@@ -22,10 +23,11 @@
     }
     let initials = (_fromFullName() ?? user?.name?.split(" ").map((name) => name[0]).join("") ?? "??")
         .substring(0, 2);
+
+    let profileMenuShown = $state(false);
 </script>
 
 <div class="card border-surface-100-900 grid h-full w-full grid-cols-[auto_1fr] border-[1px]">
-    <!-- Component -->
     <NavRail class="navbar" expanded={false}>
         {#snippet header()}
         <NavTile id="menu" title="Menu" labelExpanded="Menu" onclick={() => expanded = !expanded}>
@@ -47,13 +49,15 @@
             <IconSettings/>
         </NavTile>
         {#if user != null}
-        <NavTile id="avatar" labelExpanded={data.user?.name} title="user">
+        <NavTile id="avatar" labelExpanded={data.user?.name} title="user" onclick={() => profileMenuShown = !profileMenuShown}>
             <Avatar src={undefined} classes="flex justify-center items-center">{initials}</Avatar>
         </NavTile>
+        {#if profileMenuShown}
+            <UserMenu/>
+        {/if}
         {/if}
         {/snippet}
     </NavRail>
-    <!-- Content -->
     <div class="flex items-center justify-center">
         <slot/>
     </div>
