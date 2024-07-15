@@ -4,24 +4,24 @@
     import type { NodeMetadata } from "$lib/model/nodes";
 
     interface Props {
-        config: Record<string, any>
+        settings: Record<string, any>
         metadata: NodeMetadata | undefined
     }
 
-    const {
-        config,
-        metadata
+    let {
+        settings,
+        metadata,
     }: Props = $props();
 </script>
 
 <table class="table border-collapse">
     <tbody>
-    {#each Object.entries(config) as [key, value]}
+    {#each Object.entries(settings).filter((key) => key[0] !== "type") as [key, value]}
         {#if typeof value == "object"}
             <tr>
                 <th colspan="2">
                     {key}
-                    <svelte:self config={value}></svelte:self>
+                    <svelte:self settings={value}></svelte:self>
                 </th>
             </tr>
         {:else}

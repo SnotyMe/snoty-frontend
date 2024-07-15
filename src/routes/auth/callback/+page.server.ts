@@ -1,6 +1,7 @@
 import type { PageServerLoad } from "./$types";
 import { PUBLIC_API_HOST } from "$env/static/public";
 import { redirectUrl } from "$lib/auth/urls";
+import { error_json } from "$lib/api/api";
 
 export const load: PageServerLoad = async ({ url, cookies }) => {
     const params = url.searchParams;
@@ -22,9 +23,7 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
             cookies.set("refresh_token", res.refresh_token, ops)
             return res
         })
-        .catch((error) => {
-            return { error: error.message };
-        })
+        .catch(error_json)
     return {
         result
     }

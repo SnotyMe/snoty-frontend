@@ -1,19 +1,24 @@
 <script lang="ts">
     import { Handle, type NodeProps, Position } from "@xyflow/svelte";
-    import { type FlowNode, getNodeMetadata } from "$lib/model/nodes";
+    import { getNodeMetadata, type StandaloneNode } from "$lib/model/nodes";
     import { example_node_metadata } from "$lib/data/example_data";
     import FlowNodeSettings from "$lib/components/flow/FlowNodeSettings.svelte";
 
     interface Props extends NodeProps {
-        data: FlowNode
+        data: StandaloneNode
+        clientWidth?: number
+        clientHeight?: number
     }
-
-    const { data }: Props = $props()
+    let {
+        data,
+        clientWidth = $bindable(),
+        clientHeight = $bindable()
+    }: Props = $props()
 
     const metadata = getNodeMetadata(example_node_metadata, data.descriptor)
 </script>
 
-<div>
+<div bind:clientWidth={clientWidth} bind:clientHeight={clientHeight}>
     {#if metadata?.input != null}
         <Handle type="target" position={Position.Left}/>
     {/if}
@@ -21,7 +26,7 @@
         {#if metadata}
             <p class="drag-handle cursor-pointer">{metadata.displayName}</p>
             <div class="flow-node-options table-wrap">
-                <FlowNodeSettings config={data.config} {metadata}/>
+                <FlowNodeSettings settings={data.settings} {metadata}/>
             </div>
         {:else}
             <div class="text-center">Unknown node type</div>

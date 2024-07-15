@@ -1,7 +1,9 @@
-import { redirect, type ServerLoadEvent } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 
-export function ensureLoggedIn(event: ServerLoadEvent) {
-    if (event.locals.user == null) {
+export function ensureLoggedIn(locals: App.Locals): string {
+    if (locals.user == null) {
         throw redirect(307, "/auth/login")
     }
+    // user exists => token can't be null
+    return locals.access_token!!
 }

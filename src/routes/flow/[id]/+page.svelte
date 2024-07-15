@@ -1,17 +1,19 @@
 <script lang="ts">
-    import { example_nodes } from "$lib/data/example_data";
     import Flow from "$lib/components/flow/Flow.svelte";
-    import { page } from "$app/stores";
     import { SvelteFlowProvider } from "@xyflow/svelte";
     import Page from "$lib/components/Page.svelte";
+    import type { PageData } from "./$types";
 
-    const startNode = example_nodes.find(node => node.id == $page.params.id)
+    interface Props {
+        data: PageData
+    }
+    const { data } = $props();
 </script>
 
 <Page title="Flow">
-    {#if startNode}
+    {#if data.flow}
         <SvelteFlowProvider>
-            <Flow rootNode={startNode} involved={example_nodes}/>
+            <Flow rootNode={data.flow}/>
         </SvelteFlowProvider>
     {:else}
         No node with this id:(

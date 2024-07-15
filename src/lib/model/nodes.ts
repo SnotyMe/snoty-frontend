@@ -1,10 +1,13 @@
 type NodeId = string
 
-export interface FlowNode extends Record<string, any>{
-    id: NodeId
+export interface StandaloneNode extends Record<string, any>{
+    _id: NodeId
     descriptor: NodeDescriptor
-    config: Record<string, any>
-    next: NodeId[]
+    settings: Record<string, any>
+}
+
+export interface RelationalNode extends StandaloneNode {
+    next: RelationalNode[] | null
 }
 
 export interface NodeDescriptor {

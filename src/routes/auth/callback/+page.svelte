@@ -9,7 +9,7 @@
     {#await data.result}
         Please wait while we log you in...
     {:then result}
-        {#if result.code >= 400}
+        {#if result.error || result.code >= 400}
             <p>An error occurred trying to sign you in: {result.message}</p>
         {:else}
             <p>Welcome. Please wait while we redirect you...</p>

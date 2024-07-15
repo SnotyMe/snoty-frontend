@@ -4,6 +4,7 @@ export const load: LayoutServerLoad = async (event) => {
     const user = event.locals.user;
 
     return {
-        user
+        user,
+        access_token: event.locals.access_token
     }
 }
