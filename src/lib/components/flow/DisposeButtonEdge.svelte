@@ -12,6 +12,7 @@
     export let targetPosition: $$Props['targetPosition'];
     export let markerEnd: $$Props['markerEnd'] = undefined;
     export let style: $$Props['style'] = undefined;
+    export let data: $$Props['data'] = undefined;
 
     $: [edgePath, labelX, labelY] = getBezierPath({
         sourceX,
@@ -24,7 +25,21 @@
 
     const edges = useEdges();
 
-    const onEdgeClick = () => edges.update((eds) => eds.filter((edge) => edge.id !== id));
+    function onEdgeClick() {
+        function del() {
+            edges.update((eds) => eds.filter((edge) => edge.id !== id));
+        }
+
+        if (!data.ondisconnect) {
+            del()
+        } else {
+            const promise = data.ondisconnect?.(new CustomEvent('disconnect', { detail: { id } })) as Promise<any>;
+            promise.then(del).catch(error => {
+                alert("Couldn't disconnect.")
+                console.error("Error while attempting to disconnect", error)
+            });
+        }
+    }
 </script>
 
 <BaseEdge path={edgePath} {markerEnd} {style} />

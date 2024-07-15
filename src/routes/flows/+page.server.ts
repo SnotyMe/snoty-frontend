@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({ locals, fetch }): Promise<{
     const token = ensureLoggedIn(locals)
 
     return {
-        flows: getFlows(token, fetch)
+        flows: getFlows({ token, fetch })
             .then(nodes => nodes.map(node => ({
                 node: node,
                 metadata: getNodeMetadata(example_node_metadata, node.descriptor)

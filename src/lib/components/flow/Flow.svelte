@@ -7,11 +7,14 @@
     import type { RelationalNode } from "$lib/model/nodes";
     import { onMount } from "svelte";
     import FlowNode from "$lib/components/flow/FlowNode.svelte";
+    import { disconnectNodes } from "$lib/api/node_api";
+    import type { ApiProps } from "$lib/api/api";
 
     type Props = {
         rootNode: RelationalNode,
+        apiProps: ApiProps
     }
-    const { rootNode }: Props = $props()
+    const { rootNode, apiProps }: Props = $props()
 
     const { allNodes, involvedNodes } = resolveNodes(rootNode);
     const initialNodes = involvedNodes.map(node => {
@@ -28,7 +31,10 @@
         (node.next ?? []).map(next => ({
             id: `${node._id}:${next._id}`,
             source: node._id,
-            target: next._id
+            target: next._id,
+            data: {
+                ondisconnect: () => disconnectNodes(apiProps, node._id, next._id)
+            }
         } as Edge))
     );
 

@@ -22,6 +22,7 @@ export async function getLayoutedElements(
     options = { ...options, ...elkOptions }
     const isHorizontal = options?.['elk.direction'] === 'RIGHT';
     let elkEdges = edges.map((edge) => ({
+        ...edge,
         id: edge.id,
         sources: [edge.source],
         targets: [edge.target]
@@ -58,6 +59,7 @@ export async function getLayoutedElements(
         })),
 
         edges: layoutedGraph.edges?.map(e => ({
+            ...e,
             id: e.id,
             source: e.sources[0],
             target: e.targets[0]
