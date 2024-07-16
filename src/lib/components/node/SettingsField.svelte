@@ -4,28 +4,33 @@
     const CENSORED = "********";
 
     interface Props {
+        key: string
         value: any
         metadata?: NodeField | undefined
+        onchange?: (key: string, value: any) => void
     }
 
-    let { value: initialValue, metadata = undefined }: Props = $props();
+    let { key, value: actualValue, metadata = undefined, onchange }: Props = $props();
 
-    let value = $state(initialValue);
+    // actually displayed value
+    let valueState = $state(actualValue);
     if (metadata?.censored) {
-        value = CENSORED;
+        valueState = CENSORED;
     }
 
-    function clicked(event: MouseEvent) {
+    function clicked() {
         if (metadata?.censored) {
-            (event.target as HTMLInputElement).value = initialValue;
+            valueState = actualValue;
         }
     }
 
     function focusout(event: FocusEvent) {
+        actualValue = (event.target as HTMLInputElement).value;
+        valueState = actualValue;
         if (metadata?.censored) {
-            initialValue = (event.target as HTMLInputElement).value;
-            (event.target as HTMLInputElement).value = CENSORED;
+            valueState = CENSORED;
         }
+        onchange?.(key, actualValue);
     }
 </script>
 
@@ -40,5 +45,5 @@
 </style>
 
 <div>
-    <input type="text" bind:value={value} onmousedown={clicked} onfocusout={focusout}/>
+    <input type="text" value={valueState} onfocusin={clicked} onfocusout={focusout}/>
 </div>

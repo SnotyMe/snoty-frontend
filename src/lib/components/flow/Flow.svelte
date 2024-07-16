@@ -4,24 +4,29 @@
     import { writable } from "svelte/store";
     import { DISPOSE_EDGE, edgeTypes, FLOW_NODE, nodeTypes } from "$lib/model/svelte_flow";
     import { getLayoutedElements, resolveNodes } from "$lib/components/flow/flow_utils";
-    import type { RelationalNode } from "$lib/model/nodes";
+    import { getNodeMetadata, type NodeMetadata, type RelationalNode, type Settings } from "$lib/model/nodes";
     import { onMount } from "svelte";
-    import FlowNode from "$lib/components/flow/FlowNode.svelte";
-    import { disconnectNodes } from "$lib/api/node_api";
+    import FlowNode from "$lib/components/node/Node.svelte";
+    import { disconnectNodes, updateSettings } from "$lib/api/node_api";
     import type { ApiProps } from "$lib/api/api";
 
     type Props = {
         rootNode: RelationalNode,
+        metadatas: Map<string, NodeMetadata>,
         apiProps: ApiProps
     }
-    const { rootNode, apiProps }: Props = $props()
+    const { rootNode, metadatas, apiProps }: Props = $props()
 
     const { allNodes, involvedNodes } = resolveNodes(rootNode);
     const initialNodes = involvedNodes.map(node => {
         return ({
             id: node._id,
             position: { x: 0, y: 0 },
-            data: node,
+            data: {
+                ...node,
+                metadata: getNodeMetadata(metadatas, node.descriptor)!,
+                onsettingschange: (newSettings: Settings) => updateSettings(apiProps, node._id, newSettings),
+            },
             dragHandle: '.drag-handle',
             type: FLOW_NODE
         } as Node)
@@ -64,7 +69,7 @@
 <!-- hidden dummy element with all initial settings to measure the node size for autolayouting -->
 <div class="absolute opacity-0">
     {#each involvedNodes as node}
-        <FlowNode bind:clientWidth={widths[node._id]} bind:clientHeight={heights[node._id]} data={node}/>
+        <FlowNode bind:clientWidth={widths[node._id]} bind:clientHeight={heights[node._id]} data={{...node, metadata: getNodeMetadata(metadatas, node.descriptor)}}/>
     {/each}
 </div>
 

@@ -1,4 +1,4 @@
-import FlowNode from "$lib/components/flow/FlowNode.svelte";
+import FlowNode from "$lib/components/node/Node.svelte";
 import DisposeButtonEdge from "$lib/components/flow/DisposeButtonEdge.svelte";
 
 export const FLOW_NODE = "flow-node";

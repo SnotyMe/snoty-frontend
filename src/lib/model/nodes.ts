@@ -1,9 +1,10 @@
-type NodeId = string
+export type NodeId = string
+export type Settings = Record<string, any>
 
 export interface StandaloneNode extends Record<string, any>{
     _id: NodeId
     descriptor: NodeDescriptor
-    settings: Record<string, any>
+    settings: Settings
 }
 
 export interface RelationalNode extends StandaloneNode {
@@ -11,15 +12,15 @@ export interface RelationalNode extends StandaloneNode {
 }
 
 export interface NodeDescriptor {
-    subsystem: string,
+    subsystem: string
     type: string
 }
 
 export interface NodeField {
-    name: string,
-    hidden: boolean,
-    censored: boolean,
-    descriptive: boolean
+    name: string
+    type: string
+    hidden: boolean
+    censored: boolean
 }
 
 type NodePosition = "START" | "MIDDLE" | "END"
@@ -33,10 +34,12 @@ export interface NodeMetadata {
     output: NodeField[] | null
 }
 
+export type NodeMetadataMap = Map<string, NodeMetadata>
+
 export function descriptorAsString(descriptor: NodeDescriptor): string {
     return descriptor.subsystem + ":" + descriptor.type
 }
 
-export function getNodeMetadata(metadatas: Map<string, NodeMetadata>, descriptor: NodeDescriptor) {
-    return metadatas.get(descriptorAsString(descriptor))
+export function getNodeMetadata(metadatas: NodeMetadataMap, descriptor: NodeDescriptor): NodeMetadata {
+    return metadatas.get(descriptorAsString(descriptor))!
 }

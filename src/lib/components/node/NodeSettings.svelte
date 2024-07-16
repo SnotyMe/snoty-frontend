@@ -6,29 +6,34 @@
     interface Props {
         settings: Record<string, any>
         metadata: NodeMetadata | undefined
+        onchange: (key: string, value: any) => void
     }
 
-    let {
+    const {
         settings,
         metadata,
+        onchange
     }: Props = $props();
+
+    const filteredSettings = Object.entries(settings)
+        .filter(([key]) => key !== "type" && key !== "name");
 </script>
 
 <table class="table border-collapse">
     <tbody>
-    {#each Object.entries(settings).filter((key) => key[0] !== "type") as [key, value]}
+    {#each filteredSettings as [key, value]}
         {#if typeof value == "object"}
             <tr>
                 <th colspan="2">
                     {key}
-                    <svelte:self settings={value}></svelte:self>
+                    <svelte:self {onchange} settings={value}></svelte:self>
                 </th>
             </tr>
         {:else}
             <tr>
                 <th>{key}</th>
                 <th>
-                    <SettingsField value={value} metadata={metadata?.settings.find(field => field.name === key)}/>
+                    <SettingsField onchange={onchange} {key} value={settings[key]} metadata={metadata?.settings.find(field => field.name === key)}/>
                 </th>
             </tr>
         {/if}
