@@ -19,6 +19,8 @@ export interface NodeDescriptor {
 export interface NodeField {
     name: string
     type: string
+    displayName: string
+    description: string
     hidden: boolean
     censored: boolean
 }

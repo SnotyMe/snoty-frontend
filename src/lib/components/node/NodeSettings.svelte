@@ -16,7 +16,19 @@
     }: Props = $props();
 
     const filteredSettings = Object.entries(settings)
-        .filter(([key]) => key !== "type" && key !== "name");
+        .filter(([key]) => key !== "type" && key !== "name")
+
+    function getMetadata(key: string) {
+        return metadata?.settings.find(field => field.name === key);
+    }
+
+    function getName(key: string) {
+        return getMetadata(key)?.displayName ?? key;
+    }
+
+    function getDescription(key: string) {
+        return getMetadata(key)?.description ?? "";
+    }
 </script>
 
 <table class="table border-collapse">
@@ -25,13 +37,13 @@
         {#if typeof value == "object"}
             <tr>
                 <th colspan="2">
-                    {key}
+                    <p title={getDescription(key)}>{getName(key)}</p>
                     <svelte:self {onchange} settings={value}></svelte:self>
                 </th>
             </tr>
         {:else}
             <tr>
-                <th>{key}</th>
+                <th title={getDescription(key)}>{getName(key)}</th>
                 <th>
                     <SettingsField onchange={onchange} {key} value={settings[key]} metadata={metadata?.settings.find(field => field.name === key)}/>
                 </th>

@@ -24,14 +24,21 @@
         }
     }
 
-    function focusout(event: FocusEvent) {
-        actualValue = (event.target as HTMLInputElement).value;
+    function changed(event: UIEvent) {
+        if (metadata?.type === "Boolean") {
+            // we want true / false
+            actualValue = (event.target as HTMLInputElement).checked;
+        } else {
+            actualValue = (event.target as HTMLInputElement).value;
+        }
         valueState = actualValue;
         if (metadata?.censored) {
             valueState = CENSORED;
         }
         onchange?.(key, actualValue);
     }
+
+    const type = metadata?.type
 </script>
 
 <style>
@@ -39,11 +46,24 @@
         background: none;
     }
 
-    div, input {
+    div, input[type="text"] {
         width: 100%;
+        --tw-ring-opacity: 0;
+
+        &:focus {
+            --tw-ring-opacity: 1;
+        }
+    }
+
+    input[type="checkbox"] {
+        --tw-ring-offset-width: 0px;
     }
 </style>
 
 <div>
-    <input type="text" value={valueState} onfocusin={clicked} onfocusout={focusout}/>
+    {#if type === "Boolean"}
+        <input class="checkbox" type="checkbox" checked={actualValue} onchange={changed}/>
+    {:else}
+        <input class="input px-2 py-0.5 border-transparent" type="text" value={valueState} onfocusin={clicked} onfocusout={changed}/>
+    {/if}
 </div>

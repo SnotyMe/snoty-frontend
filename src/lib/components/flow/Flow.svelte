@@ -74,7 +74,7 @@
 </div>
 
 <SvelteFlow proOptions={{hideAttribution: true}}
-            colorMode="dark"
+            colorMode="system"
             {nodeTypes}
             {edgeTypes}
             nodes={nodesStore}
