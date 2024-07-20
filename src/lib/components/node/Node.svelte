@@ -3,6 +3,7 @@
     import { type NodeMetadata, type StandaloneNode } from "$lib/model/nodes";
     import NodeSettings from "$lib/components/node/NodeSettings.svelte";
     import SettingsField from "$lib/components/node/SettingsField.svelte";
+    import { setRecursively } from "$lib/utils/utils";
 
     interface Props extends NodeProps {
         data: StandaloneNode & {
@@ -21,7 +22,7 @@
     const metadata = data.metadata
 
     function updateSettings(key: string, value: any) {
-        data.settings[key] = value
+        setRecursively(data.settings, key, value)
         data.onsettingschange?.(data.settings)
     }
 </script>

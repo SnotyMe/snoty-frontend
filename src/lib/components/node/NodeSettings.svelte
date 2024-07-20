@@ -5,14 +5,16 @@
 
     interface Props {
         settings: Record<string, any>
+        path?: string | null
         metadata: NodeMetadata | undefined
         onchange: (key: string, value: any) => void
     }
 
     const {
         settings,
+        path = null,
         metadata,
-        onchange
+        onchange: rootOnchange
     }: Props = $props();
 
     const filteredSettings = Object.entries(settings)
@@ -29,6 +31,13 @@
     function getDescription(key: string) {
         return getMetadata(key)?.description ?? "";
     }
+
+    function onchange(key: string, value: any) {
+        if (path != null)
+            rootOnchange(path + "." + key, value);
+        else
+            rootOnchange(key, value);
+    }
 </script>
 
 <table class="table border-collapse">
@@ -38,7 +47,7 @@
             <tr>
                 <th colspan="2">
                     <p title={getDescription(key)}>{getName(key)}</p>
-                    <svelte:self {onchange} settings={value}></svelte:self>
+                    <svelte:self {onchange} settings={value} path={path ? `${path}.${key}` : key}></svelte:self>
                 </th>
             </tr>
         {:else}

@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { NodeField } from "$lib/model/nodes";
+    import { enumDetails } from "$lib/model/node_field_details";
 
     const CENSORED = "********";
 
@@ -63,6 +64,12 @@
 <div>
     {#if type === "Boolean"}
         <input class="checkbox" type="checkbox" checked={actualValue} onchange={changed}/>
+    {:else if type === "Enum"}
+        <select class="select" onchange={changed}>
+            {#each enumDetails(metadata).values as constant}
+                <option value={constant.value} selected={constant.value === actualValue}>{constant.displayName}</option>
+            {/each}
+        </select>
     {:else}
         <input class="input px-2 py-0.5 border-transparent" type="text" value={valueState} onfocusin={clicked} onfocusout={changed}/>
     {/if}

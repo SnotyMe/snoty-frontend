@@ -1,3 +1,5 @@
+import type { Details } from "$lib/model/node_field_details";
+
 export type NodeId = string
 export type Settings = Record<string, any>
 
@@ -23,6 +25,7 @@ export interface NodeField {
     description: string
     hidden: boolean
     censored: boolean
+    details?: Details
 }
 
 type NodePosition = "START" | "MIDDLE" | "END"
