@@ -65,10 +65,13 @@
         class="w-8/12 max-w-4xl h-8/12 shadow-lg cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 overflow-hidden border"
 >
     {#if metadata}
-        <SettingsField
-                key="name"
-                onchange={settings.setProperty}
-                value={settings.settings["name"] ?? metadata.displayName}/>
+        {#key settings.settings["name"]}
+            <SettingsField
+                    key="name"
+                    onchange={settings.setProperty}
+                    value={settings.settings["name"] ?? metadata.displayName}
+            />
+        {/key}
         <div class="flow-node-options table-wrap border-t-4 mt-1">
             <NodeSettings settings={settings} {metadata} expanded={true}/>
         </div>
