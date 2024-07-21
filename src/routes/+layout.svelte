@@ -4,6 +4,7 @@
     import IconSettings from "lucide-svelte/icons/settings";
     import IconHome from "lucide-svelte/icons/house";
     import IconWorkflow from "lucide-svelte/icons/workflow";
+    import IconInfo from "lucide-svelte/icons/info";
     import IconMenu from "lucide-svelte/icons/menu";
     import UserMenu from "./UserMenu.svelte";
 
@@ -43,6 +44,9 @@
                 <IconWorkflow/>
             </NavTile>
         {/if}
+        <NavTile id="about" labelExpanded="About" label="About" href="/about">
+            <IconInfo/>
+        </NavTile>
         {/snippet}
         {#snippet footer()}
         <NavTile id="settings" labelExpanded="Settings" href="/settings" title="settings">
