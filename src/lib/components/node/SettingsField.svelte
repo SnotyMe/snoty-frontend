@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { NodeField } from "$lib/model/nodes";
-    import { enumDetails, textDetails } from "$lib/model/node_field_details";
+    import { enumDetails, plaintextDetails } from "$lib/model/node_field_details";
 
     const CENSORED = "********";
 
@@ -81,10 +81,10 @@
             {/each}
         </select>
     {:else}
-        {#if expanded || textDetails(metadata)?.multiline}
+        {#if expanded || (plaintextDetails(metadata)?.lines ?? -1) > 1}
             <textarea
                     rows="3"
-                    class:singleline={textDetails(metadata)?.multiline !== true}
+                    class:singleline={(plaintextDetails(metadata)?.lines ?? -1) <= 1}
                     wrap="soft"
                     class="w-full input px-2 py-0.5 border-transparent"
                     onfocusin={clicked} onfocusout={changed}

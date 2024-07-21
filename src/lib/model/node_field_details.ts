@@ -15,10 +15,10 @@ export function enumDetails(field: NodeField | undefined) {
     return field!.details as EnumDetails
 }
 
-export interface TextDetails extends Details {
-    multiline: boolean
+export interface PlaintextDetails extends Details {
+    lines: number
 }
 
-export function textDetails(field: NodeField | undefined) {
-    return field?.details as TextDetails | undefined
+export function plaintextDetails(field: NodeField | undefined) {
+    return field?.details as PlaintextDetails | undefined
 }
