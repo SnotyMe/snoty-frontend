@@ -2,23 +2,25 @@
 
     import SettingsField from "$lib/components/node/SettingsField.svelte";
     import type { NodeMetadata } from "$lib/model/nodes";
+    import type { SettingsStore } from "$lib/utils/settings.svelte";
+    import { getRecursively } from "$lib/utils/utils";
+    import { getFiltered } from "$lib/components/node/NodeSettings.js";
 
     interface Props {
-        settings: Record<string, any>
+        settings: SettingsStore
         path?: string | null
         metadata: NodeMetadata | undefined
-        onchange: (key: string, value: any) => void
+        expanded?: boolean
     }
 
     const {
         settings,
         path = null,
         metadata,
-        onchange: rootOnchange
+        expanded = false
     }: Props = $props();
 
-    const filteredSettings = Object.entries(settings)
-        .filter(([key]) => key !== "type" && key !== "name")
+    const filteredSettings = $derived(getFiltered(settings, path))
 
     function getMetadata(key: string) {
         return metadata?.settings.find(field => field.name === key);
@@ -34,9 +36,13 @@
 
     function onchange(key: string, value: any) {
         if (path != null)
-            rootOnchange(path + "." + key, value);
+            settings.setProperty(path + "." + key, value);
         else
-            rootOnchange(key, value);
+            settings.setProperty(key, value);
+    }
+
+    function pathKey(key: string): string {
+        return path ? `${path}.${key}` : key
     }
 </script>
 
@@ -47,14 +53,28 @@
             <tr>
                 <th colspan="2">
                     <p title={getDescription(key)}>{getName(key)}</p>
-                    <svelte:self {onchange} settings={value} path={path ? `${path}.${key}` : key}></svelte:self>
+                    <svelte:self
+                            {expanded}
+                            {settings}
+                            {metadata}
+                            {onchange}
+                            path={pathKey(key)}
+                    />
                 </th>
             </tr>
         {:else}
             <tr>
                 <th title={getDescription(key)}>{getName(key)}</th>
                 <th>
-                    <SettingsField onchange={onchange} {key} value={settings[key]} metadata={metadata?.settings.find(field => field.name === key)}/>
+                    {#key getRecursively(settings.settings, pathKey(key))}
+                        <SettingsField
+                                {expanded}
+                                onchange={onchange}
+                                {key}
+                                value={getRecursively(settings.settings, pathKey(key))}
+                                metadata={metadata?.settings.find(field => field.name === key)}
+                        />
+                    {/key}
                 </th>
             </tr>
         {/if}

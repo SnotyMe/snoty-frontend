@@ -11,7 +11,14 @@ export interface EnumConstant {
     displayName: string
 }
 
-
 export function enumDetails(field: NodeField | undefined) {
     return field!.details as EnumDetails
+}
+
+export interface TextDetails extends Details {
+    multiline: boolean
+}
+
+export function textDetails(field: NodeField | undefined) {
+    return field?.details as TextDetails | undefined
 }

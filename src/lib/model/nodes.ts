@@ -1,12 +1,15 @@
 import type { Details } from "$lib/model/node_field_details";
 
 export type NodeId = string
-export type Settings = Record<string, any>
+export type NodeSettings = Record<string, any>
 
-export interface StandaloneNode extends Record<string, any>{
+export interface SettinglessNode extends Record<string, any> {
     _id: NodeId
     descriptor: NodeDescriptor
-    settings: Settings
+}
+
+export interface StandaloneNode extends SettinglessNode {
+    settings: NodeSettings
 }
 
 export interface RelationalNode extends StandaloneNode {

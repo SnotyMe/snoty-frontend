@@ -4,7 +4,7 @@
     import { writable } from "svelte/store";
     import { DISPOSE_EDGE, edgeTypes, FLOW_NODE, nodeTypes } from "$lib/model/svelte_flow";
     import { getLayoutedElements, resolveNodes } from "$lib/components/flow/flow_utils";
-    import { getNodeMetadata, type NodeMetadata, type RelationalNode, type Settings } from "$lib/model/nodes";
+    import { getNodeMetadata, type NodeMetadata, type RelationalNode, type NodeSettings } from "$lib/model/nodes";
     import { onMount } from "svelte";
     import FlowNode from "$lib/components/node/Node.svelte";
     import { disconnectNodes, updateSettings } from "$lib/api/node_api";
@@ -25,7 +25,7 @@
             data: {
                 ...node,
                 metadata: getNodeMetadata(metadatas, node.descriptor)!,
-                onsettingschange: (newSettings: Settings) => updateSettings(apiProps, node._id, newSettings),
+                onsettingschange: (newSettings: NodeSettings) => updateSettings(apiProps, node._id, newSettings),
             },
             dragHandle: '.drag-handle',
             type: FLOW_NODE

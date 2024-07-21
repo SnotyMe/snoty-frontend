@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { NodeField } from "$lib/model/nodes";
-    import { enumDetails } from "$lib/model/node_field_details";
+    import { enumDetails, textDetails } from "$lib/model/node_field_details";
 
     const CENSORED = "********";
 
@@ -9,9 +9,10 @@
         value: any
         metadata?: NodeField | undefined
         onchange?: (key: string, value: any) => void
+        expanded?: boolean
     }
 
-    let { key, value: actualValue, metadata = undefined, onchange }: Props = $props();
+    let { key, value: actualValue, metadata = undefined, onchange, expanded = false }: Props = $props();
 
     // actually displayed value
     let valueState = $state(actualValue);
@@ -47,7 +48,7 @@
         background: none;
     }
 
-    div, input[type="text"] {
+    div, input[type=text], textarea {
         width: 100%;
         --tw-ring-opacity: 0;
 
@@ -59,9 +60,18 @@
     input[type="checkbox"] {
         --tw-ring-offset-width: 0px;
     }
+
+    .singleline {
+        resize: none;
+    }
+
+    .expanded * {
+        padding-top: calc(0.5rem * var(--space-scale-factor));
+        padding-bottom: calc(0.5rem * var(--space-scale-factor));
+    }
 </style>
 
-<div>
+<div class:expanded={expanded}>
     {#if type === "Boolean"}
         <input class="checkbox" type="checkbox" checked={actualValue} onchange={changed}/>
     {:else if type === "Enum"}
@@ -71,6 +81,22 @@
             {/each}
         </select>
     {:else}
-        <input class="input px-2 py-0.5 border-transparent" type="text" value={valueState} onfocusin={clicked} onfocusout={changed}/>
+        {#if expanded || textDetails(metadata)?.multiline}
+            <textarea
+                    rows="3"
+                    class:singleline={textDetails(metadata)?.multiline !== true}
+                    wrap="soft"
+                    class="w-full input px-2 py-0.5 border-transparent"
+                    onfocusin={clicked} onfocusout={changed}
+            >{valueState}</textarea>
+        {:else}
+            <input
+                    type="text"
+                    class="input px-2 py-0.5 border-transparent"
+                    onfocusin={clicked}
+                    onfocusout={changed}
+                    value={valueState}
+            />
+        {/if}
     {/if}
 </div>
