@@ -74,8 +74,13 @@
     {/each}
 </div>
 
+{#await promise}
+    <div class="w-full h-full flex justify-center items-center">
+        <p>Loading...</p>
+    </div>
+{:then _}
 <SvelteFlow proOptions={{hideAttribution: true}}
-            colorMode="system"
+            colorMode="{window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'}"
             {nodeTypes}
             {edgeTypes}
             nodes={nodesStore}
@@ -91,13 +96,8 @@
                 }}
             class="svelte-flow">
     <Background/>
-    {#await promise}
-        <div class="w-full h-full flex justify-center items-center">
-            <p>Loading...</p>
-        </div>
-    {:then _}
         <Controls/>
         <MiniMap/>
         <Logs rootNode={rootNode._id} {apiProps}/>
-    {/await}
 </SvelteFlow>
+{/await}

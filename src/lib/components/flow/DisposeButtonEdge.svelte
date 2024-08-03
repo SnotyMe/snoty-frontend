@@ -48,7 +48,7 @@
             class="edgeButtonContainer nodrag nopan"
             style:transform="translate(-50%, -50%) translate({labelX}px,{labelY}px)"
     >
-        <button class="edgeButton bg-surface-900 hover:bg-surface-700" on:click={onEdgeClick}><span> × </span></button>
+        <button class="edgeButton border-surface-900-100 bg-surface-100-900 hover:bg-surface-200-800" on:click={onEdgeClick}><span> × </span></button>
     </div>
 </EdgeLabelRenderer>
 
@@ -63,7 +63,7 @@
     .edgeButton {
         width: 1em;
         height: 1em;
-        border: 1px solid #fff;
+        border-width: 1px;
         cursor: pointer;
         border-radius: 50%;
         font-size: 2em;
