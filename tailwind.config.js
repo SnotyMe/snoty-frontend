@@ -5,6 +5,7 @@ import { skeleton } from "@skeletonlabs/skeleton/plugin"
 import forms from "@tailwindcss/forms"
 import * as themes from "@skeletonlabs/skeleton/themes"
 
+/** @type {import('tailwindcss').Config} */
 export default {
   content: [
       "./src/**/*.{html,js,svelte,ts}",
@@ -19,4 +20,10 @@ export default {
         themes: [ themes.cerberus ]
       })
   ],
+  safelist: [
+      {
+          pattern: /bg-.*-500/,
+          variants: ["after"]
+      }
+  ]
 }

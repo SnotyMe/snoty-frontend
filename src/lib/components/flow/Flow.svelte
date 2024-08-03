@@ -4,11 +4,12 @@
     import { writable } from "svelte/store";
     import { DISPOSE_EDGE, edgeTypes, FLOW_NODE, nodeTypes } from "$lib/model/svelte_flow";
     import { getLayoutedElements, resolveNodes } from "$lib/components/flow/flow_utils";
-    import { getNodeMetadata, type NodeMetadata, type RelationalNode, type NodeSettings } from "$lib/model/nodes";
+    import { getNodeMetadata, type NodeMetadata, type NodeSettings, type RelationalNode } from "$lib/model/nodes";
     import { onMount } from "svelte";
     import FlowNode from "$lib/components/node/Node.svelte";
     import { disconnectNodes, updateSettings } from "$lib/api/node_api";
     import type { ApiProps } from "$lib/api/api";
+    import Logs from "$lib/components/logs/Logs.svelte";
 
     type Props = {
         rootNode: RelationalNode,
@@ -97,5 +98,6 @@
     {:then _}
         <Controls/>
         <MiniMap/>
+        <Logs rootNode={rootNode._id} {apiProps}/>
     {/await}
 </SvelteFlow>

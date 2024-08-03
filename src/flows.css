@@ -1,0 +1,23 @@
+:root {
+    --flow-control-padding: 1em;
+    --flow-control-button-size: 2em;
+}
+
+.svelte-flow__handle.svelte-flow__handle {
+    width: 12px;
+    height: 12px;
+}
+
+button.svelte-flow__controls-button {
+    width: var(--flow-control-button-size);
+    height: var(--flow-control-button-size);
+}
+
+button.svelte-flow__controls-button svg {
+    max-width: 16px;
+    max-height: 16px;
+}
+
+div.svelte-flow__panel {
+    margin: var(--flow-control-padding);
+}
