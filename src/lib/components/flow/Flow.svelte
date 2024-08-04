@@ -12,11 +12,12 @@
     import Logs from "$lib/components/logs/Logs.svelte";
 
     type Props = {
-        rootNode: RelationalNode,
-        metadatas: Map<string, NodeMetadata>,
+        rootNode: RelationalNode
+        metadatas: Map<string, NodeMetadata>
         apiProps: ApiProps
+        colorScheme: string
     }
-    const { rootNode, metadatas, apiProps }: Props = $props()
+    const { rootNode, metadatas, apiProps, colorScheme }: Props = $props()
 
     const { allNodes, involvedNodes } = resolveNodes(rootNode);
     const initialNodes = involvedNodes.map(node => {
@@ -74,13 +75,8 @@
     {/each}
 </div>
 
-{#await promise}
-    <div class="w-full h-full flex justify-center items-center">
-        <p>Loading...</p>
-    </div>
-{:then _}
 <SvelteFlow proOptions={{hideAttribution: true}}
-            colorMode="{window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'}"
+            colorMode="{colorScheme}"
             {nodeTypes}
             {edgeTypes}
             nodes={nodesStore}
@@ -96,8 +92,13 @@
                 }}
             class="svelte-flow">
     <Background/>
+    {#await promise}
+        <div class="w-full h-full flex justify-center items-center">
+            <p>Loading...</p>
+        </div>
+    {:then _}
         <Controls/>
         <MiniMap/>
         <Logs rootNode={rootNode._id} {apiProps}/>
+    {/await}
 </SvelteFlow>
-{/await}

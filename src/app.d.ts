@@ -8,8 +8,11 @@ declare global {
 		interface Locals {
 			user: User | null
 			access_token: string | null
+			colorScheme: string | null
 		}
-		// interface PageData {}
+		interface PageData {
+			colorScheme: string | null
+		}
 		// interface PageState {}
 		// interface Platform {}
 	}

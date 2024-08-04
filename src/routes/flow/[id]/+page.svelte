@@ -19,7 +19,7 @@
 <Page title="Flow">
     {#if data.flow}
         <SvelteFlowProvider>
-            <Flow {apiProps} metadatas={data.metadatas} rootNode={data.flow}/>
+            <Flow colorScheme={data.colorScheme} {apiProps} metadatas={data.metadatas} rootNode={data.flow}/>
         </SvelteFlowProvider>
     {:else}
         No node with this id:(

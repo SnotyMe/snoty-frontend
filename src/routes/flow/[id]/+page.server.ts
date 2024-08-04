@@ -11,6 +11,7 @@ export const load: PageServerLoad = async ({ locals, fetch, params }) => {
 
     return {
         flow,
-        metadatas
+        metadatas,
+        colorScheme: locals.colorScheme,
     }
 }
