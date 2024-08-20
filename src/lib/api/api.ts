@@ -14,7 +14,13 @@ export async function authenticatedApiFetch(props: ApiProps, url: string, option
     return res;
 }
 
-export function error_json(error: any) {
+export interface ErrorJson {
+    error: boolean
+    message: string
+}
+
+export function error_json(error: any): ErrorJson {
+    console.error("An error occurred!", error)
     return { error: true, message: error.message };
 }
 
