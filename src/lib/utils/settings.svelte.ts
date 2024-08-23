@@ -1,5 +1,6 @@
-import type { NodeSettings } from "$lib/model/nodes";
+import type { NodeMetadata, NodeSettings } from "$lib/model/nodes";
 import { setRecursively } from "$lib/utils/utils";
+import { getDefaultValue } from "$lib/model/node_field_details";
 
 export interface SettingsStore {
     settings: NodeSettings;
@@ -19,4 +20,15 @@ export function createSettings(initial: NodeSettings): SettingsStore {
         },
         setProperty
     };
+}
+
+export function nodeSettingsFromMetadata(nodeMetadata: NodeMetadata): NodeSettings {
+    const fields = nodeMetadata.settings
+
+    const settings: NodeSettings = {}
+    for (const field of fields) {
+        settings[field.name] = getDefaultValue(field);
+    }
+    settings.name = nodeMetadata.displayName
+    return settings;
 }

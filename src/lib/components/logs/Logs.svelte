@@ -27,7 +27,7 @@
     }
 </style>
 
-<Panel position="top-right">
+<Panel position="top-right" class="svelte-flow__controls">
     <slot name="before">
         <ControlButton
                 on:click={showLogs}

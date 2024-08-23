@@ -15,14 +15,14 @@
     let { key, value: actualValue, metadata = undefined, onchange, expanded = false }: Props = $props();
 
     // actually displayed value
-    let valueState = $state(actualValue);
-    if (metadata?.censored) {
-        valueState = CENSORED;
+    let displayState = $state(actualValue);
+    if (metadata?.censored && actualValue !== "") {
+        displayState = CENSORED;
     }
 
     function clicked() {
         if (metadata?.censored) {
-            valueState = actualValue;
+            displayState = actualValue;
         }
     }
 
@@ -33,9 +33,9 @@
         } else {
             actualValue = (event.target as HTMLInputElement).value;
         }
-        valueState = actualValue;
+        displayState = actualValue;
         if (metadata?.censored) {
-            valueState = CENSORED;
+            displayState = actualValue === "" ? "" : CENSORED;
         }
         onchange?.(key, actualValue);
     }
@@ -88,14 +88,14 @@
                     wrap="soft"
                     class="w-full input px-2 py-0.5 border-transparent"
                     onfocusin={clicked} onfocusout={changed}
-            >{valueState}</textarea>
+            >{displayState}</textarea>
         {:else}
             <input
                     type="text"
                     class="input px-2 py-0.5 border-transparent"
                     onfocusin={clicked}
                     onfocusout={changed}
-                    value={valueState}
+                    value={displayState}
             />
         {/if}
     {/if}

@@ -42,7 +42,7 @@
         {/if}
         <div class="w-full flex gap-2">
             <div class="w-full p-2 preset-filled-surface-500 drag-handle cursor-pointer"></div>
-            <NodeDetailsButton {settings} {data}/>
+            <NodeDetailsButton {settings} {metadata}/>
         </div>
     </div>
     {#if metadata?.output != null}

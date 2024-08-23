@@ -17,7 +17,7 @@ export function setRecursively(object: Record<any, any>, path: string, value: an
     return result;
 }
 
-export function getRecursively(object: Record<string, any>, path: string | null): Record<string, any> {
+export function getRecursively(object: Record<string, any>, path: string | null): any {
     if (!path) {
         return object;
     }
@@ -25,7 +25,8 @@ export function getRecursively(object: Record<string, any>, path: string | null)
     let current = object;
 
     for (const element of keys) {
-        if (!current[element]) {
+        if (current[element] === undefined) {
+            console.error(`Could not find key ${element} in object ${JSON.stringify(current)}`);
             return undefined;
         }
         current = current[element];

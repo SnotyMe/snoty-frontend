@@ -42,7 +42,7 @@
     }
 </script>
 
-<BaseEdge path={edgePath} {markerEnd} {style} />
+<BaseEdge path={edgePath} {markerEnd} {style}/>
 <EdgeLabelRenderer>
     <div
             class="edgeButtonContainer nodrag nopan"

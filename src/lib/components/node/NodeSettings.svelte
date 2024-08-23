@@ -5,6 +5,7 @@
     import type { SettingsStore } from "$lib/utils/settings.svelte";
     import { getRecursively } from "$lib/utils/utils";
     import { getFiltered } from "$lib/components/node/NodeSettings.js";
+    import Plus from "lucide-svelte/icons/plus";
 
     interface Props {
         settings: SettingsStore
@@ -48,7 +49,9 @@
 
 <table class="table border-collapse">
     <tbody>
-    {#each filteredSettings as [key, value]}
+    {#each filteredSettings as [key, _]}
+        {@const fullPath = pathKey(key)}
+        {@const value = getRecursively(settings.settings, fullPath)}
         {#if typeof value == "object"}
             <tr>
                 <th colspan="2">
@@ -60,6 +63,9 @@
                             {onchange}
                             path={pathKey(key)}
                     />
+                    <button class="block m-auto" onclick={() => onchange(fullPath, { newfield: "", ...value })}>
+                        <Plus/>
+                    </button>
                 </th>
             </tr>
         {:else}
@@ -71,7 +77,7 @@
                                 {expanded}
                                 onchange={onchange}
                                 {key}
-                                value={getRecursively(settings.settings, pathKey(key))}
+                                {value}
                                 metadata={metadata?.settings.find(field => field.name === key)}
                         />
                     {/key}

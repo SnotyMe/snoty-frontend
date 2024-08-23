@@ -1,16 +1,16 @@
 <script lang="ts">
-    import type { NodeMetadataMap } from "$lib/model/nodes";
+    import type { NodeDescriptor, NodeMetadataMap } from "$lib/model/nodes";
     import { Accordion, AccordionItem } from "@skeletonlabs/skeleton-svelte";
     import NodeFieldChips from "$lib/components/add/NodeFieldChips.svelte";
 
     interface Props {
         metadatas: NodeMetadataMap
+        onnodeadd: (nodeDescriptor: NodeDescriptor) => void
     }
-    const { metadatas }: Props = $props();
+    const { metadatas, onnodeadd }: Props = $props();
     let filteredMetadatas = $state(metadatas)
 
     const currentValue: string[] = $state([])
-    $effect(() => console.log(currentValue))
 
     function updateFilter(event: Event) {
         const value = (event.target as HTMLInputElement).value.toLowerCase()
@@ -36,7 +36,7 @@
                         <NodeFieldChips name="Inputs" fields={metadata.input}/>
                         <NodeFieldChips name="Outputs" fields={metadata.output}/>
                     </div>
-                    <button type="button" class="btn preset-filled">Add</button>
+                    <button type="button" class="btn preset-filled" onclick={() => onnodeadd(metadata.descriptor)}>Add</button>
                 </div>
             {/snippet}
         </AccordionItem>

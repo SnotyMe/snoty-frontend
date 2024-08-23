@@ -4,7 +4,7 @@
     import type { ApiProps } from "$lib/api/api";
     import LogTable from "$lib/components/logs/LogTable.svelte";
     import type { PopupProps } from "$lib/components/node/control";
-    import NodePopupContainer from "$lib/components/node/control/NodePopupContainer.svelte";
+    import NodeDrawer from "$lib/components/node/control/NodeDrawer.svelte";
 
     interface Props extends PopupProps {
         rootNode: NodeId
@@ -15,7 +15,7 @@
     const { rootNode, apiProps } = props;
 </script>
 
-<NodePopupContainer horizontalAlign="right" width="70%" height="70%" isOpen={props.isOpen}>
+<NodeDrawer horizontalAlign="right" width="70%" height="70%" isOpen={props.isOpen}>
     {#await getFlowLogs(apiProps, rootNode)}
         Loading logs...
     {:then logs}
@@ -23,4 +23,4 @@
     {:catch error}
         <p>{error.message}</p>
     {/await}
-</NodePopupContainer>
+</NodeDrawer>

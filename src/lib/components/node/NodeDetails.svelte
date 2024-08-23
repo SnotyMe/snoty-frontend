@@ -2,20 +2,22 @@
     import NodeSettings from "$lib/components/node/NodeSettings.svelte";
     import SettingsField from "$lib/components/node/SettingsField.svelte";
     import type { SettingsStore } from "$lib/utils/settings.svelte";
-    import type { FullNode } from "$lib/components/node/node";
+    import type { NodeMetadata } from "$lib/model/nodes";
+    import { onMount } from "svelte";
 
     interface Props {
-        data: FullNode
+        metadata: NodeMetadata
         settings: SettingsStore
         dialog: HTMLDialogElement
+        instashow?: boolean
     }
 
     let {
-        data,
+        metadata,
         settings,
-        dialog = $bindable()
+        dialog = $bindable(),
+        instashow = false,
     }: Props = $props()
-    const metadata = data.metadata
 
     function close(event: MouseEvent) {
         const rect = dialog.getBoundingClientRect();
@@ -30,6 +32,10 @@
         if (event.key === "Escape") {
             dialog.close();
         }
+    }
+
+    if (instashow) {
+        onMount(() => dialog.showModal());
     }
 </script>
 
@@ -78,4 +84,5 @@
     {:else}
         <div class="text-center">Unknown node type</div>
     {/if}
+    <slot/>
 </dialog>

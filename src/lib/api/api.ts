@@ -5,7 +5,8 @@ export type Fetch = typeof fetch;
 export async function authenticatedApiFetch(props: ApiProps, url: string, options: RequestInit = {}): Promise<Response> {
     options.headers = {
         ...options.headers,
-        "Authorization": `Bearer ${props.token}`
+        "Authorization": `Bearer ${props.token}`,
+        "Content-Type": "application/json"
     };
     const res = await props.fetch(`${PUBLIC_API_HOST}/${url}`, options);
     if (!res.ok) {

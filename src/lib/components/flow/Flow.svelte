@@ -8,14 +8,15 @@
         getNodeMetadata,
         type NodeMetadataMap,
         type NodeSettings,
-        type RelationalNode
+        type RelationalNode, type StandaloneNode
     } from "$lib/model/nodes";
     import { onMount } from "svelte";
     import FlowNode from "$lib/components/node/Node.svelte";
-    import { disconnectNodes, updateSettings } from "$lib/api/node_api";
+    import { connectNodes, disconnectNodes, updateSettings } from "$lib/api/node_api";
     import type { ApiProps } from "$lib/api/api";
     import Logs from "$lib/components/logs/Logs.svelte";
-    import AddNode from "$lib/components/add/AddNode.svelte";
+    import AddNode from "$lib/components/add/AddNodeDrawer.svelte";
+    import type { NodeCreatedHandler } from "$lib/components/add";
 
     type Props = {
         rootNode: RelationalNode
@@ -26,8 +27,9 @@
     const { rootNode, metadatas, apiProps, colorScheme }: Props = $props()
 
     const { allNodes, involvedNodes } = resolveNodes(rootNode);
-    const initialNodes = involvedNodes.map(node => {
-        return ({
+
+    function createNodeFromNode(node: StandaloneNode) {
+        return {
             id: node._id,
             position: { x: 0, y: 0 },
             data: {
@@ -37,8 +39,10 @@
             },
             dragHandle: '.drag-handle',
             type: FLOW_NODE
-        } as Node)
-    });
+        } as Node;
+    }
+
+    const initialNodes = involvedNodes.map(createNodeFromNode);
 
     const initialEdges = allNodes.flatMap(node =>
         (node.next ?? []).map(next => ({
@@ -72,6 +76,11 @@
             $edgesStore = layoutedEdges
         })
     })
+
+    const addNode: NodeCreatedHandler = async (node: StandaloneNode) => {
+        const newNode = createNodeFromNode(node)
+        nodesStore.update(nodes => [...nodes, newNode])
+    }
 </script>
 
 <!-- hidden dummy element with all initial settings to measure the node size for autolayouting -->
@@ -96,7 +105,9 @@
                         height: 25
                     }
                 }}
-            class="svelte-flow">
+            class="svelte-flow"
+            onconnect={(event) => connectNodes(apiProps, event.source, event.target)}
+>
     <Background/>
     {#await promise}
         <div class="w-full h-full flex justify-center items-center">
@@ -106,6 +117,6 @@
         <Controls/>
         <MiniMap/>
         <Logs rootNode={rootNode._id} {apiProps}/>
-        <AddNode {apiProps} {metadatas}/>
+        <AddNode {apiProps} {metadatas} onnodecreated={addNode}/>
     {/await}
 </SvelteFlow>

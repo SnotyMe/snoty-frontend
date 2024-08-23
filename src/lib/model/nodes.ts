@@ -35,6 +35,7 @@ type NodePosition = "START" | "MIDDLE" | "END"
 
 // static metadata that describes a node
 export interface NodeMetadata {
+    descriptor: NodeDescriptor
     displayName: string
     position: NodePosition
     settings: NodeField[]

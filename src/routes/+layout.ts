@@ -6,11 +6,7 @@ export const load: LayoutServerLoad = async ({ locals, fetch }) => {
 
     const theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     if (locals?.colorScheme !== theme) {
-        const formData = new FormData();
-        formData.append("theme", theme);
-        await fetch("/?/setTheme", {
-            method: "POST",
-            body: formData
-        })
+        const expiration = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString();
+        document.cookie = `theme=${theme}; path=/; expires=${expiration}`
     }
 }
