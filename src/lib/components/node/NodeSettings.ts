@@ -1,4 +1,4 @@
-import { getRecursively } from "$lib/utils/utils";
+import { getRecursively } from "$lib/utils/settings-utils.svelte";
 import type { SettingsStore } from "$lib/utils/settings.svelte";
 
 export function getFiltered(settings: SettingsStore, path: string | null) {

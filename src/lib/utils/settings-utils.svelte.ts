@@ -1,5 +1,7 @@
+import type { SettingsStore } from "$lib/utils/settings.svelte";
+
 export function setRecursively(object: Record<any, any>, path: string | null, key: string, value: any): Record<any, any> {
-    const full = { ...object };
+    const full = structuredClone($state.snapshot(object));
     const subobj = findRecursively(path, full);
 
     subobj[key] = value;
@@ -10,7 +12,7 @@ export function setRecursively(object: Record<any, any>, path: string | null, ke
 export function renameRecursively(object: Record<any, any>, path: string | null, oldKey: string, newKey: string): Record<any, any> {
     if (oldKey === newKey) return object;
 
-    const full = { ...object };
+    const full = structuredClone($state.snapshot(object));
     const subobj = findRecursively(path, full)
 
     subobj[newKey] = subobj[oldKey];
@@ -34,6 +36,10 @@ function findRecursively(path: string | null, object: Record<any, any>) {
     }
 
     return current
+}
+
+export function getRecursive(store: SettingsStore, path: string | null) {
+    return getRecursively(store.settings, path)
 }
 
 export function getRecursively(object: Record<string, any>, path: string | null): any {

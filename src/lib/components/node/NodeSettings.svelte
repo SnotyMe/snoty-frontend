@@ -3,9 +3,9 @@
     import SettingsField from "$lib/components/node/SettingsField.svelte";
     import type { NodeMetadata } from "$lib/model/nodes";
     import type { SettingsStore } from "$lib/utils/settings.svelte";
-    import { getRecursively } from "$lib/utils/utils";
     import { getFiltered } from "$lib/components/node/NodeSettings.js";
     import Plus from "lucide-svelte/icons/plus";
+    import { getRecursive } from "$lib/utils/settings-utils.svelte";
 
     interface Props {
         settings: SettingsStore
@@ -45,6 +45,10 @@
         settings.renameProperty(path, oldKey, newKey);
     }
 
+    function addField(key: string) {
+        settings.setProperty(pathKey(key), "newfield", "new value");
+    }
+
     function pathKey(key: string): string {
         return path ? `${path}.${key}` : key
     }
@@ -52,15 +56,12 @@
 
 <table class="table border-collapse">
     <tbody>
-    {#key filteredSettings}
     {#each filteredSettings as [key, _]}
-        {@const fullPath = pathKey(key)}
-        {@const value = getRecursively(settings.settings, fullPath)}
-        {@const fieldName = getName(key)}
+        {@const value = getRecursive(settings, pathKey(key))}
         {#if typeof value == "object"}
             <tr>
                 <th colspan="2">
-                    <p title={getDescription(key)}>{fieldName}</p>
+                    <p title={getDescription(key)}>{getName(key)}</p>
                     <svelte:self
                             {expanded}
                             {settings}
@@ -69,7 +70,7 @@
                             path={pathKey(key)}
                             canRenameFields={getMetadata(key)?.type === "Map"}
                     />
-                    <button class="block m-auto" onclick={() => onchange(fullPath, { newfield: "", ...value })}>
+                    <button class="block m-auto" onclick={() => addField(key)}>
                         <Plus/>
                     </button>
                 </th>
@@ -78,25 +79,26 @@
             <tr>
                 <th title={getDescription(key)}>
                     {#if canRenameFields}
-                        <SettingsField {key} value={key} onchange={(key, value) => rename(key, value)}/>
+                        <SettingsField
+                            {key}
+                            value={key}
+                            onchange={(key, value) => rename(key, value)}
+                        />
                     {:else}
-                        {fieldName}
+                        {getName(key)}
                     {/if}
                 </th>
                 <th>
-                    {#key getRecursively(settings.settings, pathKey(key))}
-                        <SettingsField
-                                {expanded}
-                                onchange={onchange}
-                                {key}
-                                {value}
-                                metadata={metadata?.settings.find(field => field.name === key)}
-                        />
-                    {/key}
+                    <SettingsField
+                        {expanded}
+                        onchange={onchange}
+                        {key}
+                        {value}
+                        metadata={metadata?.settings.find(field => field.name === key)}
+                    />
                 </th>
             </tr>
         {/if}
     {/each}
-    {/key}
     </tbody>
 </table>
