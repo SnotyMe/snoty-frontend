@@ -1,11 +1,12 @@
 <script lang="ts">
     import NodeSettings from "$lib/components/node/NodeSettings.svelte";
-    import SettingsField from "$lib/components/node/SettingsField.svelte";
     import type { SettingsStore } from "$lib/utils/settings.svelte";
     import type { NodeMetadata } from "$lib/model/nodes";
     import { onMount } from "svelte";
+    import NodeName from "$lib/components/node/NodeName.svelte";
 
     interface Props {
+        nodeId?: string
         metadata: NodeMetadata
         settings: SettingsStore
         dialog: HTMLDialogElement
@@ -13,6 +14,7 @@
     }
 
     let {
+        nodeId,
         metadata,
         settings,
         dialog = $bindable(),
@@ -71,13 +73,12 @@
         class="w-8/12 max-w-4xl h-8/12 shadow-lg cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 overflow-hidden border"
 >
     {#if metadata}
-        {#key settings.settings["name"]}
-            <SettingsField
-                    key="name"
-                    onchange={settings.setProperty}
-                    value={settings.settings["name"] ?? metadata.displayName}
-            />
-        {/key}
+        <div class="flex items-center gap-2">
+            <NodeName settings={settings} {metadata}/>
+            {#if nodeId}
+                <p>{nodeId}</p>
+            {/if}
+        </div>
         <div class="flow-node-options table-wrap border-t-4 mt-1">
             <NodeSettings settings={settings} {metadata} expanded={true}/>
         </div>

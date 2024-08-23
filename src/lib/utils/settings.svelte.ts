@@ -1,24 +1,30 @@
 import type { NodeMetadata, NodeSettings } from "$lib/model/nodes";
-import { setRecursively } from "$lib/utils/utils";
+import { renameRecursively, setRecursively } from "$lib/utils/utils";
 import { getDefaultValue } from "$lib/model/node_field_details";
 
 export interface SettingsStore {
     settings: NodeSettings;
-    setProperty(key: string, value: string): void;
+    setProperty(path: string | null, key: string, value: string): void;
+    renameProperty(path: string | null, oldKey: string, newKey: string): void;
 }
 
 export function createSettings(initial: NodeSettings): SettingsStore {
     let settings = $state(initial);
 
-    function setProperty(key: string, value: string) {
-        settings = setRecursively(settings, key, value);
+    function setProperty(path: string | null, key: string, value: string) {
+        settings = setRecursively(settings, path, key, value);
+    }
+
+    function renameProperty(path: string | null, oldKey: string, newKey: string) {
+        settings = renameRecursively(settings, path, oldKey, newKey);
     }
 
     return {
         get settings() {
             return settings;
         },
-        setProperty
+        setProperty,
+        renameProperty,
     };
 }
 

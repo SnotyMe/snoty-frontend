@@ -1,20 +1,39 @@
-export function setRecursively(object: Record<any, any>, path: string, value: any): Record<any, any> {
-    const keys = path.split('.');
-    let result: Record<any, any> = { ...object }; // create a shallow copy of the object
-    let current = result;
+export function setRecursively(object: Record<any, any>, path: string | null, key: string, value: any): Record<any, any> {
+    const full = { ...object };
+    const subobj = findRecursively(path, full);
 
-    for (let i = 0; i < keys.length - 1; i++) {
-        if (!current[keys[i]]) {
-            current[keys[i]] = {};
-        } else {
-            current[keys[i]] = { ...current[keys[i]] }; // create a shallow copy of the nested object
+    subobj[key] = value;
+
+    return full;
+}
+
+export function renameRecursively(object: Record<any, any>, path: string | null, oldKey: string, newKey: string): Record<any, any> {
+    if (oldKey === newKey) return object;
+
+    const full = { ...object };
+    const subobj = findRecursively(path, full)
+
+    subobj[newKey] = subobj[oldKey];
+    delete subobj[oldKey];
+
+    return full;
+}
+
+function findRecursively(path: string | null, object: Record<any, any>) {
+    if (path === null) return object
+
+    const keys = path.split('.');
+
+    let current = object;
+
+    for (let key of keys) {
+        if (!current[key]) {
+            current[key] = {};
         }
-        current = current[keys[i]];
+        current = current[key];
     }
 
-    current[keys[keys.length - 1]] = value;
-
-    return result;
+    return current
 }
 
 export function getRecursively(object: Record<string, any>, path: string | null): any {

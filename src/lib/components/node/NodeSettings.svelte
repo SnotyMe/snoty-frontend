@@ -12,11 +12,13 @@
         path?: string | null
         metadata: NodeMetadata | undefined
         expanded?: boolean
+        canRenameFields?: boolean
     }
 
     const {
         settings,
         path = null,
+        canRenameFields = false,
         metadata,
         expanded = false
     }: Props = $props();
@@ -36,10 +38,11 @@
     }
 
     function onchange(key: string, value: any) {
-        if (path != null)
-            settings.setProperty(path + "." + key, value);
-        else
-            settings.setProperty(key, value);
+        settings.setProperty(path, key, value)
+    }
+
+    function rename(oldKey: string, newKey: string) {
+        settings.renameProperty(path, oldKey, newKey);
     }
 
     function pathKey(key: string): string {
@@ -49,19 +52,22 @@
 
 <table class="table border-collapse">
     <tbody>
+    {#key filteredSettings}
     {#each filteredSettings as [key, _]}
         {@const fullPath = pathKey(key)}
         {@const value = getRecursively(settings.settings, fullPath)}
+        {@const fieldName = getName(key)}
         {#if typeof value == "object"}
             <tr>
                 <th colspan="2">
-                    <p title={getDescription(key)}>{getName(key)}</p>
+                    <p title={getDescription(key)}>{fieldName}</p>
                     <svelte:self
                             {expanded}
                             {settings}
                             {metadata}
                             {onchange}
                             path={pathKey(key)}
+                            canRenameFields={getMetadata(key)?.type === "Map"}
                     />
                     <button class="block m-auto" onclick={() => onchange(fullPath, { newfield: "", ...value })}>
                         <Plus/>
@@ -70,7 +76,13 @@
             </tr>
         {:else}
             <tr>
-                <th title={getDescription(key)}>{getName(key)}</th>
+                <th title={getDescription(key)}>
+                    {#if canRenameFields}
+                        <SettingsField {key} value={key} onchange={(key, value) => rename(key, value)}/>
+                    {:else}
+                        {fieldName}
+                    {/if}
+                </th>
                 <th>
                     {#key getRecursively(settings.settings, pathKey(key))}
                         <SettingsField
@@ -85,5 +97,6 @@
             </tr>
         {/if}
     {/each}
+    {/key}
     </tbody>
 </table>

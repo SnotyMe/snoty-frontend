@@ -5,14 +5,15 @@
     import type { NodeMetadata } from "$lib/model/nodes";
 
     interface Props {
+        nodeId: string
         metadata: NodeMetadata;
         settings: SettingsStore
     }
 
-    let { metadata, settings }: Props = $props();
+    let { nodeId, metadata, settings }: Props = $props();
     let element: HTMLDialogElement;
 </script>
-<NodeDetails bind:dialog={element} {metadata} {settings}/>
+<NodeDetails {nodeId} bind:dialog={element} {metadata} {settings}/>
 <button onclick={() => element.showModal()} class="block">
     <IconMaximize/>
 </button>
