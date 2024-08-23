@@ -12,13 +12,22 @@
         expanded?: boolean
     }
 
-    let { key, value: actualValue, metadata = undefined, onchange, expanded = false }: Props = $props();
+    let { key, value: outsideValue, metadata = undefined, onchange, expanded = false }: Props = $props();
+
+    function render() {
+        return metadata?.censored
+            ? actualValue === "" ? "" : CENSORED
+            : outsideValue;
+    }
+
+    let actualValue = outsideValue;
+    $effect(() => {
+        actualValue = outsideValue;
+        displayState = render();
+    });
 
     // actually displayed value
-    let displayState = $state(actualValue);
-    if (metadata?.censored && actualValue !== "") {
-        displayState = CENSORED;
-    }
+    let displayState = $state(render());
 
     function clicked() {
         if (metadata?.censored) {
@@ -33,10 +42,7 @@
         } else {
             actualValue = (event.target as HTMLInputElement).value;
         }
-        displayState = actualValue;
-        if (metadata?.censored) {
-            displayState = actualValue === "" ? "" : CENSORED;
-        }
+        displayState = render()
         onchange?.(key, actualValue);
     }
 

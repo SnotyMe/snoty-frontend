@@ -5,7 +5,6 @@
     import type { SettingsStore } from "$lib/utils/settings.svelte";
     import { getFiltered } from "$lib/components/node/NodeSettings.js";
     import Plus from "lucide-svelte/icons/plus";
-    import { getRecursive } from "$lib/utils/settings-utils.svelte";
 
     interface Props {
         settings: SettingsStore
@@ -56,8 +55,7 @@
 
 <table class="table border-collapse">
     <tbody>
-    {#each filteredSettings as [key, _]}
-        {@const value = getRecursive(settings, pathKey(key))}
+    {#each filteredSettings as [key, value]}
         {#if typeof value == "object"}
             <tr>
                 <th colspan="2">
