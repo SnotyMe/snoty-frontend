@@ -6,6 +6,8 @@
     import LogContainer from "$lib/components/logs/LogContainer.svelte";
     import IconOpenLogs from "lucide-svelte/icons/scroll-text";
     import IconCloseLogs from "lucide-svelte/icons/scroll";
+    import SettingsField from "$lib/components/node/SettingsField.svelte";
+    import { renameFlow } from "$lib/api/flow_api";
 
     type Props = Omit<AddNodeProps, "isOpen">
     const props: Props = $props()
@@ -31,7 +33,7 @@
     }
 </style>
 
-<Panel position="top-left" class="svelte-flow__controls">
+<Panel position="top-left" class="svelte-flow__controls svelte-flow__controls-horizontal">
     <ControlButton
             on:click={() => toggleOpen(ADD)}
             class="svelte-flow__controls-addnode"
@@ -40,6 +42,12 @@
     >
         <IconAdd/>
     </ControlButton>
+    <SettingsField
+            key="name"
+            onchange={(_, value) => renameFlow(props.apiProps, props.flow._id, value)}
+            value={props.flow.name}
+            class="ml-2"
+    />
 </Panel>
 
 <AddNodeDrawer {...props} bind:isOpen={openStates[ADD]}/>
@@ -59,4 +67,4 @@
     </ControlButton>
 </Panel>
 
-<LogContainer isOpen={openStates[LOGS]} {...props}/>
+<LogContainer flowId={props.flow._id} isOpen={openStates[LOGS]} {...props}/>

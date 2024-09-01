@@ -10,9 +10,10 @@
         metadata?: NodeField | undefined
         onchange?: (key: string, value: any) => void
         expanded?: boolean
+        class?: string
     }
 
-    let { key, value: outsideValue, metadata = undefined, onchange, expanded = false }: Props = $props();
+    let { key, value: outsideValue, metadata = undefined, onchange, expanded = false, class: clazz = "" }: Props = $props();
 
     function render() {
         return metadata?.censored
@@ -77,7 +78,7 @@
     }
 </style>
 
-<div class:expanded={expanded}>
+<div class:expanded={expanded} class={clazz}>
     {#if type === "Boolean"}
         <input class="checkbox" type="checkbox" checked={actualValue} onchange={changed}/>
     {:else if type === "Enum"}

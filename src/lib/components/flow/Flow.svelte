@@ -112,6 +112,6 @@
     {:then _}
         <Controls/>
         <MiniMap/>
-        <FlowMenus flowId={flow._id} {apiProps} {metadatas} onnodecreated={addNode}/>
+        <FlowMenus {flow} {apiProps} {metadatas} onnodecreated={addNode}/>
     {/await}
 </SvelteFlow>

@@ -1,10 +1,11 @@
-import type { NodeId, NodeMetadataMap, StandaloneNode } from "$lib/model/nodes";
+import type { NodeMetadataMap, StandaloneNode } from "$lib/model/nodes";
 import type { ApiProps } from "$lib/api/api";
+import type { Workflow } from "$lib/model/flows";
 
 export type NodeCreatedHandler = (node: StandaloneNode) => void
 
 interface AddNodeProps {
-    flowId: NodeId
+    flow: Workflow
     apiProps: ApiProps
     metadatas: NodeMetadataMap
     onnodecreated: NodeCreatedHandler

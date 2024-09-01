@@ -21,3 +21,22 @@ button.svelte-flow__controls-button svg {
 div.svelte-flow__panel {
     margin: var(--flow-control-padding);
 }
+
+.svelte-flow__controls.svelte-flow__controls-horizontal {
+    flex-direction: row;
+    align-items: center;
+}
+
+.svelte-flow__controls-horizontal .svelte-flow__controls-button {
+    border-right: 1px solid
+        var(--xy-controls-button-border-color-props,
+            var(--xy-controls-button-border-color,
+                var(--xy-controls-button-border-color-default)
+            )
+        );
+    border-bottom: none;
+}
+
+.svelte-flow__controls-horizontal .svelte-flow__controls-button:last-of-type {
+    border-right: none;
+}
