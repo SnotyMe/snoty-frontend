@@ -9,10 +9,9 @@
     import FlowNode from "$lib/components/node/Node.svelte";
     import { connectNodes, deleteNode, disconnectNodes, updateSettings } from "$lib/api/node_api";
     import type { ApiProps } from "$lib/api/api";
-    import Logs from "$lib/components/logs/Logs.svelte";
-    import AddNode from "$lib/components/add/AddNodeDrawer.svelte";
     import type { NodeCreatedHandler } from "$lib/components/add";
     import type { WorkflowWithNodes } from "$lib/model/flows";
+    import FlowMenus from "$lib/components/flow/FlowMenus.svelte";
 
     type Props = {
         flow: WorkflowWithNodes
@@ -113,7 +112,6 @@
     {:then _}
         <Controls/>
         <MiniMap/>
-        <Logs flowId={flow._id} {apiProps}/>
-        <AddNode flowId={flow._id} {apiProps} {metadatas} onnodecreated={addNode}/>
+        <FlowMenus flowId={flow._id} {apiProps} {metadatas} onnodecreated={addNode}/>
     {/await}
 </SvelteFlow>

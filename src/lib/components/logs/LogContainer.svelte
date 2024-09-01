@@ -3,19 +3,17 @@
     import type { NodeId } from "$lib/model/nodes";
     import type { ApiProps } from "$lib/api/api";
     import LogTable from "$lib/components/logs/LogTable.svelte";
-    import type { PopupProps } from "$lib/components/node/control";
     import NodeDrawer from "$lib/components/node/control/NodeDrawer.svelte";
 
-    interface Props extends PopupProps {
+    interface Props {
+        isOpen: boolean
         flowId: NodeId
         apiProps: ApiProps
     }
-
-    const props: Props = $props();
-    const { flowId, apiProps } = props;
+    const { isOpen, flowId, apiProps }: Props = $props();
 </script>
 
-<NodeDrawer horizontalAlign="right" width="70%" height="70%" isOpen={props.isOpen}>
+<NodeDrawer horizontalAlign="right" width="70%" height="70%" {isOpen}>
     {#await getFlowLogs(apiProps, flowId)}
         Loading logs...
     {:then logs}
