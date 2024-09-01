@@ -5,6 +5,7 @@
     import type { SettingsStore } from "$lib/utils/settings.svelte";
     import { getFiltered } from "$lib/components/node/NodeSettings.js";
     import Plus from "lucide-svelte/icons/plus";
+    import Minus from "lucide-svelte/icons/minus";
 
     interface Props {
         settings: SettingsStore
@@ -42,6 +43,10 @@
 
     function rename(oldKey: string, newKey: string) {
         settings.renameProperty(path, oldKey, newKey);
+    }
+
+    function remove(key: string) {
+        settings.deleteProperty(path, key);
     }
 
     function addField(key: string) {
@@ -86,7 +91,7 @@
                         {getName(key)}
                     {/if}
                 </th>
-                <th>
+                <th class="flex gap-2 flex-row items-center">
                     <SettingsField
                         {expanded}
                         onchange={onchange}
@@ -94,6 +99,11 @@
                         {value}
                         metadata={metadata?.settings.find(field => field.name === key)}
                     />
+                    {#if canRenameFields}
+                        <button onclick={() => remove(key)}>
+                            <Minus/>
+                        </button>
+                    {/if}
                 </th>
             </tr>
         {/if}

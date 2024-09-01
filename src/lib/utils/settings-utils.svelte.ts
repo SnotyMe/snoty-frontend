@@ -21,6 +21,15 @@ export function renameRecursively(object: Record<any, any>, path: string | null,
     return full;
 }
 
+export function deleteRecursively(object: Record<any, any>, path: string | null, key: string): Record<any, any> {
+    const full = structuredClone($state.snapshot(object));
+    const subobj = findRecursively(path, full);
+
+    delete subobj[key];
+
+    return full;
+}
+
 function findRecursively(path: string | null, object: Record<any, any>) {
     if (path === null) return object
 

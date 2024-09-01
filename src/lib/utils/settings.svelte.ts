@@ -1,11 +1,12 @@
 import type { NodeMetadata, NodeSettings } from "$lib/model/nodes";
-import { renameRecursively, setRecursively } from "$lib/utils/settings-utils.svelte";
+import { deleteRecursively, renameRecursively, setRecursively } from "$lib/utils/settings-utils.svelte";
 import { getDefaultValue } from "$lib/model/node_field_details";
 
 export interface SettingsStore {
     settings: NodeSettings;
     setProperty(path: string | null, key: string, value: string): void;
     renameProperty(path: string | null, oldKey: string, newKey: string): void;
+    deleteProperty(path: string | null, key: string): void;
     recreate(): void;
 }
 
@@ -20,12 +21,17 @@ export function createSettings(initial: NodeSettings): SettingsStore {
         settings = renameRecursively(settings, path, oldKey, newKey);
     }
 
+    function deleteProperty(path: string | null, key: string) {
+        settings = deleteRecursively(settings, path, key);
+    }
+
     return {
         get settings() {
             return settings;
         },
         setProperty,
         renameProperty,
+        deleteProperty,
         recreate: () => settings = structuredClone($state.snapshot(settings))
     };
 }
