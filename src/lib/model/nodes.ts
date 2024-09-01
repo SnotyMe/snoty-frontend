@@ -12,8 +12,8 @@ export interface StandaloneNode extends SettinglessNode {
     settings: NodeSettings
 }
 
-export interface RelationalNode extends StandaloneNode {
-    next: RelationalNode[] | null
+export interface FlowNode extends StandaloneNode {
+    next: NodeId[] | null
 }
 
 export interface NodeDescriptor {

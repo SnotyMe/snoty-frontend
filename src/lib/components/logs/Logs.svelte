@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type { NodeId } from "$lib/model/nodes";
     import { ControlButton, Panel } from "@xyflow/svelte";
     import IconOpenLogs from "lucide-svelte/icons/scroll-text";
     import IconCloseLogs from "lucide-svelte/icons/scroll";
@@ -7,7 +6,6 @@
     import LogContainer from "$lib/components/logs/LogContainer.svelte";
 
     interface Props {
-        rootNode: NodeId
         apiProps: ApiProps
     }
 

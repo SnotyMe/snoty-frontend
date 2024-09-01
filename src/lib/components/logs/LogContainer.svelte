@@ -7,16 +7,16 @@
     import NodeDrawer from "$lib/components/node/control/NodeDrawer.svelte";
 
     interface Props extends PopupProps {
-        rootNode: NodeId
+        flowId: NodeId
         apiProps: ApiProps
     }
 
     const props: Props = $props();
-    const { rootNode, apiProps } = props;
+    const { flowId, apiProps } = props;
 </script>
 
 <NodeDrawer horizontalAlign="right" width="70%" height="70%" isOpen={props.isOpen}>
-    {#await getFlowLogs(apiProps, rootNode)}
+    {#await getFlowLogs(apiProps, flowId)}
         Loading logs...
     {:then logs}
         <LogTable {logs}/>

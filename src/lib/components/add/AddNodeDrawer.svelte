@@ -5,6 +5,7 @@
     import {
         getNodeMetadata,
         type NodeDescriptor,
+        type NodeId,
         type NodeMetadata,
         type NodeMetadataMap,
         type StandaloneNode
@@ -17,12 +18,13 @@
     import AddNodeButton from "$lib/components/add/AddNodeButton.svelte";
 
     interface Props {
+        flowId: NodeId
         apiProps: ApiProps
         metadatas: NodeMetadataMap
         onnodecreated: NodeCreatedHandler
     }
 
-    const { apiProps, metadatas, onnodecreated: onnodecreatedupstream }: Props = $props();
+    const { flowId, apiProps, metadatas, onnodecreated: onnodecreatedupstream }: Props = $props();
 
     let isOpen = $state(false);
 
@@ -78,6 +80,7 @@
                      metadata={currentAdd.metadata}
                      settings={currentAdd.settings}>
             <AddNodeButton
+                {flowId}
                 {apiProps}
                 {onnodecreated}
                 descriptor={currentAdd.metadata.descriptor}

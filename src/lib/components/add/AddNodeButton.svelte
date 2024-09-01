@@ -1,18 +1,19 @@
 <script lang="ts">
     import type { SettingsStore } from "$lib/utils/settings.svelte";
-    import type { NodeDescriptor } from "$lib/model/nodes";
+    import type { NodeDescriptor, NodeId } from "$lib/model/nodes";
     import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
     import type { ApiProps } from "$lib/api/api";
     import { createNode, type NodeCreateDTO } from "$lib/api/node_api";
     import type { NodeCreatedHandler } from "$lib/components/add";
 
     interface Props {
+        flowId: NodeId
         apiProps: ApiProps
         descriptor: NodeDescriptor
         settings: SettingsStore
         onnodecreated: NodeCreatedHandler
     }
-    const { apiProps, descriptor, settings, onnodecreated }: Props = $props()
+    const { flowId, apiProps, descriptor, settings, onnodecreated }: Props = $props()
 
     let submitting = $state(false)
 
@@ -21,6 +22,7 @@
         try {
             const nodeCreateDTO: NodeCreateDTO = {
                 descriptor,
+                flowId,
                 settings: settings.settings
             }
             const createdNode = await createNode(apiProps, nodeCreateDTO)

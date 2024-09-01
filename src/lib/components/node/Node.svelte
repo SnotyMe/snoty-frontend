@@ -5,10 +5,12 @@
     import { createSettings } from "$lib/utils/settings.svelte";
     import NodeDetailsButton from "$lib/components/node/NodeDetailsButton.svelte";
     import NodeName from "$lib/components/node/NodeName.svelte";
+    import NodeDeleteButton from "$lib/components/node/NodeDeleteButton.svelte";
 
     interface Props extends NodeProps {
         data: StandaloneNode & {
             onsettingschange?: (settings: Record<string, any>) => void
+            ondelete: () => void
             metadata: NodeMetadata
         }
         clientWidth?: number
@@ -39,6 +41,7 @@
             <div class="text-center">Unknown node type</div>
         {/if}
         <div class="w-full flex gap-2">
+            <NodeDeleteButton ondelete={data.ondelete}/>
             <div class="w-full p-2 preset-filled-surface-500 drag-handle cursor-pointer"></div>
             <NodeDetailsButton nodeId={data._id} {settings} {metadata}/>
         </div>

@@ -1,6 +1,6 @@
 import ELK, { type ElkNode } from 'elkjs/lib/elk.bundled.js';
 import { type Edge, type Node, Position } from "@xyflow/svelte";
-import type { RelationalNode, StandaloneNode as StandaloneNode } from "$lib/model/nodes";
+import type { FlowNode, StandaloneNode as StandaloneNode } from "$lib/model/nodes";
 
 const elk = new ELK();
 
@@ -67,11 +67,11 @@ export async function getLayoutedElements(
     });
 }
 
-export function resolveNodes(node: RelationalNode) {
-    const allNodes = new Set<RelationalNode>();
+export function resolveNodes(node: FlowNode) {
+    const allNodes = new Set<FlowNode>();
     const involvedNodes = new Map<string, StandaloneNode>();
 
-    function dfs(node: RelationalNode) {
+    function dfs(node: FlowNode) {
         if (allNodes.has(node)) {
             return;
         }

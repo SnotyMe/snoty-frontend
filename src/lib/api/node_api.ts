@@ -1,7 +1,7 @@
 import { type ApiProps, authenticatedApiFetch } from "$lib/api/api";
 import {
     descriptorAsString,
-    type NodeDescriptor,
+    type NodeDescriptor, type NodeId,
     type NodeMetadata,
     type NodeMetadataMap,
     type StandaloneNode
@@ -21,7 +21,7 @@ async function updateNodeConnection(props: ApiProps, action: "connect" | "discon
         .then((res) => res.json());
 }
 
-export type NodeCreateDTO = Omit<StandaloneNode, "_id">
+export type NodeCreateDTO = Omit<StandaloneNode, "_id"> & { flowId: string }
 export async function createNode(props: ApiProps, node: NodeCreateDTO): Promise<StandaloneNode> {
     return authenticatedApiFetch(props, `wiring/node/create`, {
         method: "POST",
@@ -30,10 +30,17 @@ export async function createNode(props: ApiProps, node: NodeCreateDTO): Promise<
         .then((res) => res.json());
 }
 
-export async function updateSettings(props: ApiProps, id: string, settings: Record<string, any>) {
+export async function updateSettings(props: ApiProps, id: NodeId, settings: Record<string, any>) {
     return authenticatedApiFetch(props, `wiring/node/${id}`, {
         method: "PUT",
         body: JSON.stringify(settings),
+    })
+        .then((res) => res.json());
+}
+
+export async function deleteNode(props: ApiProps, id: NodeId) {
+    return authenticatedApiFetch(props, `wiring/node/${id}`, {
+        method: "DELETE",
     })
         .then((res) => res.json());
 }

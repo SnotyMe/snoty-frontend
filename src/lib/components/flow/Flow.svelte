@@ -3,30 +3,24 @@
     import { Background, Controls, type Edge, MarkerType, MiniMap, type Node, SvelteFlow } from "@xyflow/svelte";
     import { writable } from "svelte/store";
     import { DISPOSE_EDGE, edgeTypes, FLOW_NODE, nodeTypes } from "$lib/model/svelte_flow";
-    import { getLayoutedElements, resolveNodes } from "$lib/components/flow/flow_utils";
-    import {
-        getNodeMetadata,
-        type NodeMetadataMap,
-        type NodeSettings,
-        type RelationalNode, type StandaloneNode
-    } from "$lib/model/nodes";
+    import { getLayoutedElements } from "$lib/components/flow/flow_utils";
+    import { getNodeMetadata, type NodeMetadataMap, type NodeSettings, type StandaloneNode } from "$lib/model/nodes";
     import { onMount } from "svelte";
     import FlowNode from "$lib/components/node/Node.svelte";
-    import { connectNodes, disconnectNodes, updateSettings } from "$lib/api/node_api";
+    import { connectNodes, deleteNode, disconnectNodes, updateSettings } from "$lib/api/node_api";
     import type { ApiProps } from "$lib/api/api";
     import Logs from "$lib/components/logs/Logs.svelte";
     import AddNode from "$lib/components/add/AddNodeDrawer.svelte";
     import type { NodeCreatedHandler } from "$lib/components/add";
+    import type { WorkflowWithNodes } from "$lib/model/flows";
 
     type Props = {
-        rootNode: RelationalNode
+        flow: WorkflowWithNodes
         metadatas: NodeMetadataMap
         apiProps: ApiProps
         colorScheme: string
     }
-    const { rootNode, metadatas, apiProps, colorScheme }: Props = $props()
-
-    const { allNodes, involvedNodes } = resolveNodes(rootNode);
+    const { flow, metadatas, apiProps, colorScheme }: Props = $props()
 
     function createNodeFromNode(node: StandaloneNode) {
         return {
@@ -36,21 +30,24 @@
                 ...node,
                 metadata: getNodeMetadata(metadatas, node.descriptor)!,
                 onsettingschange: (newSettings: NodeSettings) => updateSettings(apiProps, node._id, newSettings),
+                ondelete: () => {
+                    deleteNode(apiProps, node._id)
+                        .then(() => nodesStore.update(nodes => nodes.filter(n => n.id !== node._id)))
+                },
             },
             dragHandle: '.drag-handle',
             type: FLOW_NODE
         } as Node;
     }
 
-    const initialNodes = involvedNodes.map(createNodeFromNode);
-
-    const initialEdges = allNodes.flatMap(node =>
+    const initialNodes = flow.nodes.map(createNodeFromNode);
+    const initialEdges = flow.nodes.flatMap(node =>
         (node.next ?? []).map(next => ({
-            id: `${node._id}:${next._id}`,
+            id: `${node._id}:${next}`,
             source: node._id,
-            target: next._id,
+            target: next,
             data: {
-                ondisconnect: () => disconnectNodes(apiProps, node._id, next._id)
+                ondisconnect: () => disconnectNodes(apiProps, node._id, next)
             }
         } as Edge))
     );
@@ -85,7 +82,7 @@
 
 <!-- hidden dummy element with all initial settings to measure the node size for autolayouting -->
 <div class="absolute opacity-0">
-    {#each involvedNodes as node}
+    {#each flow.nodes as node}
         <FlowNode bind:clientWidth={widths[node._id]} bind:clientHeight={heights[node._id]} data={{...node, metadata: getNodeMetadata(metadatas, node.descriptor)}}/>
     {/each}
 </div>
@@ -116,7 +113,7 @@
     {:then _}
         <Controls/>
         <MiniMap/>
-        <Logs rootNode={rootNode._id} {apiProps}/>
-        <AddNode {apiProps} {metadatas} onnodecreated={addNode}/>
+        <Logs flowId={flow._id} {apiProps}/>
+        <AddNode flowId={flow._id} {apiProps} {metadatas} onnodecreated={addNode}/>
     {/await}
 </SvelteFlow>
