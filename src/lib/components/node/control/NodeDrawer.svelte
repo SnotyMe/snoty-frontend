@@ -17,7 +17,7 @@
         --x-padding: var(--flow-control-padding);
 
         max-width: calc(100% - 2 * var(--x-padding));
-        max-height: calc(100% - var(--top-padding) - var(--flow-control-padding));
+        max-height: calc(100% - var(--y-padding) - var(--flow-control-padding));
 
         resize: both;
 
