@@ -7,7 +7,7 @@
     import NodeDetails from "$lib/components/node/NodeDetails.svelte";
     import AddNodeButton from "$lib/components/add/AddNodeButton.svelte";
 
-    let { isOpen: ogOpen = $bindable(), flowId, apiProps, metadatas, onnodecreated: onnodecreatedupstream }: AddNodeProps = $props()
+    let { isOpen: ogOpen = $bindable(), flow, apiProps, metadatas, onnodecreated: onnodecreatedupstream }: AddNodeProps = $props()
     let isOpen = $state(ogOpen)
     $effect(() => {
         isOpen = ogOpen
@@ -48,7 +48,7 @@
                      metadata={currentAdd.metadata}
                      settings={currentAdd.settings}>
             <AddNodeButton
-                {flowId}
+                flowId={flow._id}
                 {apiProps}
                 {onnodecreated}
                 descriptor={currentAdd.metadata.descriptor}
