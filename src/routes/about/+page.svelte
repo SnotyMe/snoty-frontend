@@ -2,6 +2,7 @@
     import Monitor from "lucide-svelte/icons/monitor";
     import Server from "lucide-svelte/icons/server";
     import Book from "lucide-svelte/icons/book-text";
+    import Page from "$lib/components/Page.svelte";
 </script>
 
 <style>
@@ -29,6 +30,7 @@
     }
 </style>
 
+<Page pageName="About">
 <div id="wrapper" class="text-center space-y-8">
     <div>
         <h1>About</h1>
@@ -90,3 +92,4 @@
         </div>
     </div>
 </div>
+</Page>
