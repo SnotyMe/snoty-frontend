@@ -1,6 +1,6 @@
 <script>
     import "../app.css";
-    import { NavRail, NavTile, Avatar } from "@skeletonlabs/skeleton-svelte";
+    import { Nav, Avatar } from "@skeletonlabs/skeleton-svelte";
     import IconSettings from "lucide-svelte/icons/settings";
     import IconHome from "lucide-svelte/icons/house";
     import IconWorkflow from "lucide-svelte/icons/workflow";
@@ -8,10 +8,7 @@
     import IconMenu from "lucide-svelte/icons/menu";
     import UserMenu from "./UserMenu.svelte";
 
-    // BLOCKED until @skeletonlabs/skeleton-svelte@1.0.0-next.4 is released
-    // see https://github.com/skeletonlabs/skeleton/pull/2750
-    let expanded = true;
-
+    let expanded = $state(false);
 
     const {
         data
@@ -26,42 +23,46 @@
         .substring(0, 2);
 
     let profileMenuShown = $state(false);
+
+    const tileProps = {
+        active: "",
+    }
 </script>
 
 <div class="card border-surface-100-900 grid h-full w-full grid-cols-[auto_1fr] border-[1px]">
-    <NavRail classes="navbar overflow-y-scroll" expanded={false}>
+    <Nav.Rail value="nothing" classes="navbar overflow-y-scroll" {expanded}>
         {#snippet header()}
-        <NavTile id="menu" title="Menu" labelExpanded="Menu" onclick={() => expanded = !expanded}>
+        <Nav.Tile id="menu" labelExpanded="Menu" title="menu" onclick={() => expanded = !expanded} {...tileProps}>
             <IconMenu/>
-        </NavTile>
+        </Nav.Tile>
         {/snippet}
         {#snippet tiles()}
-        <NavTile id="home" labelExpanded="Home" label="Home" href="/">
+        <Nav.Tile id="home" labelExpanded="Home" label="Home" href="/" {...tileProps}>
             <IconHome/>
-        </NavTile>
+        </Nav.Tile>
         {#if data.user != null}
-            <NavTile id="flows" labelExpanded="Flows" label="Flows" href="/flows">
+            <Nav.Tile id="flows" labelExpanded="My Flows" label="Flows" href="/flows" {...tileProps}>
                 <IconWorkflow/>
-            </NavTile>
+            </Nav.Tile>
         {/if}
-        <NavTile id="about" labelExpanded="About" label="About" href="/about">
+        <Nav.Tile id="about" labelExpanded="About Snoty" label="About" href="/about" {...tileProps}>
             <IconInfo/>
-        </NavTile>
+        </Nav.Tile>
         {/snippet}
         {#snippet footer()}
-        <NavTile id="settings" labelExpanded="Settings" href="/settings" title="settings">
+        <Nav.Tile id="settings" labelExpanded="Settings" href="/settings" title="settings" {...tileProps}>
             <IconSettings/>
-        </NavTile>
+        </Nav.Tile>
         {#if user != null}
-        <NavTile id="avatar" labelExpanded={data.user?.name} title="user" onclick={() => profileMenuShown = !profileMenuShown}>
+        <Nav.Tile id="avatar" labelExpanded={data.user?.name} title="user" onclick={() => profileMenuShown = !profileMenuShown} {...tileProps}>
             <Avatar src={undefined} classes="flex justify-center items-center">{initials}</Avatar>
-        </NavTile>
+        </Nav.Tile>
         {#if profileMenuShown}
             <UserMenu/>
         {/if}
         {/if}
         {/snippet}
-    </NavRail>
+    </Nav.Rail>
     <div class="flex items-center justify-center h-full overflow-y-scroll">
         <slot/>
     </div>
