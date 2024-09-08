@@ -29,7 +29,7 @@
 </script>
 
 <div class="card border-surface-100-900 grid h-full w-full grid-cols-[auto_1fr] border-[1px]">
-    <NavRail class="navbar" expanded={false}>
+    <NavRail classes="navbar overflow-y-scroll" expanded={false}>
         {#snippet header()}
         <NavTile id="menu" title="Menu" labelExpanded="Menu" onclick={() => expanded = !expanded}>
             <IconMenu/>
@@ -62,7 +62,7 @@
         {/if}
         {/snippet}
     </NavRail>
-    <div class="flex items-center justify-center">
+    <div class="flex items-center justify-center h-full overflow-y-scroll">
         <slot/>
     </div>
 </div>
