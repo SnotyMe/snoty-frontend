@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { NodeDescriptor, NodeMetadataMap } from "$lib/model/nodes";
-    import { Accordion, AccordionItem } from "@skeletonlabs/skeleton-svelte";
+    import { Accordion } from "@skeletonlabs/skeleton-svelte";
     import NodeFieldChips from "$lib/components/add/NodeFieldChips.svelte";
 
     interface Props {
@@ -25,7 +25,7 @@
 
 <Accordion value={currentValue}>
     {#each filteredMetadatas.values() as metadata}
-        <AccordionItem id={metadata.displayName}>
+        <Accordion.Item id={metadata.displayName}>
             {#snippet control()}
                 <p class="h5">{metadata.displayName}</p>
             {/snippet}
@@ -39,6 +39,6 @@
                     <button type="button" class="btn preset-filled" onclick={() => onnodeadd(metadata.descriptor)}>Add</button>
                 </div>
             {/snippet}
-        </AccordionItem>
+        </Accordion.Item>
     {/each}
 </Accordion>
