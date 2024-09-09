@@ -10,19 +10,25 @@ export interface SettingsStore {
     recreate(): void;
 }
 
-export function createSettings(initial: NodeSettings): SettingsStore {
+export function createSettings(
+    initial: NodeSettings,
+    onsettingschange?: (settings: NodeSettings) => void,
+): SettingsStore {
     let settings = $state(initial);
 
     function setProperty(path: string | null, key: string, value: string) {
         settings = setRecursively(settings, path, key, value);
+        onsettingschange?.(settings);
     }
 
     function renameProperty(path: string | null, oldKey: string, newKey: string) {
         settings = renameRecursively(settings, path, oldKey, newKey);
+        onsettingschange?.(settings);
     }
 
     function deleteProperty(path: string | null, key: string) {
         settings = deleteRecursively(settings, path, key);
+        onsettingschange?.(settings);
     }
 
     return {

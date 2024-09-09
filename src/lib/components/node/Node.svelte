@@ -22,8 +22,7 @@
         clientHeight = $bindable(),
     }: Props = $props()
     // settings store, encapsulates an immutable record
-    const settings = createSettings(data.settings)
-    $effect(() => data.onsettingschange?.(settings.settings))
+    const settings = createSettings(data.settings, data.onsettingschange)
     const metadata = data.metadata
 </script>
 
