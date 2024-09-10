@@ -21,6 +21,7 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
             let ops = { expires: new Date(new Date().getTime() + res.expires_in * 1000), path: "/" };
             cookies.set("access_token", res.access_token, ops)
             cookies.set("refresh_token", res.refresh_token, ops)
+            cookies.set("id_token", res.id_token, ops)
             return res
         })
         .catch(error_json)
