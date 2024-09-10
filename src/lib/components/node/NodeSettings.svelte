@@ -85,7 +85,7 @@
                         <SettingsField
                             {key}
                             value={key}
-                            onchange={(key, value) => rename(key, value)}
+                            onchange={rename}
                         />
                     {:else}
                         {getName(key)}
