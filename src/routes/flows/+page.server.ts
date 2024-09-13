@@ -23,17 +23,7 @@ export const load: PageServerLoad = async ({ locals, fetch }): Promise<{
         )
     console.log(flows2)
 
-    /*
     return {
-        flows: Promise.all([flows, flowExecutions])
-            .then(([flows, executions]) =>
-                flows.map(flow => ({
-                    ...flow,
-                    lastExecution: executions.find(exec => exec.flowId === flow._id)
-                }))
-            )
+        flows: flows2
     }
-*/
-
-    return { flows: [] }
 }
