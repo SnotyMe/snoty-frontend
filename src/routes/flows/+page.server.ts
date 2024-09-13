@@ -12,6 +12,8 @@ export const load: PageServerLoad = async ({ locals, fetch }): Promise<{
     const flows = await getFlows(apiProps)
     const flowExecutions = await getFlowExecutions(apiProps)
 
+    console.log(flows, flowExecutions)
+
     /*
     return {
         flows: Promise.all([flows, flowExecutions])
