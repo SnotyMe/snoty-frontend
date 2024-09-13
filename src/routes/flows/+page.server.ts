@@ -9,10 +9,19 @@ export const load: PageServerLoad = async ({ locals, fetch }): Promise<{
     const token = ensureLoggedIn(locals)
     const apiProps = { token, fetch };
 
-    const flows = await getFlows(apiProps)
-    const flowExecutions = await getFlowExecutions(apiProps)
+    const flows = getFlows(apiProps)
+    const flowExecutions = getFlowExecutions(apiProps)
 
     console.log(flows, flowExecutions)
+
+    const flows2 = await Promise.all([flows, flowExecutions])
+        .then(([flows, executions]) =>
+            flows.map(flow => ({
+                ...flow,
+                lastExecution: executions.find(exec => exec.flowId === flow._id)
+            }))
+        )
+    console.log(flows2)
 
     /*
     return {
