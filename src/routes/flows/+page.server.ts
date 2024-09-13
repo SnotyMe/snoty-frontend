@@ -1,6 +1,7 @@
 import type { PageServerLoad } from "./$types";
 import { ensureLoggedIn } from "$lib/auth/protection";
 import type { FlowExecution, Workflow } from "$lib/model/flows";
+import { getFlows } from "$lib/api/flow_api";
 
 export const load: PageServerLoad = async ({ locals, fetch }): Promise<{
     flows: Promise<(Workflow & { lastExecution: FlowExecution | undefined })[]>
@@ -8,10 +9,12 @@ export const load: PageServerLoad = async ({ locals, fetch }): Promise<{
     const token = ensureLoggedIn(locals)
     const apiProps = { token, fetch };
 
-/*
-    const flows = getFlows(apiProps)
+    const flows = await getFlows(apiProps)
+    /*
     const flowExecutions = getFlowExecutions(apiProps)
+     */
 
+    /*
     return {
         flows: Promise.all([flows, flowExecutions])
             .then(([flows, executions]) =>
