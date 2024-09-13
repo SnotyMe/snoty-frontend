@@ -8,11 +8,7 @@ export async function authenticatedApiFetch(props: ApiProps, url: string, option
         "Authorization": `Bearer ${props.token}`,
         "Content-Type": "application/json"
     };
-    const res = await props.fetch(`${PUBLIC_API_HOST}/${url}`, options);
-    if (!res.ok) {
-        throw new Error(res.statusText);
-    }
-    return res;
+    return await props.fetch(`${PUBLIC_API_HOST}/${url}`, options);
 }
 
 export interface ErrorJson {

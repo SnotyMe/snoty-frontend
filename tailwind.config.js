@@ -12,7 +12,11 @@ export default {
       join(require.resolve('@skeletonlabs/skeleton-svelte'), '../**/*.{html,js,svelte,ts}')
   ],
   theme: {
-    extend: {},
+    extend: {
+        spacing: {
+            '128': '32rem',
+        }
+    },
   },
   plugins: [
       forms,

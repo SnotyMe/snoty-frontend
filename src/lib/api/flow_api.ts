@@ -1,6 +1,6 @@
 import { type ApiProps, authenticatedApiFetch } from "$lib/api/api";
 import type { NodeLogEntry } from "$lib/model/node_logs";
-import type { Workflow, WorkflowWithNodes } from "$lib/model/flows";
+import type { FlowExecution, Workflow, WorkflowWithNodes } from "$lib/model/flows";
 
 export type CreateFlowDTO = { name: string };
 export async function createFlow(props: ApiProps, flow: CreateFlowDTO): Promise<Workflow> {
@@ -16,6 +16,11 @@ export async function createFlow(props: ApiProps, flow: CreateFlowDTO): Promise<
 
 export async function getFlows(props: ApiProps): Promise<Workflow[]> {
     return authenticatedApiFetch(props, "wiring/flow/list")
+        .then((res) => res.json());
+}
+
+export async function getFlowExecutions(props: ApiProps): Promise<FlowExecution[]> {
+    return authenticatedApiFetch(props, "wiring/flow/list/executions")
         .then((res) => res.json());
 }
 

@@ -6,6 +6,7 @@
     import type { ApiProps } from "$lib/api/api";
     import { goto } from "$app/navigation";
     import SettingsField from "$lib/components/node/SettingsField.svelte";
+    import ExecutionStatusIcon from "./ExecutionStatusIcon.svelte";
 
     interface Props {
         data: PageData;
@@ -28,9 +29,12 @@
     {#await data.flows}
         <p>Loading...</p>
     {:then myFlows}
-        <div class="space-y-4 min-w-96">
+        <div class="space-y-4 min-w-44 md:min-w-128">
             {#each myFlows as flow}
-                <div class="card preset-filled-surface-100-900 gap-2 p-4 w-full flex justify-between items-center">
+                <div class="card preset-filled-surface-100-900 gap-3 p-4 px-6 w-full flex justify-between items-center">
+                    {#if flow.lastExecution?.status}
+                        <ExecutionStatusIcon status={flow.lastExecution.status}/>
+                    {/if}
                     <SettingsField
                             key="name"
                             onchange={(_, value) => renameFlow(apiProps, flow._id, value)}
