@@ -31,6 +31,8 @@ export function getDefaultValue(field: NodeField): any {
             return false
         case "Map":
             return {}
+        case "List":
+            return []
         default:
             return ""
     }
