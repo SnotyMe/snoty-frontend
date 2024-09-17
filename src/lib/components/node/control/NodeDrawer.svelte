@@ -30,7 +30,7 @@
             /* reset direction back to ltr */
             direction: ltr;
             height: 100%;
-            overflow-y: scroll;
+            overflow-y: auto;
         }
     }
 </style>
