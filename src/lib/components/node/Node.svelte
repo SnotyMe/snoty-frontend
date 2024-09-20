@@ -3,9 +3,10 @@
     import { type NodeMetadata, type StandaloneNode } from "$lib/model/nodes";
     import NodeSettings from "$lib/components/node/NodeSettings.svelte";
     import { createSettings } from "$lib/utils/settings.svelte";
-    import NodeDetailsButton from "$lib/components/node/NodeDetailsButton.svelte";
+    import IconGripVertical from "lucide-svelte/icons/grip-vertical";
     import NodeName from "$lib/components/node/NodeName.svelte";
     import NodeDeleteButton from "$lib/components/node/NodeDeleteButton.svelte";
+    import NodeDetailsButton from "$lib/components/node/NodeDetailsButton.svelte";
 
     interface Props extends NodeProps {
         data: StandaloneNode & {
@@ -32,16 +33,18 @@
     {/if}
     <div class="cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 block overflow-hidden border">
         {#if metadata}
-            <NodeName {settings} {metadata}/>
-            <div class="flow-node-options table-wrap border-t-4 mt-1">
+            <div class="flex items-center">
+                <IconGripVertical class="drag-handle cursor-pointer"/>
+                <NodeName {settings} {metadata}/>
+            </div>
+            <div class="flow-node-options table-wrap border-y-4 my-1">
                 <NodeSettings {settings} {metadata}/>
             </div>
         {:else}
             <div class="text-center">Unknown node type</div>
         {/if}
-        <div class="w-full flex gap-2">
+        <div class="mt-2 w-full flex justify-between gap-2">
             <NodeDeleteButton ondelete={data.ondelete}/>
-            <div class="w-full p-2 preset-filled-surface-500 drag-handle cursor-pointer"></div>
             <NodeDetailsButton nodeId={data._id} {settings} {metadata}/>
         </div>
     </div>
