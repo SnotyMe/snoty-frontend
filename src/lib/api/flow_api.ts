@@ -49,5 +49,6 @@ export async function getFlowLogs(props: ApiProps, id: string): Promise<NodeLogE
                     timestamp: new Date(line.timestamp),
                 }
             ))
+            .toSorted((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
         );
 }
