@@ -7,6 +7,7 @@
     import NodeName from "$lib/components/node/NodeName.svelte";
     import NodeDeleteButton from "$lib/components/node/NodeDeleteButton.svelte";
     import NodeDetailsButton from "$lib/components/node/NodeDetailsButton.svelte";
+    import NodeLogsButton from "$lib/components/node/NodeLogsButton.svelte";
 
     interface Props extends NodeProps {
         data: StandaloneNode & {
@@ -43,9 +44,12 @@
         {:else}
             <div class="text-center">Unknown node type</div>
         {/if}
-        <div class="mt-2 w-full flex justify-between gap-2">
+        <div class="mt-2 w-full flex justify-between">
             <NodeDeleteButton ondelete={data.ondelete}/>
-            <NodeDetailsButton nodeId={data._id} {settings} {metadata}/>
+            <div class="flex gap-1">
+                <NodeLogsButton nodeId={data._id}/>
+                <NodeDetailsButton nodeId={data._id} {settings} {metadata}/>
+            </div>
         </div>
     </div>
     {#if metadata?.output != null}
