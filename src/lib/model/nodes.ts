@@ -52,3 +52,16 @@ export function descriptorAsString(descriptor: NodeDescriptor): string {
 export function getNodeMetadata(metadatas: NodeMetadataMap, descriptor: NodeDescriptor): NodeMetadata {
     return metadatas.get(descriptorAsString(descriptor))!
 }
+
+/**
+ * template name -> template
+ */
+export type TemplateMap = Map<string, string>
+/**
+ * descriptor -> templates
+ */
+export type NodeTemplatesMap = Map<string, TemplateMap>
+
+export function getNodeTemplates(templates: NodeTemplatesMap, descriptor: NodeDescriptor): TemplateMap {
+    return templates.get(descriptorAsString(descriptor))!
+}

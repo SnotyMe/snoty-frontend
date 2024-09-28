@@ -1,10 +1,13 @@
 import { type ApiProps, authenticatedApiFetch } from "$lib/api/api";
 import {
     descriptorAsString,
-    type NodeDescriptor, type NodeId,
+    type NodeDescriptor,
+    type NodeId,
     type NodeMetadata,
     type NodeMetadataMap,
-    type StandaloneNode
+    type NodeTemplatesMap,
+    type StandaloneNode,
+    type TemplateMap
 } from "$lib/model/nodes";
 
 export const disconnectNodes = async (props: ApiProps, from_id: string, to_id: string): Promise<void> =>
@@ -45,13 +48,26 @@ export async function deleteNode(props: ApiProps, id: NodeId) {
         .then((res) => res.json());
 }
 
-export async function nodeMetadata(props: ApiProps) {
-    return authenticatedApiFetch(props, `wiring/node/list`)
+export async function getNodeMetadatas(props: ApiProps) {
+    return authenticatedApiFetch(props, `wiring/node/metadata`)
         .then((res) => res.json() as Promise<{ descriptor: NodeDescriptor, metadata: NodeMetadata }[]>)
         .then((nodes) => {
             const map: NodeMetadataMap = new Map<string, NodeMetadata>();
             nodes.forEach(({ descriptor, metadata }) => {
                 map.set(descriptorAsString(descriptor), metadata);
+            });
+            return map;
+        });
+}
+
+export async function getNodeTemplates(props: ApiProps) {
+    return authenticatedApiFetch(props, `wiring/node/metadata/template`)
+        .then((res) => res.json() as Promise<{ descriptor: NodeDescriptor, templates: Record<string, string> }[]>)
+        .then((nodes) => {
+            const map: NodeTemplatesMap = new Map<string, TemplateMap>();
+            nodes.forEach(({ descriptor, templates: templatesRecord }) => {
+                const templates = new Map<string, string>(Object.entries(templatesRecord));
+                map.set(descriptorAsString(descriptor), templates);
             });
             return map;
         });

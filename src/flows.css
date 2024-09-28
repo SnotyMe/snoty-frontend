@@ -40,3 +40,10 @@ div.svelte-flow__panel {
 .svelte-flow__controls-horizontal .svelte-flow__controls-button:last-of-type {
     border-right: none;
 }
+
+/* Fix selection in nodes */
+.svelte-flow__node {
+    user-select: unset !important;
+    -moz-user-select: unset !important;
+    -moz-user-select: unset !important;
+}

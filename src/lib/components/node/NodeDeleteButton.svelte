@@ -2,7 +2,7 @@
     import IconTrash from "lucide-svelte/icons/trash-2";
 
     interface Props {
-        ondelete: () => void
+        ondelete?: () => void
     }
     let { ondelete }: Props = $props()
 </script>

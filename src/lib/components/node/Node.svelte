@@ -7,12 +7,16 @@
     import NodeName from "$lib/components/node/NodeName.svelte";
     import NodeDeleteButton from "$lib/components/node/NodeDeleteButton.svelte";
     import NodeDetailsButton from "$lib/components/node/NodeDetailsButton.svelte";
+    import Liquid from "$lib/components/template/Liquid.svelte";
+    import { config } from "$lib/components/template/config";
 
     interface Props extends NodeProps {
-        data: StandaloneNode & {
-            onsettingschange?: (settings: Record<string, any>) => void
-            ondelete: () => void
+        data: {
+            node: StandaloneNode
             metadata: NodeMetadata
+            templates: Map<string, string> | undefined
+            onsettingschange?: (settings: Record<string, any>) => void
+            ondelete?: () => void
         }
         clientWidth?: number
         clientHeight?: number
@@ -22,9 +26,9 @@
         clientWidth = $bindable(),
         clientHeight = $bindable(),
     }: Props = $props()
+    const { node, metadata, templates } = data
     // settings store, encapsulates an immutable record
-    const settings = createSettings(data.settings, data.onsettingschange)
-    const metadata = data.metadata
+    const settings = createSettings(node.settings, data.onsettingschange)
 </script>
 
 <div bind:clientWidth={clientWidth} bind:clientHeight={clientHeight}>
@@ -43,9 +47,12 @@
         {:else}
             <div class="text-center">Unknown node type</div>
         {/if}
+        <p>
+            <Liquid template={templates?.get("node_bottom")} inputs={{node, config, settings: settings.settings, metadata}}/>
+        </p>
         <div class="mt-2 w-full flex justify-between gap-2">
             <NodeDeleteButton ondelete={data.ondelete}/>
-            <NodeDetailsButton nodeId={data._id} {settings} {metadata}/>
+            <NodeDetailsButton nodeId={node._id} {settings} {metadata}/>
         </div>
     </div>
     {#if metadata?.output != null}

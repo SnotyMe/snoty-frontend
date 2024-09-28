@@ -28,6 +28,7 @@ export default {
       {
           pattern: /bg-.*-500/,
           variants: ["after"]
-      }
+      },
+      "anchor"
   ]
 }
