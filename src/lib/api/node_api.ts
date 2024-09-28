@@ -1,4 +1,4 @@
-import { type ApiProps, authenticatedApiFetch } from "$lib/api/api";
+import { apiFetch, type ApiProps, authenticatedApiFetch, type UnauthenticatedApiProps } from "$lib/api/api";
 import {
     descriptorAsString,
     type NodeDescriptor,
@@ -48,8 +48,8 @@ export async function deleteNode(props: ApiProps, id: NodeId) {
         .then((res) => res.json());
 }
 
-export async function getNodeMetadatas(props: ApiProps) {
-    return authenticatedApiFetch(props, `wiring/node/metadata`)
+export async function getNodeMetadatas(props: UnauthenticatedApiProps) {
+    return apiFetch(props, `wiring/node/metadata`)
         .then((res) => res.json() as Promise<{ descriptor: NodeDescriptor, metadata: NodeMetadata }[]>)
         .then((nodes) => {
             const map: NodeMetadataMap = new Map<string, NodeMetadata>();
@@ -60,8 +60,8 @@ export async function getNodeMetadatas(props: ApiProps) {
         });
 }
 
-export async function getNodeTemplates(props: ApiProps) {
-    return authenticatedApiFetch(props, `wiring/node/metadata/template`)
+export async function getNodeTemplates(props: UnauthenticatedApiProps) {
+    return apiFetch(props, `wiring/node/metadata/template`)
         .then((res) => res.json() as Promise<{ descriptor: NodeDescriptor, templates: Record<string, string> }[]>)
         .then((nodes) => {
             const map: NodeTemplatesMap = new Map<string, TemplateMap>();
