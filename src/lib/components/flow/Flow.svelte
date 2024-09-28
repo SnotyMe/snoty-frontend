@@ -4,7 +4,14 @@
     import { writable } from "svelte/store";
     import { DISPOSE_EDGE, edgeTypes, FLOW_NODE, nodeTypes } from "$lib/model/svelte_flow";
     import { getLayoutedElements } from "$lib/components/flow/flow_utils";
-    import { getNodeMetadata, type NodeMetadataMap, type NodeSettings, type StandaloneNode } from "$lib/model/nodes";
+    import {
+        getNodeMetadata,
+        getNodeTemplates,
+        type NodeMetadataMap,
+        type NodeSettings,
+        type NodeTemplatesMap,
+        type StandaloneNode
+    } from "$lib/model/nodes";
     import { onMount } from "svelte";
     import FlowNode from "$lib/components/node/Node.svelte";
     import { connectNodes, deleteNode, disconnectNodes, updateSettings } from "$lib/api/node_api";
@@ -16,18 +23,20 @@
     type Props = {
         flow: WorkflowWithNodes
         metadatas: NodeMetadataMap
+        templates: NodeTemplatesMap
         apiProps: ApiProps
         colorScheme: string
     }
-    const { flow, metadatas, apiProps, colorScheme }: Props = $props()
+    const { flow, metadatas, templates, apiProps, colorScheme }: Props = $props()
 
     function createNodeFromNode(node: StandaloneNode) {
         return {
             id: node._id,
             position: { x: 0, y: 0 },
             data: {
-                ...node,
+                node,
                 metadata: getNodeMetadata(metadatas, node.descriptor)!,
+                templates: templates ? getNodeTemplates(templates, node.descriptor) : undefined,
                 onsettingschange: (newSettings: NodeSettings) => updateSettings(apiProps, node._id, newSettings),
                 ondelete: () => {
                     deleteNode(apiProps, node._id)
@@ -82,7 +91,7 @@
 <!-- hidden dummy element with all initial settings to measure the node size for autolayouting -->
 <div class="absolute opacity-0">
     {#each flow.nodes as node}
-        <FlowNode bind:clientWidth={widths[node._id]} bind:clientHeight={heights[node._id]} data={{...node, metadata: getNodeMetadata(metadatas, node.descriptor)}}/>
+        <FlowNode bind:clientWidth={widths[node._id]} bind:clientHeight={heights[node._id]} data={{node, metadata: getNodeMetadata(metadatas, node.descriptor)}}/>
     {/each}
 </div>
 

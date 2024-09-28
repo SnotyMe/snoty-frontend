@@ -35,8 +35,8 @@ export async function getLayoutedElements(
         sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
 
         // Hardcode a width and height for elk to use when layouting.
-        width: widths[node.data._id as string],
-        height: heights[node.data._id as string]
+        width: widths[node.id as string],
+        height: heights[node.id as string]
     }));
     const graph: ElkNode = {
         id: 'root',

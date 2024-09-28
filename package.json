@@ -32,6 +32,7 @@
 		"@xyflow/svelte": "^0.1.19",
 		"elkjs": "^0.9.3",
 		"jwt-decode": "^4.0.0",
+		"liquidjs": "^10.17.0",
 		"lucide-svelte": "^0.407.0",
 		"monaco-editor": "^0.50.0"
 	}
