@@ -24,16 +24,39 @@ export function plaintextDetails(field: NodeField | undefined) {
 }
 
 export function getDefaultValue(field: NodeField): any {
+    const defaultValue = field.defaultValue
     switch (field.type) {
         case "Enum":
-            return enumDetails(field).values[0].value
+            let constants = enumDetails(field).values;
+            return tryParseEnum(defaultValue, constants) ?? constants[0].value
         case "Boolean":
-            return false
+            let result = tryParseBoolean(defaultValue);
+            return result === undefined ? false : result;
+        case "Plaintext":
+            return defaultValue ?? ""
         case "Map":
             return {}
         case "List":
             return []
         default:
             return ""
+    }
+}
+
+function tryParseEnum(value: string | undefined, constants: EnumConstant[]): string | undefined {
+    if (value === undefined) {
+        return undefined
+    }
+    return constants.find(c => c.value === value)?.value
+}
+
+function tryParseBoolean(value: string | undefined): boolean | undefined {
+    switch (value?.toLowerCase()) {
+        case "true":
+            return true
+        case "false":
+            return false
+        default:
+            return undefined
     }
 }
