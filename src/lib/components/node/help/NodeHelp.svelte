@@ -1,0 +1,31 @@
+<script lang="ts">
+    import { Accordion } from "@skeletonlabs/skeleton-svelte";
+    import type { NodeMetadata } from "$lib/model/nodes";
+    import NodeHelpFields from "$lib/components/node/help/NodeHelpFields.svelte";
+    import { descriptorAsString } from "$lib/model/nodes.js";
+
+    interface Props {
+        metadata: NodeMetadata
+    }
+    const { metadata }: Props = $props();
+
+    const value = $state([])
+</script>
+
+<div class="mt-0 m-1">
+    <div class="flex justify-between mb-4">
+        <h1 class="leading-none h1" style="vertical-align: top">{metadata.displayName}</h1>
+        <p>{descriptorAsString(metadata.descriptor)}</p>
+    </div>
+    <Accordion {value} multiple>
+        <NodeHelpFields name="Settings" fields={metadata.settings}/>
+        {#if metadata.input}
+            <hr class="hr">
+            <NodeHelpFields name="Input" fields={metadata.input}/>
+        {/if}
+        {#if metadata.output}
+            <hr class="hr">
+            <NodeHelpFields name="Output" fields={metadata.output}/>
+        {/if}
+    </Accordion>
+</div>

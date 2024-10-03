@@ -6,6 +6,9 @@
     import { createSettings, nodeSettingsFromMetadata, type SettingsStore } from "$lib/utils/settings.svelte";
     import NodeDetails from "$lib/components/node/NodeDetails.svelte";
     import AddNodeButton from "$lib/components/add/AddNodeButton.svelte";
+    import NodeHelp from "$lib/components/node/help/NodeHelp.svelte";
+    import ScaleTransition from "$lib/components/transition/ScaleTransition.svelte";
+    import IconArrowLeft from "lucide-svelte/icons/arrow-left"
 
     let { isOpen: ogOpen = $bindable(), flow, apiProps, metadatas, onnodecreated: onnodecreatedupstream }: AddNodeProps = $props()
     let isOpen = $state(ogOpen)
@@ -20,13 +23,18 @@
         const settingsStore = createSettings(nodeSettingsFromMetadata(metadata))
 
         currentAdd = { metadata, settings: settingsStore };
-        if (addDialog) addDialog.showModal()
+        addDialog?.showModal()
     }
 
     const onnodecreated: NodeCreatedHandler = async (node: StandaloneNode) => {
         currentAdd = null
         ogOpen = false
         onnodecreatedupstream(node)
+    }
+
+    let currentHelpMetadata: NodeMetadata | null = $state(null)
+    function showHelp(metadata: NodeMetadata) {
+        currentHelpMetadata = metadata
     }
 </script>
 
@@ -38,7 +46,20 @@
 </style>
 
 <NodeDrawer horizontalAlign="left" width="60%" height="80%" {isOpen}>
-    <AddNodeList {metadatas} onnodeadd={addNode}/>
+    <div class="grid">
+        {#if currentHelpMetadata === null}
+            <ScaleTransition>
+                <AddNodeList {metadatas} onnodeadd={addNode} onshowhelp={showHelp}/>
+            </ScaleTransition>
+        {:else}
+            <ScaleTransition>
+                <button onclick={() => currentHelpMetadata = null}>
+                    <IconArrowLeft/>
+                </button>
+                <NodeHelp metadata={currentHelpMetadata}/>
+            </ScaleTransition>
+        {/if}
+    </div>
 </NodeDrawer>
 
 {#key currentAdd}

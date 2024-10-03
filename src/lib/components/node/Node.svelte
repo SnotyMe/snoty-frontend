@@ -9,6 +9,7 @@
     import NodeDetailsButton from "$lib/components/node/NodeDetailsButton.svelte";
     import Liquid from "$lib/components/template/Liquid.svelte";
     import { config } from "$lib/components/template/config";
+    import NodeHelpButton from "$lib/components/node/help/NodeHelpButton.svelte";
 
     interface Props extends NodeProps {
         data: {
@@ -52,7 +53,10 @@
         </p>
         <div class="mt-2 w-full flex justify-between gap-2">
             <NodeDeleteButton ondelete={data.ondelete}/>
-            <NodeDetailsButton nodeId={node._id} {settings} {metadata}/>
+            <div class="flex gap-1">
+                <NodeHelpButton {metadata}/>
+                <NodeDetailsButton nodeId={node._id} {settings} {metadata}/>
+            </div>
         </div>
     </div>
     {#if metadata?.output != null}

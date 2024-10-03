@@ -1,8 +1,22 @@
 import type { NodeField } from "$lib/model/nodes";
 
-export interface Details {}
+export interface Details<T> {
+    type: T
+}
 
-export interface EnumDetails extends Details {
+function casted<DetailsTypeName, DetailsType>(details: any | null, detailsTypeName: DetailsTypeName): { type: DetailsTypeName } & DetailsType | undefined {
+    if (!details) return undefined
+
+    return {
+        ...details as DetailsType | undefined,
+        type: detailsTypeName
+    } as { type: DetailsTypeName } & DetailsType | undefined
+}
+
+export const ENUM = "Enum"
+type TEnum = typeof ENUM
+export interface EnumDetails extends Details<TEnum> {
+    type: TEnum
     values: EnumConstant[]
 }
 
@@ -12,23 +26,26 @@ export interface EnumConstant {
 }
 
 export function enumDetails(field: NodeField | undefined) {
-    return field!.details as EnumDetails
+    return casted<TEnum, EnumDetails>(field?.details, ENUM)
 }
 
-export interface PlaintextDetails extends Details {
+export const PLAINTEXT = "Plaintext"
+type TPlaintext = typeof PLAINTEXT
+export interface PlaintextDetails extends Details<TPlaintext> {
+    type: TPlaintext
     lines: number
 }
 
 export function plaintextDetails(field: NodeField | undefined) {
-    return field?.details as PlaintextDetails | undefined
+    return casted<TPlaintext, PlaintextDetails>(field?.details, PLAINTEXT)
 }
 
 export function getDefaultValue(field: NodeField): any {
     const defaultValue = field.defaultValue
     switch (field.type) {
         case "Enum":
-            let constants = enumDetails(field).values;
-            return tryParseEnum(defaultValue, constants) ?? constants[0].value
+            let constants = enumDetails(field)?.values;
+            return constants === undefined ? "" : tryParseEnum(defaultValue, constants) ?? constants[0].value
         case "Boolean":
             let result = tryParseBoolean(defaultValue);
             return result === undefined ? false : result;
@@ -40,6 +57,29 @@ export function getDefaultValue(field: NodeField): any {
             return []
         default:
             return ""
+    }
+}
+
+export function getDefaultValueFormattedIfPresent(field: NodeField): any | null {
+    switch (field.type) {
+        case "Enum":
+            return enumDetails(field)!.values[0].displayName
+        case "Boolean":
+            return tryParseBoolean(field.defaultValue) ?? false
+        default:
+            return null
+    }
+}
+
+export function getPolyDetails(field: NodeField): Details<any> | undefined {
+    let split = field.type;
+    switch (split) {
+        case ENUM:
+            return enumDetails(field)
+        case PLAINTEXT:
+            return plaintextDetails(field)
+        default:
+            return undefined
     }
 }
 

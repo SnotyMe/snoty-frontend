@@ -1,13 +1,15 @@
 <script lang="ts">
-    import type { NodeDescriptor, NodeMetadataMap } from "$lib/model/nodes";
+    import type { NodeDescriptor, NodeMetadata, NodeMetadataMap } from "$lib/model/nodes";
     import { Accordion } from "@skeletonlabs/skeleton-svelte";
     import NodeFieldChips from "$lib/components/add/NodeFieldChips.svelte";
+    import IconCircleHelp from "lucide-svelte/icons/circle-help";
 
     interface Props {
         metadatas: NodeMetadataMap
+        onshowhelp: (metadata: NodeMetadata) => void
         onnodeadd: (nodeDescriptor: NodeDescriptor) => void
     }
-    const { metadatas, onnodeadd }: Props = $props();
+    const { metadatas, onshowhelp, onnodeadd }: Props = $props();
     let filteredMetadatas = $state(metadatas)
 
     const currentValue: string[] = $state([])
@@ -23,7 +25,7 @@
     <input class="input" type="text" placeholder="Search" oninput={updateFilter}/>
 </label>
 
-<Accordion value={currentValue} collapsible>
+<Accordion value={currentValue} collapsible classes="text-sm">
     {#each filteredMetadatas.values() as metadata}
         <Accordion.Item value={metadata.displayName}>
             {#snippet control()}
@@ -36,7 +38,14 @@
                         <NodeFieldChips name="Inputs" fields={metadata.input}/>
                         <NodeFieldChips name="Outputs" fields={metadata.output}/>
                     </div>
-                    <button type="button" class="btn preset-filled" onclick={() => onnodeadd(metadata.descriptor)}>Add</button>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick={() => onshowhelp(metadata)}>
+                            <IconCircleHelp/>
+                        </button>
+                        <button type="button" class="btn preset-filled" onclick={() => onnodeadd(metadata.descriptor)}>
+                            Add
+                        </button>
+                    </div>
                 </div>
             {/snippet}
         </Accordion.Item>

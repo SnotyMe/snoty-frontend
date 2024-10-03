@@ -5,6 +5,7 @@
         isOpen,
         width,
         height,
+        class: clazz,
         verticalAlign = "top",
         horizontalAlign
     }: PopupProps = $props();
@@ -39,7 +40,7 @@
      class:rtl={horizontalAlign === "right"}
      style={`${horizontalAlign}: var(--x-padding); ${verticalAlign}: var(--y-padding); width: ${width}; height: ${height}`}
      id="container"
-     class="text-sm z-10 flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 overflow-hidden block border">
+     class="{clazz} z-10 flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 overflow-hidden block border">
     <div>
         <slot/>
     </div>
