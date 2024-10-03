@@ -12,10 +12,11 @@ export async function apiFetch(props: UnauthenticatedApiProps, url: string, opti
 
 export async function authenticatedApiFetch(props: ApiProps, url: string, options: RequestInit = {}): Promise<Response> {
     return apiFetch(props, url, {
+        ...options,
         headers: {
             "Authorization": `Bearer ${props.token}`,
+            ...options.headers,
         },
-        ...options,
     })
 }
 

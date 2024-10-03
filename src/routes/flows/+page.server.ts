@@ -13,6 +13,7 @@ export const load: PageServerLoad = async ({ locals, fetch }): Promise<{
     const flowExecutions = getFlowExecutions(apiProps)
 
     return {
+        ...locals,
         flows: Promise.all([flows, flowExecutions])
             .then(([flows, executions]) =>
                 flows.map(flow => ({

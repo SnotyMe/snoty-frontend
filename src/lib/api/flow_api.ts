@@ -32,9 +32,6 @@ export async function getFlow(props: ApiProps, id: string): Promise<WorkflowWith
 export async function renameFlow(props: ApiProps, id: string, name: string): Promise<Response> {
     return authenticatedApiFetch(props, `wiring/flow/${id}/rename`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "text/plain",
-        },
         body: name,
     })
 }
