@@ -10,6 +10,7 @@
     import Liquid from "$lib/components/template/Liquid.svelte";
     import { config } from "$lib/components/template/config";
     import NodeHelpButton from "$lib/components/node/help/NodeHelpButton.svelte";
+    import IconCircleHelp from "lucide-svelte/icons/circle-help";
 
     interface Props extends NodeProps {
         data: {
@@ -33,7 +34,7 @@
 </script>
 
 <div bind:clientWidth={clientWidth} bind:clientHeight={clientHeight}>
-    {#if metadata?.input != null}
+    {#if metadata?.input !== null}
         <Handle type="target" position={Position.Left}/>
     {/if}
     <div class="cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 block overflow-hidden border">
@@ -45,21 +46,27 @@
             <div class="flow-node-options table-wrap border-y-4 my-1">
                 <NodeSettings {settings} {metadata}/>
             </div>
-        {:else}
-            <div class="text-center">Unknown node type</div>
-        {/if}
-        <p>
-            <Liquid template={templates?.get("node_bottom")} inputs={{node, config, settings: settings.settings, metadata}}/>
-        </p>
-        <div class="mt-2 w-full flex justify-between gap-2">
-            <NodeDeleteButton ondelete={data.ondelete}/>
-            <div class="flex gap-1">
-                <NodeHelpButton {metadata}/>
-                <NodeDetailsButton nodeId={node._id} {settings} {metadata}/>
+            <p>
+                <Liquid template={templates?.get("node_bottom")} inputs={{node, config, settings: settings.settings, metadata}}/>
+            </p>
+            <div class="mt-2 w-full flex justify-between gap-2">
+                <NodeDeleteButton ondelete={data.ondelete}/>
+                <div class="flex gap-1">
+                    <NodeHelpButton {metadata}/>
+                    <NodeDetailsButton nodeId={node._id} {settings} {metadata}/>
+                </div>
             </div>
-        </div>
+        {:else}
+            <div>
+                <div class="flex items-center">
+                    <IconGripVertical class="drag-handle cursor-pointer"/>
+                    <p>{settings.settings.name}</p>
+                </div>
+                <IconCircleHelp size="5rem" class="my-6 mx-auto"/>
+            </div>
+        {/if}
     </div>
-    {#if metadata?.output != null}
+    {#if metadata?.output !== null}
         <Handle type="source" position={Position.Right}/>
     {/if}
 </div>
