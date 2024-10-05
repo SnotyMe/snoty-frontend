@@ -11,6 +11,8 @@
     import { config } from "$lib/components/template/config";
     import NodeHelpButton from "$lib/components/node/help/NodeHelpButton.svelte";
     import IconCircleHelp from "lucide-svelte/icons/circle-help";
+    import { browser } from "$app/environment";
+    import { setNodeAPI } from "$lib/components/template/node";
 
     interface Props extends NodeProps {
         data: {
@@ -31,6 +33,9 @@
     const { node, metadata, templates } = data
     // settings store, encapsulates an immutable record
     const settings = createSettings(node.settings, data.onsettingschange)
+    if (browser) {
+        setNodeAPI(node._id, { node, metadata, settings })
+    }
 </script>
 
 <div bind:clientWidth={clientWidth} bind:clientHeight={clientHeight}>

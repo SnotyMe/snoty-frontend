@@ -93,13 +93,13 @@
                     rows="3"
                     class:singleline={(plaintextDetails(metadata)?.lines ?? -1) <= 1}
                     wrap="soft"
-                    class="w-full input px-2 py-0.5 border-transparent"
+                    class="w-full input-field"
                     onfocusin={clicked} onfocusout={changed}
             >{displayState}</textarea>
         {:else}
             <input
                     type="text"
-                    class="input px-2 py-0.5 border-transparent"
+                    class="input-field"
                     onfocusin={clicked}
                     onfocusout={changed}
                     value={displayState}

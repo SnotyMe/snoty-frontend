@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .input-field {
+        @apply input px-2 py-0.5 border-transparent;
+    }
+}
