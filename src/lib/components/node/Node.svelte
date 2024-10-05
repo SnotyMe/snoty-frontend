@@ -51,9 +51,12 @@
             <div class="flow-node-options table-wrap border-y-4 my-1">
                 <NodeSettings {settings} {metadata}/>
             </div>
-            <p>
-                <Liquid template={templates?.get("node_bottom")} inputs={{node, config, settings: settings.settings, metadata}}/>
-            </p>
+            {#if templates?.has("node_bottom")}
+                <details>
+                    <summary class="cursor-pointer">Details</summary>
+                    <Liquid template={templates?.get("node_bottom")} inputs={{node, config, settings: settings.settings, metadata}}/>
+                </details>
+            {/if}
             <div class="mt-2 w-full flex justify-between gap-2">
                 <NodeDeleteButton ondelete={data.ondelete}/>
                 <div class="flex gap-1">
