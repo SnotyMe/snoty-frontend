@@ -4,7 +4,7 @@ import { getDefaultValue } from "$lib/model/node_field_details";
 
 export interface SettingsStore {
     settings: NodeSettings;
-    setProperty(pathKey: string[], value: string): void;
+    setProperty(pathKey: string[], value: any): void;
     renameProperty(pathKey: string[], newKey: string): void;
     deleteProperty(pathKey: string[]): void;
     recreate(): void;
@@ -16,7 +16,7 @@ export function createSettings(
 ): SettingsStore {
     let settings = $state(initial);
 
-    function setProperty(pathKey: string[], value: string) {
+    function setProperty(pathKey: string[], value: any) {
         settings = setRecursively(settings, pathKey, value);
         onsettingschange?.(settings);
     }

@@ -1,11 +1,11 @@
 <script lang="ts">
-
     import SettingsField from "$lib/components/node/SettingsField.svelte";
     import type { NodeMetadata } from "$lib/model/nodes";
     import type { SettingsStore } from "$lib/utils/settings.svelte";
-    import { getFiltered } from "$lib/components/node/NodeSettings.js";
+    import { getFiltered } from "$lib/components/node/NodeSettings";
     import Plus from "lucide-svelte/icons/plus";
     import Minus from "lucide-svelte/icons/minus";
+    import { getRecursively } from "$lib/utils/settings-utils.svelte";
 
     interface Props {
         settings: SettingsStore
@@ -13,12 +13,16 @@
         metadata: NodeMetadata | undefined
         expanded?: boolean
         canRenameFields?: boolean
+        canDeleteFields?: boolean
+        isListItem?: boolean
     }
 
     const {
         settings,
         path = [],
         canRenameFields = false,
+        canDeleteFields = false,
+        isListItem = false,
         metadata,
         expanded = false
     }: Props = $props();
@@ -37,7 +41,18 @@
         return getMetadata(key)?.description ?? "";
     }
 
-    function onchange(key: string, value: any) {
+    function getClonedList(): any[] | undefined {
+        return getRecursively(settings.settings, path)?.slice()
+    }
+
+    function onchangeList(index: number, changedValue: any) {
+        const newValues = getClonedList();
+        if (!newValues) return;
+        newValues[index] = changedValue;
+        settings.setProperty(path, newValues);
+    }
+
+    function onchange(key: string, value: string) {
         settings.setProperty(pathKey(key), value)
     }
 
@@ -45,8 +60,19 @@
         settings.renameProperty(pathKey(oldKey), newKey);
     }
 
+    function removeIndex(index: number) {
+        const newValues = getClonedList()
+        if (!newValues) return;
+        newValues.splice(index, 1);
+        settings.setProperty(path, newValues);
+    }
+
     function remove(key: string) {
         settings.deleteProperty(pathKey(key));
+    }
+
+    function addItem(key: string, value: any[]) {
+        settings.setProperty(pathKey(key), value.concat("new value"));
     }
 
     function addField(key: string) {
@@ -60,8 +86,10 @@
 
 <table class="table border-collapse">
     <tbody>
-    {#each filteredSettings as [key, value]}
+    {#each filteredSettings as [key, value], index}
         {#if typeof value == "object"}
+            {@const isMap = getMetadata(key)?.type === "Map"}
+            {@const isList = getMetadata(key)?.type === "List"}
             <tr>
                 <th colspan="2">
                     <p title={getDescription(key)}>{getName(key)}</p>
@@ -71,36 +99,40 @@
                             {metadata}
                             {onchange}
                             path={pathKey(key)}
-                            canRenameFields={getMetadata(key)?.type === "Map"}
+                            canRenameFields={isMap}
+                            canDeleteFields={isMap || isList}
+                            isListItem={isList}
                     />
-                    <button class="block m-auto" onclick={() => addField(key)}>
+                    <button class="block m-auto" onclick={() => isList ? addItem(key, value) : addField(key)}>
                         <Plus/>
                     </button>
                 </th>
             </tr>
         {:else}
             <tr>
-                <th title={getDescription(key)}>
-                    {#if canRenameFields}
-                        <SettingsField
-                            {key}
-                            value={key}
-                            onchange={rename}
-                        />
-                    {:else}
-                        {getName(key)}
-                    {/if}
-                </th>
-                <th class="flex gap-2 flex-row items-center">
+                {#if !isListItem}
+                    <th title={getDescription(key)}>
+                        {#if canRenameFields}
+                            <SettingsField
+                                {key}
+                                value={key}
+                                onchange={rename}
+                            />
+                        {:else}
+                            {getName(key)}
+                        {/if}
+                    </th>
+                {/if}
+                <th colspan={isListItem ? 2 : 1} class="flex gap-2 flex-row items-center">
                     <SettingsField
                         {expanded}
-                        onchange={onchange}
+                        onchange={(k, v) => isListItem ? onchangeList(index, v) : onchange(k, v)}
                         {key}
                         {value}
                         metadata={metadata?.settings.find(field => field.name === key)}
                     />
-                    {#if canRenameFields}
-                        <button onclick={() => remove(key)}>
+                    {#if canDeleteFields}
+                        <button onclick={() => isListItem ? removeIndex(index) : remove(key)}>
                             <Minus/>
                         </button>
                     {/if}
