@@ -1,19 +1,19 @@
-import type { SettingsStore } from "$lib/utils/settings.svelte";
-
-export function setRecursively(object: Record<any, any>, path: string | null, key: string, value: any): Record<any, any> {
+export function setRecursively(object: Record<any, any>, pathKey: string[], value: any): Record<any, any> {
     const full = structuredClone($state.snapshot(object));
-    const subobj = findRecursively(path, full);
+    const subobj = getSubobjRecursively(full, pathKey) ?? {}
 
-    subobj[key] = value;
+    subobj[lastPart(pathKey)] = value;
 
     return full;
 }
 
-export function renameRecursively(object: Record<any, any>, path: string | null, oldKey: string, newKey: string): Record<any, any> {
+export function renameRecursively(object: Record<any, any>, pathKey: string[], newKey: string): Record<any, any> {
+    const oldKey = lastPart(pathKey);
+
     if (oldKey === newKey) return object;
 
     const full = structuredClone($state.snapshot(object));
-    const subobj = findRecursively(path, full)
+    const subobj = getSubobjRecursively(full, pathKey) ?? {}
 
     subobj[newKey] = subobj[oldKey];
     delete subobj[oldKey];
@@ -21,44 +21,26 @@ export function renameRecursively(object: Record<any, any>, path: string | null,
     return full;
 }
 
-export function deleteRecursively(object: Record<any, any>, path: string | null, key: string): Record<any, any> {
+export function deleteRecursively(object: Record<any, any>, pathKey: string[]): Record<any, any> {
     const full = structuredClone($state.snapshot(object));
-    const subobj = findRecursively(path, full);
+    const subobj = getSubobjRecursively(full, pathKey) ?? {}
 
-    delete subobj[key];
+    delete subobj[lastPart(pathKey)];
 
     return full;
 }
 
-function findRecursively(path: string | null, object: Record<any, any>) {
-    if (path === null) return object
-
-    const keys = path.split('.');
-
-    let current = object;
-
-    for (let key of keys) {
-        if (!current[key]) {
-            current[key] = {};
-        }
-        current = current[key];
-    }
-
-    return current
+function getSubobjRecursively(object: Record<string, any>, pathKey: string[]): Record<string, any> | undefined {
+    return getRecursively(object, removeLastPart(pathKey));
 }
 
-export function getRecursive(store: SettingsStore, path: string | null) {
-    return getRecursively(store.settings, path)
-}
-
-export function getRecursively(object: Record<string, any>, path: string | null): any {
-    if (!path) {
+export function getRecursively(object: Record<string, any>, path: string[]): Record<string, any> | undefined {
+    if (path.length < 1) {
         return object;
     }
-    const keys = path.split('.');
     let current = object;
 
-    for (const element of keys) {
+    for (const element of path) {
         if (current[element] === undefined) {
             console.error(`Could not find key ${element} in object ${JSON.stringify(current)}`);
             return undefined;
@@ -67,4 +49,12 @@ export function getRecursively(object: Record<string, any>, path: string | null)
     }
 
     return current;
+}
+
+function removeLastPart(path: string[]): string[] {
+    return path.slice(0, path.length - 1);
+}
+
+function lastPart(path: string[]): string {
+    return path[path.length - 1];
 }

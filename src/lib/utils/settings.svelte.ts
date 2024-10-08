@@ -4,9 +4,9 @@ import { getDefaultValue } from "$lib/model/node_field_details";
 
 export interface SettingsStore {
     settings: NodeSettings;
-    setProperty(path: string | null, key: string, value: string): void;
-    renameProperty(path: string | null, oldKey: string, newKey: string): void;
-    deleteProperty(path: string | null, key: string): void;
+    setProperty(pathKey: string[], value: string): void;
+    renameProperty(pathKey: string[], newKey: string): void;
+    deleteProperty(pathKey: string[]): void;
     recreate(): void;
 }
 
@@ -16,18 +16,18 @@ export function createSettings(
 ): SettingsStore {
     let settings = $state(initial);
 
-    function setProperty(path: string | null, key: string, value: string) {
-        settings = setRecursively(settings, path, key, value);
+    function setProperty(pathKey: string[], value: string) {
+        settings = setRecursively(settings, pathKey, value);
         onsettingschange?.(settings);
     }
 
-    function renameProperty(path: string | null, oldKey: string, newKey: string) {
-        settings = renameRecursively(settings, path, oldKey, newKey);
+    function renameProperty(pathKey: string[], newKey: string) {
+        settings = renameRecursively(settings, pathKey, newKey);
         onsettingschange?.(settings);
     }
 
-    function deleteProperty(path: string | null, key: string) {
-        settings = deleteRecursively(settings, path, key);
+    function deleteProperty(pathKey: string[]) {
+        settings = deleteRecursively(settings, pathKey);
         onsettingschange?.(settings);
     }
 

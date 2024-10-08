@@ -9,7 +9,7 @@
 
     interface Props {
         settings: SettingsStore
-        path?: string | null
+        path: string[]
         metadata: NodeMetadata | undefined
         expanded?: boolean
         canRenameFields?: boolean
@@ -17,7 +17,7 @@
 
     const {
         settings,
-        path = null,
+        path = [],
         canRenameFields = false,
         metadata,
         expanded = false
@@ -38,23 +38,23 @@
     }
 
     function onchange(key: string, value: any) {
-        settings.setProperty(path, key, value)
+        settings.setProperty(pathKey(key), value)
     }
 
     function rename(oldKey: string, newKey: string) {
-        settings.renameProperty(path, oldKey, newKey);
+        settings.renameProperty(pathKey(oldKey), newKey);
     }
 
     function remove(key: string) {
-        settings.deleteProperty(path, key);
+        settings.deleteProperty(pathKey(key));
     }
 
     function addField(key: string) {
-        settings.setProperty(pathKey(key), "newfield", "new value");
+        settings.setProperty(path.concat(key, "newfield"), "new value");
     }
 
-    function pathKey(key: string): string {
-        return path ? `${path}.${key}` : key
+    function pathKey(key: string): string[] {
+        return path.concat(key);
     }
 </script>
 
