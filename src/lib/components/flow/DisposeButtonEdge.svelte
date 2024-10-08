@@ -1,5 +1,6 @@
 <script lang="ts">
     import { BaseEdge, EdgeLabelRenderer, type EdgeProps, getBezierPath, useEdges } from '@xyflow/svelte';
+    import IconX from 'lucide-svelte/icons/x';
 
     type $$Props = EdgeProps;
 
@@ -48,11 +49,13 @@
             class="edgeButtonContainer nodrag nopan"
             style:transform="translate(-50%, -50%) translate({labelX}px,{labelY}px)"
     >
-        <button class="edgeButton border-surface-900-100 bg-surface-100-900 hover:bg-surface-200-800" on:click={onEdgeClick}><span> × </span></button>
+        <button class="edgeButton border-surface-900-100 bg-surface-100-900 hover:bg-surface-200-800" on:click={onEdgeClick}>
+            <IconX class="mx-auto"/>
+        </button>
     </div>
 </EdgeLabelRenderer>
 
-<style>
+<style lang="postcss">
     .edgeButtonContainer {
         position: absolute;
         font-size: 12pt;
@@ -67,13 +70,5 @@
         cursor: pointer;
         border-radius: 50%;
         font-size: 2em;
-        line-height: 1;
-        text-align: center;
-
-        & > span {
-            /* fix vertical text offset */
-            display: block;
-            transform: translateY(-0.1em);
-        }
     }
 </style>
