@@ -14,7 +14,7 @@
 {#key settings.settings["name"]}
     <SettingsField
         key="name"
-        onchange={(key, value) => settings.setProperty(null, key, value)}
+        onchange={(key, value) => settings.setProperty([key], value)}
         value={settings.settings["name"] ?? metadata.displayName}
     />
 {/key}

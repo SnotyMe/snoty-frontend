@@ -9,7 +9,7 @@
 
     interface Props {
         settings: SettingsStore
-        path: string[]
+        path?: string[]
         metadata: NodeMetadata | undefined
         expanded?: boolean
         canRenameFields?: boolean

@@ -13,6 +13,7 @@
     import IconCircleHelp from "lucide-svelte/icons/circle-help";
     import { browser } from "$app/environment";
     import { setNodeAPI } from "$lib/components/template/node";
+    import { filterObject } from "$lib/utils/js_utils";
 
     interface Props extends NodeProps {
         data: {
@@ -32,9 +33,20 @@
     }: Props = $props()
     const { node, metadata, templates } = data
     // settings store, encapsulates an immutable record
+    function filterHidden(hidden: boolean) {
+        return (setting: { key: string, value: any }) =>
+            metadata.settings.find(field => field.name === setting.key)?.hidden === hidden
+    }
     const settings = createSettings(node.settings, data.onsettingschange)
+    const unhiddenSettings = createSettings(
+        filterObject(node.settings, filterHidden(false)),
+        data.onsettingschange
+    )
+    const hiddenSettings = createSettings(
+        filterObject(node.settings, filterHidden(true))
+    )
     if (browser) {
-        setNodeAPI(node._id, { node, metadata, settings })
+        setNodeAPI(node._id, { node, metadata, settings: settings })
     }
 </script>
 
@@ -49,7 +61,13 @@
                 <NodeName {settings} {metadata}/>
             </div>
             <div class="flow-node-options table-wrap border-y-4 my-1">
-                <NodeSettings {settings} {metadata}/>
+                <NodeSettings settings={unhiddenSettings} {metadata}/>
+                {#if Object.keys(hiddenSettings.settings).length}
+                    <details>
+                        <summary class="cursor-pointer">Show hidden settings</summary>
+                        <NodeSettings settings={hiddenSettings} {metadata}/>
+                    </details>
+                {/if}
             </div>
             {#if templates?.has("node_bottom")}
                 <details>
