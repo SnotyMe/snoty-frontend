@@ -10,6 +10,7 @@
     interface Props {
         settings: SettingsStore
         path?: string[]
+        excludedKeys?: string[]
         metadata: NodeMetadata | undefined
         expanded?: boolean
         canRenameFields?: boolean
@@ -19,6 +20,7 @@
 
     const {
         settings,
+        excludedKeys = [],
         path = [],
         canRenameFields = false,
         canDeleteFields = false,
@@ -27,7 +29,7 @@
         expanded = false
     }: Props = $props();
 
-    const filteredSettings = $derived(getFiltered(settings, path))
+    const filteredSettings = $derived(getFiltered(settings, path, excludedKeys))
 
     function getMetadata(key: string) {
         return metadata?.settings.find(field => field.name === key);

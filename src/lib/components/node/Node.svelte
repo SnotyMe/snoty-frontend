@@ -13,7 +13,6 @@
     import IconCircleHelp from "lucide-svelte/icons/circle-help";
     import { browser } from "$app/environment";
     import { setNodeAPI } from "$lib/components/template/node";
-    import { filterObject } from "$lib/utils/js_utils";
 
     interface Props extends NodeProps {
         data: {
@@ -32,19 +31,13 @@
         clientHeight = $bindable(),
     }: Props = $props()
     const { node, metadata, templates } = data
-    // settings store, encapsulates an immutable record
-    function filterHidden(hidden: boolean) {
-        return (setting: { key: string, value: any }) =>
-            metadata.settings.find(field => field.name === setting.key)?.hidden === hidden
-    }
     const settings = createSettings(node.settings, data.onsettingschange)
-    const unhiddenSettings = createSettings(
-        filterObject(node.settings, filterHidden(false)),
-        data.onsettingschange
-    )
-    const hiddenSettings = createSettings(
-        filterObject(node.settings, filterHidden(true))
-    )
+    function filterKeysHidden(hidden: boolean) {
+        return Object.keys(node.settings)
+            .filter(key => metadata.settings.find(it => it.name == key)?.hidden === hidden)
+    }
+    const hiddenSettings = filterKeysHidden(true)
+    const unhiddenSettings = filterKeysHidden(false)
     if (browser) {
         setNodeAPI(node._id, { node, metadata, settings: settings })
     }
@@ -61,11 +54,11 @@
                 <NodeName {settings} {metadata}/>
             </div>
             <div class="flow-node-options table-wrap border-y-4 my-1">
-                <NodeSettings settings={unhiddenSettings} {metadata}/>
-                {#if Object.keys(hiddenSettings.settings).length}
+                <NodeSettings {settings} excludedKeys={hiddenSettings} {metadata}/>
+                {#if hiddenSettings.length > 0}
                     <details>
                         <summary class="cursor-pointer">Show hidden settings</summary>
-                        <NodeSettings settings={hiddenSettings} {metadata}/>
+                        <NodeSettings {settings} excludedKeys={unhiddenSettings} {metadata}/>
                     </details>
                 {/if}
             </div>
