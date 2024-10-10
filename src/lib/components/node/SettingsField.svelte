@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { NodeField } from "$lib/model/nodes";
     import { enumDetails, plaintextDetails } from "$lib/model/node_field_details";
-    import MonacoSettingsField from "$lib/components/node/editor/monaco/MonacoSettingsField.svelte";
+    import CodemirrorSettingsField from "$lib/components/node/editor/codemirror/CodemirrorSettingsField.svelte";
 
     const CENSORED = "********";
 
@@ -45,6 +45,12 @@
             actualValue = (event.target as HTMLInputElement).value;
         }
         displayState = render()
+        onchange?.(key, actualValue);
+    }
+
+    function stringChanged(value: string) {
+        actualValue = value;
+        displayState = render();
         onchange?.(key, actualValue);
     }
 
@@ -93,16 +99,16 @@
             {/each}
         </select>
     {:else}
-        {#if expanded || (plaintextDetails(metadata)?.lines ?? -1) > 1}
-            {#if expanded}
-                <MonacoSettingsField
+        {#if expanded || (plaintextDetails(metadata)?.lines ?? 1) >= 1}
+            {#if expanded && metadata?.censored !== true}
+                <CodemirrorSettingsField
                     value={displayState}
-                    onfocusout={changed}
+                    onchange={stringChanged}
                 />
             {:else}
                 <textarea
-                        rows="3"
-                        class:singleline={(plaintextDetails(metadata)?.lines ?? -1) <= 1}
+                        rows={plaintextDetails(metadata)?.lines ?? 1}
+                        class:singleline={(plaintextDetails(metadata)?.lines ?? 3) <= 1}
                         wrap="soft"
                         class="w-full input-field"
                         onfocusin={clicked} onfocusout={changed}

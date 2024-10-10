@@ -29,11 +29,16 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@babel/runtime": "^7.25.7",
+		"@codemirror/lang-liquid": "^6.2.1",
+		"@codemirror/view": "^6.34.1",
+		"@uiw/codemirror-theme-dracula": "^4.23.5",
 		"@xyflow/svelte": "^0.1.20",
 		"elkjs": "^0.9.3",
 		"jwt-decode": "^4.0.0",
 		"liquidjs": "^10.17.0",
 		"lucide-svelte": "^0.407.0",
-		"monaco-editor": "^0.50.0"
+		"monaco-editor": "^0.50.0",
+		"svelte-codemirror-editor": "^1.4.1"
 	}
 }

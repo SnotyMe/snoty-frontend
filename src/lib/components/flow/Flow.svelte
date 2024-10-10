@@ -91,7 +91,10 @@
 <!-- hidden dummy element with all initial settings to measure the node size for autolayouting -->
 <div class="absolute opacity-0">
     {#each flow.nodes as node}
-        <FlowNode bind:clientWidth={widths[node._id]} bind:clientHeight={heights[node._id]} data={{node, metadata: getNodeMetadata(metadatas, node.descriptor)}}/>
+        <FlowNode bind:clientWidth={widths[node._id]}
+                  bind:clientHeight={heights[node._id]}
+                  data={{node, metadata: getNodeMetadata(metadatas, node.descriptor), templates: getNodeTemplates(templates, node.descriptor)}}
+        />
     {/each}
 </div>
 

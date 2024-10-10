@@ -119,6 +119,7 @@
                                 {key}
                                 value={key}
                                 onchange={rename}
+                                metadata={{details: { lines: 1 }}}
                             />
                         {:else}
                             {getName(key)}
