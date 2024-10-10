@@ -35,16 +35,10 @@ importers:
       lucide-svelte:
         specifier: ^0.407.0
         version: 0.407.0(svelte@5.0.0-next.201)
-      monaco-editor:
-        specifier: ^0.50.0
-        version: 0.50.0
       svelte-codemirror-editor:
         specifier: ^1.4.1
         version: 1.4.1(codemirror@6.0.1(@lezer/common@1.2.2))(svelte@5.0.0-next.201)
     devDependencies:
-      '@monaco-editor/loader':
-        specifier: ^1.4.0
-        version: 1.4.0(monaco-editor@0.50.0)
       '@skeletonlabs/skeleton':
         specifier: 3.0.0-next.5
         version: 3.0.0-next.5(postcss@8.4.47)(tailwindcss@3.4.13)
@@ -320,11 +314,6 @@ packages:
 
   '@lezer/lr@1.4.2':
     resolution: {integrity: sha512-pu0K1jCIdnQ12aWNaAVU5bzi7Bd1w54J3ECgANPmYLtQKP0HBj2cE/5coBD66MT10xbtIuUr7tg0Shbsvk0mDA==}
-
-  '@monaco-editor/loader@1.4.0':
-    resolution: {integrity: sha512-00ioBig0x642hytVspPl7DbQyaSWRaolYie/UFNjoTdvoKPzo6xrXLhTk9ixgIKcLH5b5vDOjVNiGyY+uDCUlg==}
-    peerDependencies:
-      monaco-editor: '>= 0.21.0 < 1'
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1020,9 +1009,6 @@ packages:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
     hasBin: true
 
-  monaco-editor@0.50.0:
-    resolution: {integrity: sha512-8CclLCmrRRh+sul7C08BmPBP3P8wVWfBHomsTcndxg5NRCEPfu/mc2AGU8k37ajjDVXcXFc12ORAMUkmk+lkFA==}
-
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
@@ -1208,9 +1194,6 @@ packages:
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
-
-  state-local@1.0.7:
-    resolution: {integrity: sha512-HTEHMNieakEnoe33shBYcZ7NX83ACUjCu8c40iOGEZsngj9zRnkqS9j1pqQPXwobB0ZcVTk27REb7COQ0UR59w==}
 
   string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
@@ -1630,11 +1613,6 @@ snapshots:
   '@lezer/lr@1.4.2':
     dependencies:
       '@lezer/common': 1.2.2
-
-  '@monaco-editor/loader@1.4.0(monaco-editor@0.50.0)':
-    dependencies:
-      monaco-editor: 0.50.0
-      state-local: 1.0.7
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -2392,8 +2370,6 @@ snapshots:
     dependencies:
       minimist: 1.2.8
 
-  monaco-editor@0.50.0: {}
-
   mri@1.2.0: {}
 
   mrmime@2.0.0: {}
@@ -2567,8 +2543,6 @@ snapshots:
       sander: 0.5.1
 
   source-map-js@1.2.1: {}
-
-  state-local@1.0.7: {}
 
   string-width@4.2.3:
     dependencies:
