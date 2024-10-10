@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { NodeField } from "$lib/model/nodes";
     import { enumDetails, plaintextDetails } from "$lib/model/node_field_details";
+    import MonacoSettingsField from "$lib/components/node/editor/monaco/MonacoSettingsField.svelte";
 
     const CENSORED = "********";
 
@@ -93,13 +94,20 @@
         </select>
     {:else}
         {#if expanded || (plaintextDetails(metadata)?.lines ?? -1) > 1}
-            <textarea
-                    rows="3"
-                    class:singleline={(plaintextDetails(metadata)?.lines ?? -1) <= 1}
-                    wrap="soft"
-                    class="w-full input-field"
-                    onfocusin={clicked} onfocusout={changed}
-            >{displayState}</textarea>
+            {#if expanded}
+                <MonacoSettingsField
+                    value={displayState}
+                    onfocusout={changed}
+                />
+            {:else}
+                <textarea
+                        rows="3"
+                        class:singleline={(plaintextDetails(metadata)?.lines ?? -1) <= 1}
+                        wrap="soft"
+                        class="w-full input-field"
+                        onfocusin={clicked} onfocusout={changed}
+                >{displayState}</textarea>
+            {/if}
         {:else}
             <input
                     type="text"
