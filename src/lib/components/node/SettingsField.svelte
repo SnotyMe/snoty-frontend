@@ -76,9 +76,13 @@
         padding-top: calc(0.5rem * var(--space-scale-factor));
         padding-bottom: calc(0.5rem * var(--space-scale-factor));
     }
+
+    .setting-container > *:not(.input-field) {
+        margin-left: var(--node-setting-padding);
+    }
 </style>
 
-<div class:expanded={expanded} class={clazz}>
+<div class:expanded={expanded} class="{clazz} setting-container">
     {#if type === "Boolean"}
         <input class="checkbox" type="checkbox" checked={actualValue} onchange={changed}/>
     {:else if type === "Enum"}

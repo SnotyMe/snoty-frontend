@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --node-setting-padding: 0.5rem;
+}
+
 @layer components {
     .input-field {
-        @apply input px-2 py-0.5 border-transparent;
+        @apply input px-[--node-setting-padding] py-0.5 border-transparent;
     }
 }
