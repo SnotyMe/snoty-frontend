@@ -1,12 +1,14 @@
 import type { PageServerLoad } from "./$types";
-import { PUBLIC_API_HOST } from "$env/static/public";
-import { redirectUrl } from "$lib/auth/urls";
+import { buildBackendUrl, redirectUrl } from "$lib/auth/urls";
 import { error_json } from "$lib/api/api";
 
 export const load: PageServerLoad = async ({ url, cookies }) => {
     const params = url.searchParams;
-    const result = await fetch(
-        `${PUBLIC_API_HOST}/auth/token?code=${params.get("code")}&redirect_url=${redirectUrl}`,
+    const result = await fetch(buildBackendUrl([
+            "/auth/token",
+            `?code=${params.get("code")}`,
+            `&redirect_uri=${redirectUrl}`,
+        ]),
         {
             method: "POST"
         })
