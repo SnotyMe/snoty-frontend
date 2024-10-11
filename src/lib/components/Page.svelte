@@ -1,6 +1,9 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { PUBLIC_EXTRA_SCRIPT_URL as EXTRA_SCRIPT_URL } from "$env/static/public";
+    import { PUBLIC_EXTRA_SCRIPT_URL } from "$env/static/public";
+    import { env } from "$env/dynamic/public";
+
+    const EXTRA_SCRIPT_URL = env.PUBLIC_EXTRA_SCRIPT_URL || PUBLIC_EXTRA_SCRIPT_URL;
 
     let user = $page.data.user;
 

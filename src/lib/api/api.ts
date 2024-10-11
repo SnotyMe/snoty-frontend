@@ -1,4 +1,5 @@
 import { PUBLIC_API_HOST } from "$env/static/public";
+import { env } from "$env/dynamic/public"
 
 export type Fetch = typeof fetch;
 
@@ -7,7 +8,7 @@ export async function apiFetch(props: UnauthenticatedApiProps, url: string, opti
         ...options.headers,
         "Content-Type": "application/json"
     };
-    return await props.fetch(`${PUBLIC_API_HOST}/${url}`, options);
+    return await props.fetch(`${env.PUBLIC_API_HOST ?? PUBLIC_API_HOST}/${url}`, options);
 }
 
 export async function authenticatedApiFetch(props: ApiProps, url: string, options: RequestInit = {}): Promise<Response> {
