@@ -1,5 +1,6 @@
 import type { RequestHandler } from "@sveltejs/kit";
 import { PUBLIC_AUTH_SIGNOUT_PATH } from "$env/static/public";
+import { env } from "$env/dynamic/public";
 import { buildAuthUrl } from "$lib/auth/urls";
 
 export const POST: RequestHandler = async ({ cookies, fetch }) => {
@@ -10,7 +11,7 @@ export const POST: RequestHandler = async ({ cookies, fetch }) => {
     cookies.delete("id_token", { path: "/" })
 
     await fetch(buildAuthUrl([
-        PUBLIC_AUTH_SIGNOUT_PATH,
+        env.PUBLIC_AUTH_SIGNOUT_PATH ?? PUBLIC_AUTH_SIGNOUT_PATH,
         `?id_token_hint=${idToken}`
     ]), {
         method: "GET",

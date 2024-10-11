@@ -108,7 +108,7 @@
             {:else}
                 <textarea
                         rows={plaintextDetails(metadata)?.lines ?? 1}
-                        class:singleline={(plaintextDetails(metadata)?.lines ?? 3) <= 1}
+                        class:singleline={metadata ? (plaintextDetails(metadata)?.lines ?? 3) <= 1 : true}
                         wrap="soft"
                         class="w-full input-field"
                         onfocusin={clicked} onfocusout={changed}
