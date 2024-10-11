@@ -7,7 +7,7 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
     const result = await fetch(buildBackendUrl([
             "/auth/token",
             `?code=${params.get("code")}`,
-            `&redirect_uri=${redirectUrl}`,
+            `&redirect_url=${redirectUrl}`,
         ]),
         {
             method: "POST"
