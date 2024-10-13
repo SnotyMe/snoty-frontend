@@ -8,3 +8,10 @@
 body {
     height: 100vh;
 }
+
+.codemirror-wrapper {
+    overflow: auto;
+}
+.codemirror-wrapper .cm-editor {
+    height: 100%;
+}
