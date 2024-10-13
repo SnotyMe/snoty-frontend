@@ -1,7 +1,12 @@
-import { PUBLIC_AUTH_HOST, PUBLIC_APP_URL } from "$env/static/public";
+import { PUBLIC_AUTH_HOST, PUBLIC_APP_URL, PUBLIC_API_HOST } from "$env/static/public";
+import { env } from '$env/dynamic/public';
 
 export function buildAuthUrl(parts: string[]) {
-    return PUBLIC_AUTH_HOST + parts.join("")
+    return (env.PUBLIC_AUTH_HOST ?? PUBLIC_AUTH_HOST) + parts.join("")
 }
 
-export const redirectUrl = `${PUBLIC_APP_URL}/auth/callback`
+export function buildBackendUrl(parts: string[]) {
+    return (env.PUBLIC_API_HOST ?? PUBLIC_API_HOST) + parts.join("")
+}
+
+export const redirectUrl = `${env.PUBLIC_APP_URL ?? PUBLIC_APP_URL}/auth/callback`

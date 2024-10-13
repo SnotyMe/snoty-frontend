@@ -1,0 +1,8 @@
+services:
+  frontend:
+    build: .
+    network_mode: host
+    environment:
+      # public host
+      PUBLIC_APP_URL: "http://localhost:4173"
+      PORT: 4173

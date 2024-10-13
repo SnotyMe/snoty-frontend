@@ -15,7 +15,7 @@
 
 <CodeMirror
         on:change={(c) => onchange(value)}
-        class="resize w-full max-w-full"
+        class="resize-y w-full max-w-full"
         lineWrapping={true}
         bind:value={value}
         lang={liquid()}
