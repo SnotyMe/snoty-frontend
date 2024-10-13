@@ -1,16 +1,19 @@
-export function setRecursively(object: Record<any, any>, pathKey: string[], value: any): Record<any, any> {
+export function setRecursively(object: Record<any, any>, pathKey: string[], value: any): Record<any, any> | false {
     const full = structuredClone($state.snapshot(object));
     const subobj = getSubobjRecursively(full, pathKey) ?? {}
 
+    if (subobj[lastPart(pathKey)] === value) {
+        return false;
+    }
     subobj[lastPart(pathKey)] = value;
 
     return full;
 }
 
-export function renameRecursively(object: Record<any, any>, pathKey: string[], newKey: string): Record<any, any> {
+export function renameRecursively(object: Record<any, any>, pathKey: string[], newKey: string): Record<any, any> | false {
     const oldKey = lastPart(pathKey);
 
-    if (oldKey === newKey) return object;
+    if (oldKey === newKey) return false;
 
     const full = structuredClone($state.snapshot(object));
     const subobj = getSubobjRecursively(full, pathKey) ?? {}
