@@ -17,12 +17,16 @@ export function createSettings(
     let settings = $state(initial);
 
     function setProperty(pathKey: string[], value: any) {
-        settings = setRecursively(settings, pathKey, value);
+        const result = setRecursively(settings, pathKey, value);
+        if (result === false) return;
+        settings = result;
         onsettingschange?.(settings);
     }
 
     function renameProperty(pathKey: string[], newKey: string) {
-        settings = renameRecursively(settings, pathKey, newKey);
+        const result = renameRecursively(settings, pathKey, newKey);
+        if (result === false) return;
+        settings = result;
         onsettingschange?.(settings);
     }
 
