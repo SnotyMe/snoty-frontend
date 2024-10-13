@@ -132,7 +132,7 @@
                         onchange={(k, v) => isListItem ? onchangeList(index, v) : onchange(k, v)}
                         {key}
                         {value}
-                        metadata={metadata?.settings.find(field => field.name === key) ?? {}}
+                        metadata={path.length === 0 ? metadata?.settings.find(field => field.name === key) ?? {} : {}}
                     />
                     {#if canDeleteFields}
                         <button onclick={() => isListItem ? removeIndex(index) : remove(key)}>
