@@ -75,7 +75,7 @@
     <td class="cursor-pointer" onmouseup={() => toggleExpanded("handle")}>
         {#if expanded}<ArrowDown/>{:else}<ArrowRight/>{/if}
     </td>
-    <td style="width: {formattedDateLength-3}ch">
+    <td style="width: {formattedDateLength-1}ch">
         {formatDate(log.timestamp)}
     </td>
     <td class="message" class:expanded={expanded}>

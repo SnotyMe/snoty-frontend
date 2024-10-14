@@ -6,8 +6,9 @@
     import LogContainer from "$lib/components/logs/LogContainer.svelte";
     import IconOpenLogs from "lucide-svelte/icons/scroll-text";
     import IconCloseLogs from "lucide-svelte/icons/scroll";
+    import IconRocket from "lucide-svelte/icons/rocket";
     import SettingsField from "$lib/components/node/SettingsField.svelte";
-    import { renameFlow } from "$lib/api/flow_api";
+    import { renameFlow, triggerFlow } from "$lib/api/flow_api";
 
     type Props = Omit<AddNodeProps, "isOpen">
     const props: Props = $props()
@@ -64,6 +65,14 @@
         {:else}
             <IconCloseLogs/>
         {/if}
+    </ControlButton>
+    <ControlButton
+            on:click={() => triggerFlow(props.apiProps, props.flow._id)}
+            class="svelte-flow__controls-trigger no-fill"
+            title="trigger run"
+            aria-label="trigger run"
+    >
+        <IconRocket/>
     </ControlButton>
 </Panel>
 

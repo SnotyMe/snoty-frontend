@@ -14,7 +14,7 @@
 <style>
     #container {
         position: absolute;
-        --y-padding: calc(var(--flow-control-padding) * 2 + var(--flow-control-button-size));
+        --y-padding: calc(var(--flow-control-padding) + var(--flow-control-button-size));
         --x-padding: var(--flow-control-padding);
 
         max-width: calc(100% - 2 * var(--x-padding));

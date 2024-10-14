@@ -49,3 +49,9 @@ export async function getFlowLogs(props: ApiProps, id: string): Promise<NodeLogE
             .toSorted((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
         );
 }
+
+export async function triggerFlow(props: ApiProps, id: string) {
+    return authenticatedApiFetch(props, `wiring/flow/${id}/trigger`, {
+        method: "POST",
+    });
+}
