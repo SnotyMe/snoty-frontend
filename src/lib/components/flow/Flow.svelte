@@ -64,7 +64,8 @@
     const edgesStore = writable<Edge[]>([])
 
     // never-ending promise while the layout is being calculated
-    let promise: Promise<void> = $state(new Promise(() => {}));
+    let promise: Promise<void> = $state(new Promise(() => {}))
+    let isLoading = $state(true)
 
     const heights: Record<string, number> = {}
     const widths: Record<string, number> = {}
@@ -79,6 +80,7 @@
         ).then(({ nodes: layoutedNodes, edges: layoutedEdges }) => {
             $nodesStore = layoutedNodes
             $edgesStore = layoutedEdges
+            isLoading = false
         })
     })
 
@@ -88,15 +90,17 @@
     }
 </script>
 
-<!-- hidden dummy element with all initial settings to measure the node size for autolayouting -->
-<div class="absolute opacity-0">
-    {#each flow.nodes as node}
-        <FlowNode bind:clientWidth={widths[node._id]}
-                  bind:clientHeight={heights[node._id]}
-                  data={{node, metadata: getNodeMetadata(metadatas, node.descriptor), templates: getNodeTemplates(templates, node.descriptor)}}
-        />
-    {/each}
-</div>
+{#if isLoading}
+    <!-- hidden dummy element with all initial settings to measure the node size for autolayouting -->
+    <div class="absolute opacity-0">
+        {#each flow.nodes as node}
+            <FlowNode bind:clientWidth={widths[node._id]}
+                      bind:clientHeight={heights[node._id]}
+                      data={{node, metadata: getNodeMetadata(metadatas, node.descriptor), templates: getNodeTemplates(templates, node.descriptor)}}
+            />
+        {/each}
+    </div>
+{/if}
 
 <SvelteFlow proOptions={{hideAttribution: true}}
             colorMode="{colorScheme}"
@@ -125,5 +129,7 @@
         <Controls/>
         <MiniMap/>
         <FlowMenus {flow} {apiProps} {metadatas} onnodecreated={addNode}/>
+    {:catch error}
+        Something went wrong: {error}
     {/await}
 </SvelteFlow>
