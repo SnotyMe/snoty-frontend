@@ -40,6 +40,12 @@ export function plaintextDetails(field: NodeField | undefined) {
     return casted<TPlaintext, PlaintextDetails>(field?.details, PLAINTEXT)
 }
 
+const INT = "Int"
+const LONG = "Long"
+export function isNumberType(type: string | undefined): boolean {
+    return type === INT || type === LONG
+}
+
 export function getDefaultValue(field: NodeField): any {
     const defaultValue = field.defaultValue
     switch (field.type) {

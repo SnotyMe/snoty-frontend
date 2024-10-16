@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { NodeField } from "$lib/model/nodes";
-    import { enumDetails, plaintextDetails } from "$lib/model/node_field_details";
+    import { enumDetails, isNumberType, plaintextDetails } from "$lib/model/node_field_details";
     import CodemirrorSettingsField from "$lib/components/node/editor/codemirror/CodemirrorSettingsField.svelte";
 
     const CENSORED = "********";
@@ -98,6 +98,8 @@
                 <option value={constant.value} selected={constant.value === actualValue}>{constant.displayName}</option>
             {/each}
         </select>
+    {:else if isNumberType(type)}
+        <input class="input-field" type="number" value={actualValue} onfocusin={clicked} onfocusout={changed} onchange={changed}/>
     {:else}
         {#if expanded || (plaintextDetails(metadata)?.lines ?? 1) >= 1}
             {#if expanded && metadata?.censored !== true}
