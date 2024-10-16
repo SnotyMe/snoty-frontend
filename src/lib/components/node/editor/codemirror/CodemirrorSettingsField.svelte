@@ -10,11 +10,13 @@
 
     let { value: initialValue, onchange }: Props = $props();
     let value = $state(initialValue)
-    $effect(() => value = initialValue)
+    $effect(() => {
+        value = initialValue
+    })
 </script>
 
 <CodeMirror
-        on:change={(c) => onchange(value)}
+        on:change={(_) => onchange(value) }
         class="resize-y w-full max-w-full"
         lineWrapping={true}
         bind:value={value}
