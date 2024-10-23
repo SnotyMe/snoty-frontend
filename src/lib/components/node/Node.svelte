@@ -34,7 +34,7 @@
     const settings = createSettings(node.settings, data.onsettingschange)
     function filterKeysHidden(hidden: boolean) {
         return Object.keys(node.settings)
-            .filter(key => metadata.settings.find(it => it.name == key)?.hidden === hidden)
+            .filter(key => metadata?.settings?.find(it => it.name == key)?.hidden === hidden)
     }
     const hiddenSettings = filterKeysHidden(true)
     const unhiddenSettings = filterKeysHidden(false)
