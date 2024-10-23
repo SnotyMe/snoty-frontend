@@ -13,9 +13,12 @@
     import IconCircleHelp from "lucide-svelte/icons/circle-help";
     import { browser } from "$app/environment";
     import { setNodeAPI } from "$lib/components/template/node";
+    import type { ApiProps } from "$lib/api/api";
+    import NodeLogLevel from "$lib/components/node/NodeLogLevel.svelte";
 
     interface Props extends NodeProps {
         data: {
+            apiProps: ApiProps
             node: StandaloneNode
             metadata: NodeMetadata
             templates: Map<string, string> | undefined
@@ -30,7 +33,7 @@
         clientWidth = $bindable(),
         clientHeight = $bindable(),
     }: Props = $props()
-    const { node, metadata, templates } = data
+    const { apiProps, node, metadata, templates } = data
     const settings = createSettings(node.settings, data.onsettingschange)
     function filterKeysHidden(hidden: boolean) {
         return Object.keys(node.settings)
@@ -71,6 +74,7 @@
             <div class="mt-2 w-full flex justify-between gap-2">
                 <NodeDeleteButton ondelete={data.ondelete}/>
                 <div class="flex gap-1">
+                    <NodeLogLevel {node} {apiProps}/>
                     <NodeHelpButton {metadata}/>
                     <NodeDetailsButton nodeId={node._id} {settings} {metadata}/>
                 </div>

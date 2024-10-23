@@ -41,6 +41,14 @@ export async function updateSettings(props: ApiProps, id: NodeId, settings: Reco
         .then((res) => res.json());
 }
 
+export async function updateLogLevel(props: ApiProps, id: NodeId, logLevel: string | null) {
+    return authenticatedApiFetch(props, `wiring/node/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ logLevel }),
+    })
+        .then((res) => res.json());
+}
+
 export async function deleteNode(props: ApiProps, id: NodeId) {
     return authenticatedApiFetch(props, `wiring/node/${id}`, {
         method: "DELETE",
