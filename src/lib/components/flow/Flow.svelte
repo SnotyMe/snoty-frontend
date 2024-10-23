@@ -34,6 +34,7 @@
             id: node._id,
             position: { x: 0, y: 0 },
             data: {
+                apiProps,
                 node,
                 metadata: getNodeMetadata(metadatas, node.descriptor)!,
                 templates: templates ? getNodeTemplates(templates, node.descriptor) : undefined,
