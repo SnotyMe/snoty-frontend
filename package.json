@@ -13,6 +13,7 @@
 		"@skeletonlabs/skeleton": "3.0.0-next.5",
 		"@skeletonlabs/skeleton-svelte": "1.0.0-next.10",
 		"@sveltejs/adapter-auto": "^3.2.5",
+		"@sveltejs/adapter-cloudflare": "^4.7.3",
 		"@sveltejs/adapter-node": "^5.2.8",
 		"@sveltejs/kit": "^2.7.1",
 		"@sveltejs/vite-plugin-svelte": "4.0.0",
