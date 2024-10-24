@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Handle, type NodeProps, Position } from "@xyflow/svelte";
+    import { Handle, type NodeProps, NodeResizeControl, Position } from "@xyflow/svelte";
     import { type NodeMetadata, type StandaloneNode } from "$lib/model/nodes";
     import NodeSettings from "$lib/components/node/NodeSettings.svelte";
     import { createSettings } from "$lib/utils/settings.svelte";
@@ -11,6 +11,7 @@
     import { config } from "$lib/components/template/config";
     import NodeHelpButton from "$lib/components/node/help/NodeHelpButton.svelte";
     import IconCircleHelp from "lucide-svelte/icons/circle-help";
+    import IconScaling from "lucide-svelte/icons/move-diagonal-2";
     import { browser } from "$app/environment";
     import { setNodeAPI } from "$lib/components/template/node";
     import type { ApiProps } from "$lib/api/api";
@@ -46,11 +47,14 @@
     }
 </script>
 
-<div bind:clientWidth={clientWidth} bind:clientHeight={clientHeight}>
+<div bind:clientWidth={clientWidth} bind:clientHeight={clientHeight} class="h-full">
     {#if metadata?.input !== null}
         <Handle type="target" position={Position.Left}/>
     {/if}
-    <div class="cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 block overflow-hidden border">
+    <div class="h-full cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 block overflow-auto border">
+        <NodeResizeControl minWidth={150} minHeight={50}>
+            <IconScaling size="1em" class="absolute -translate-x-2 -translate-y-2"/>
+        </NodeResizeControl>
         {#if metadata}
             <div class="flex items-center">
                 <IconGripVertical class="drag-handle cursor-pointer"/>

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import IconMaximize from "lucide-svelte/icons/maximize-2";
+    import IconExpand from "lucide-svelte/icons/expand";
     import NodeDetails from "$lib/components/node/NodeDetails.svelte";
     import type { SettingsStore } from "$lib/utils/settings.svelte";
     import type { NodeMetadata } from "$lib/model/nodes";
@@ -15,5 +15,5 @@
 </script>
 <NodeDetails {nodeId} bind:dialog={element} {metadata} {settings}/>
 <button onclick={() => element.showModal()} class="block">
-    <IconMaximize/>
+    <IconExpand/>
 </button>
