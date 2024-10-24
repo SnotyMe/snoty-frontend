@@ -47,3 +47,8 @@ div.svelte-flow__panel {
     -moz-user-select: unset !important;
     -moz-user-select: unset !important;
 }
+
+.svelte-flow__resize-control.handle {
+    background: none !important;
+    border: none !important;
+}

@@ -87,6 +87,7 @@
 
     const addNode: NodeCreatedHandler = async (node: StandaloneNode) => {
         const newNode = createNodeFromNode(node)
+        newNode.width = Object.values(widths).reduce((acc, val) => acc + val, 0) / Object.keys(widths).length
         nodesStore.update(nodes => [...nodes, newNode])
     }
 </script>
