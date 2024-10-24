@@ -1,8 +1,6 @@
-import ELK, { type ElkNode } from 'elkjs/lib/elk.bundled.js';
 import { type Edge, type Node, Position } from "@xyflow/svelte";
 import type { FlowNode, StandaloneNode as StandaloneNode } from "$lib/model/nodes";
-
-const elk = new ELK();
+import type { ElkNode } from "elkjs/lib/elk-api";
 
 const elkOptions = {
     'elk.algorithm': 'layered',
@@ -19,6 +17,10 @@ export async function getLayoutedElements(
     heights: Record<string, number>,
     options: Record<string, string> = {}
 ): Promise<{ nodes: Node[], edges: Edge[] }> {
+    const { default: ELK } = await import('elkjs/lib/elk.bundled.js');
+
+    const elk = new ELK();
+
     options = { ...options, ...elkOptions }
     const isHorizontal = options?.['elk.direction'] === 'RIGHT';
     let elkEdges = edges.map((edge) => ({

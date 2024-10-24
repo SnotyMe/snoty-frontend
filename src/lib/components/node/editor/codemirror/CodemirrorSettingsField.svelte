@@ -2,13 +2,9 @@
     import { liquid } from "@codemirror/lang-liquid";
     import { dracula } from "@uiw/codemirror-theme-dracula"
     import CodeMirror from "svelte-codemirror-editor"
+    import type { CodemirrorProps } from "$lib/components/node/editor/codemirror";
 
-    interface Props {
-        value: string
-        onchange: (value: string) => void
-    }
-
-    let { value: initialValue, onchange }: Props = $props();
+    let { value: initialValue, onchange }: CodemirrorProps = $props();
     let value = $state(initialValue)
     $effect(() => {
         value = initialValue
