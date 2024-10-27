@@ -9,7 +9,7 @@
     const { logs }: Props = $props();
 </script>
 
-<table class="border-spacing-0 table-fixed w-full">
+<table class="border-spacing-0 w-full">
     <tbody>
     {#each logs.toReversed() as log}
         <LogLine {log}/>

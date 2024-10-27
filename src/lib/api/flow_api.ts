@@ -1,6 +1,6 @@
 import { type ApiProps, authenticatedApiFetch } from "$lib/api/api";
 import type { NodeLogEntry } from "$lib/model/node_logs";
-import type { FlowExecution, Workflow, WorkflowWithNodes } from "$lib/model/flows";
+import type { EnumeratedFlowExecution, FlowExecution, Workflow, WorkflowWithNodes } from "$lib/model/flows";
 
 export type CreateFlowDTO = { name: string };
 export async function createFlow(props: ApiProps, flow: CreateFlowDTO): Promise<Workflow> {
@@ -19,7 +19,7 @@ export async function getFlows(props: ApiProps): Promise<Workflow[]> {
         .then((res) => res.json());
 }
 
-export async function getFlowExecutions(props: ApiProps): Promise<FlowExecution[]> {
+export async function enumerateFlowExecutions(props: ApiProps): Promise<EnumeratedFlowExecution[]> {
     return authenticatedApiFetch(props, "wiring/flow/list/executions")
         .then((res) => res.json());
 }
@@ -47,6 +47,25 @@ export async function getFlowLogs(props: ApiProps, id: string): Promise<NodeLogE
                 }
             ))
             .toSorted((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
+        );
+}
+
+export async function getFlowExecutions(props: ApiProps, id: string): Promise<FlowExecution[]> {
+    return authenticatedApiFetch(props, `wiring/flow/${id}/executions`)
+        .then((res) => res.json() as Promise<({ startDate: string, logs: ({ timestamp: string } & NodeLogEntry)[] } & FlowExecution)[]>)
+        .then((executions) => executions.map(execution => (
+                {
+                    ...execution,
+                    startDate: new Date(execution.startDate),
+                    logs: execution.logs.map(line => (
+                        {
+                            ...line,
+                            timestamp: new Date(line.timestamp),
+                        }
+                    )),
+                }
+            ))
+                .toSorted((a, b) => b.startDate.getTime() - a.startDate.getTime())
         );
 }
 

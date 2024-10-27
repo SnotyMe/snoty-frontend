@@ -6,6 +6,7 @@
         width,
         height,
         class: clazz,
+        innerClass: innerClazz,
         verticalAlign = "top",
         horizontalAlign
     }: PopupProps = $props();
@@ -41,7 +42,7 @@
      style={`${horizontalAlign}: var(--x-padding); ${verticalAlign}: var(--y-padding); width: ${width}; height: ${height}`}
      id="container"
      class="{clazz} z-10 flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 overflow-hidden block border">
-    <div>
+    <div class="{innerClazz}">
         <slot/>
     </div>
 </div>

@@ -1,6 +1,6 @@
 import type { PageServerLoad } from "./$types";
 import { ensureLoggedIn } from "$lib/auth/protection";
-import { getFlowExecutions, getFlows } from "$lib/api/flow_api";
+import { enumerateFlowExecutions, getFlows } from "$lib/api/flow_api";
 import type { FlowExecution, Workflow } from "$lib/model/flows";
 
 export const load: PageServerLoad = async ({ locals, fetch }): Promise<{
@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({ locals, fetch }): Promise<{
     const apiProps = { token, fetch };
 
     const flows = getFlows(apiProps)
-    const flowExecutions = getFlowExecutions(apiProps)
+    const flowExecutions = enumerateFlowExecutions(apiProps)
 
     return {
         ...locals,

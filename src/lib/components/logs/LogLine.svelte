@@ -3,7 +3,7 @@
     import ArrowDown from "lucide-svelte/icons/chevron-down";
     import type { NodeLogEntry } from "$lib/model/node_logs";
     import { getLevelColor } from "$lib/components/logs/log_utils";
-    import { formatDate, formattedDateLength } from "$lib/utils/date_utils";
+    import { formatDate } from "$lib/utils/date_utils";
 
     interface Props {
         log: NodeLogEntry
@@ -36,7 +36,7 @@
 
     .level {
         position: relative;
-        padding-right: 0.5em;
+        padding-right: 0.1em;
 
         &::after {
             content: "";
@@ -61,21 +61,17 @@
         }
     }
 
-    td:not(.message) {
-        width: max-content;
-    }
-
-    tr:not(:has(td.message.expanded)) {
+    :global(tr.logline:not(:has(td.message.expanded))) {
         cursor: pointer;
     }
 </style>
 
-<tr class="my-4" onmousedown={() => toggleExpanded("container")}>
+<tr class="logline w-full my-4 overflow-auto" onmousedown={() => toggleExpanded("container")}>
     <td class="level after:bg-{getLevelColor(log.level)}"></td>
-    <td class="cursor-pointer" onmouseup={() => toggleExpanded("handle")}>
+    <td class="w-0 cursor-pointer" onmouseup={() => toggleExpanded("handle")}>
         {#if expanded}<ArrowDown/>{:else}<ArrowRight/>{/if}
     </td>
-    <td style="width: {formattedDateLength-1}ch">
+    <td class="w-0 text-nowrap pr-3">
         {formatDate(log.timestamp)}
     </td>
     <td class="message" class:expanded={expanded}>
