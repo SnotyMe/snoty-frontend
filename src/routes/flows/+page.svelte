@@ -9,6 +9,7 @@
     import ExecutionStatusIcon from "./ExecutionStatusIcon.svelte";
     import List from "$lib/components/list/List.svelte";
     import ListItem from "$lib/components/list/ListItem.svelte";
+    import LoadingButton from "$lib/components/LoadingButton.svelte";
 
     interface Props {
         data: PageData;
@@ -49,9 +50,11 @@
                 </ListItem>
             {/each}
             <div class="flex justify-center">
-                <button class="px-4 py-2" onclick={oncreateflow}>
-                    <IconPlus/>
-                </button>
+                <LoadingButton class="px-4 py-2" onclick={oncreateflow}>
+                    {#snippet idle()}
+                        <IconPlus/>
+                    {/snippet}
+                </LoadingButton>
             </div>
         </List>
     {:catch error}

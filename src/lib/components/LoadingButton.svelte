@@ -5,6 +5,7 @@
 
     interface Props {
         onclick: () => Promise<any>
+        class?: string
         loading?: Snippet
         idle: Snippet
         done?: Snippet
@@ -13,6 +14,7 @@
 
     const {
         onclick: handler,
+        class: clazz = "btn preset-filled",
         idle: idleSnippet,
         loading: loadingSnippet,
         done: doneSnippet,
@@ -36,7 +38,7 @@
     }
 </script>
 
-<button class="btn preset-filled" class:disabled={doing} {onclick}>
+<button class={clazz} class:disabled={doing} {onclick}>
     {#if done && doneSnippet}
         {@render doneSnippet()}
     {:else if doing}
