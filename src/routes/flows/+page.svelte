@@ -7,6 +7,8 @@
     import { goto } from "$app/navigation";
     import SettingsField from "$lib/components/node/SettingsField.svelte";
     import ExecutionStatusIcon from "./ExecutionStatusIcon.svelte";
+    import List from "$lib/components/list/List.svelte";
+    import ListItem from "$lib/components/list/ListItem.svelte";
 
     interface Props {
         data: PageData;
@@ -29,9 +31,9 @@
     {#await data.flows}
         <p>Loading...</p>
     {:then myFlows}
-        <div class="space-y-4 min-w-44 md:min-w-128">
+        <List>
             {#each myFlows as flow}
-                <div class="card preset-filled-surface-100-900 gap-3 p-4 px-6 w-full flex justify-between items-center">
+                <ListItem>
                     {#if flow.lastExecution?.status}
                         <ExecutionStatusIcon status={flow.lastExecution.status}/>
                     {/if}
@@ -44,14 +46,14 @@
                         <span>View</span>
                         <span>&rarr;</span>
                     </a>
-                </div>
+                </ListItem>
             {/each}
             <div class="flex justify-center">
                 <button class="px-4 py-2" onclick={oncreateflow}>
                     <IconPlus/>
                 </button>
             </div>
-        </div>
+        </List>
     {:catch error}
         <p>{error.message}</p>
     {/await}

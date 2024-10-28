@@ -6,6 +6,7 @@
     import IconWorkflow from "lucide-svelte/icons/workflow";
     import IconInfo from "lucide-svelte/icons/info";
     import IconMenu from "lucide-svelte/icons/menu";
+    import IconMonitorCog from "lucide-svelte/icons/monitor-cog";
     import UserMenu from "./UserMenu.svelte";
 
     let expanded = $state(false);
@@ -48,18 +49,23 @@
         <Nav.Tile id="about" labelExpanded="About Snoty" label="About" href="/about" {...tileProps}>
             <IconInfo/>
         </Nav.Tile>
+        {#if data.roles?.includes("admin")}
+            <Nav.Tile id="admin" labelExpanded="Admin" label="Admin" href="/admin" {...tileProps}>
+                <IconMonitorCog/>
+            </Nav.Tile>
+        {/if}
         {/snippet}
         {#snippet footer()}
         <Nav.Tile id="settings" labelExpanded="Settings" href="/settings" title="settings" {...tileProps}>
             <IconSettings/>
         </Nav.Tile>
         {#if user != null}
-        <Nav.Tile id="avatar" labelExpanded={data.user?.name} title="user" onclick={() => profileMenuShown = !profileMenuShown} {...tileProps}>
-            <Avatar src={undefined} classes="flex justify-center items-center">{initials}</Avatar>
-        </Nav.Tile>
-        {#if profileMenuShown}
-            <UserMenu/>
-        {/if}
+            <Nav.Tile id="avatar" labelExpanded={data.user?.name} title="user" onclick={() => profileMenuShown = !profileMenuShown} {...tileProps}>
+                <Avatar src={undefined} classes="flex justify-center items-center">{initials}</Avatar>
+            </Nav.Tile>
+            {#if profileMenuShown}
+                <UserMenu/>
+            {/if}
         {/if}
         {/snippet}
     </Nav.Rail>

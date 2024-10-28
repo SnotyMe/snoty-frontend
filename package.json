@@ -39,7 +39,7 @@
 		"elkjs": "^0.9.3",
 		"jwt-decode": "^4.0.0",
 		"liquidjs": "^10.18.0",
-		"lucide-svelte": "^0.407.0",
+		"lucide-svelte": "^0.454.0",
 		"svelte-codemirror-editor": "^1.4.1"
 	}
 }
