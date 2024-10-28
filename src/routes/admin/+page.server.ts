@@ -10,7 +10,7 @@ export const load: LayoutServerLoad = async ({ locals, fetch }) => {
         fetch: fetch
     }) : null;
 
-    if (groups === null) {
+    if (groups === null || groups.length == 0) {
         return redirect(307, "/auth/login");
     }
 
