@@ -10,6 +10,7 @@
     import List from "$lib/components/list/List.svelte";
     import ListItem from "$lib/components/list/ListItem.svelte";
     import LoadingButton from "$lib/components/LoadingButton.svelte";
+    import DeleteDialog from "./DeleteDialog.svelte";
 
     interface Props {
         data: PageData;
@@ -47,6 +48,7 @@
                         <span>View</span>
                         <span>&rarr;</span>
                     </a>
+                    <DeleteDialog flowId={flow._id} {apiProps}/>
                 </ListItem>
             {/each}
             <div class="flex justify-center">

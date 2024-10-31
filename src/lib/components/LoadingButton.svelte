@@ -5,6 +5,7 @@
 
     interface Props {
         onclick: () => Promise<any>
+        onloaddone?: () => void
         class?: string
         loading?: Snippet
         idle: Snippet
@@ -14,6 +15,7 @@
 
     const {
         onclick: handler,
+        onloaddone,
         class: clazz = "btn preset-filled",
         idle: idleSnippet,
         loading: loadingSnippet,
@@ -30,6 +32,7 @@
         try {
             await handler()
             done = true
+            onloaddone?.()
         } catch (e: any) {
             console.error("Error while doing something", e)
             errorMessage = e.message

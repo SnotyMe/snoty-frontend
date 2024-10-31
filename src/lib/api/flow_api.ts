@@ -74,3 +74,9 @@ export async function triggerFlow(props: ApiProps, id: string) {
         method: "POST",
     });
 }
+
+export async function deleteFlow(props: ApiProps, id: string) {
+    return authenticatedApiFetch(props, `wiring/flow/${id}`, {
+        method: "DELETE",
+    });
+}
