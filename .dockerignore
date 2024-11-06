@@ -1,0 +1,7 @@
+.env.*
+
+docker-compose.yml
+Dockerfile
+
+node_modules/
+.svelte-kit/
