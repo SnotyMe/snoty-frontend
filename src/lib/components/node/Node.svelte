@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Handle, type NodeProps, NodeResizeControl, Position } from "@xyflow/svelte";
+    import { Handle, type NodeProps, NodeResizeControl, Position, useStore } from "@xyflow/svelte";
     import { type NodeMetadata, type StandaloneNode } from "$lib/model/nodes";
     import NodeSettings from "$lib/components/node/NodeSettings.svelte";
     import { createSettings } from "$lib/utils/settings.svelte";
@@ -45,11 +45,16 @@
     if (browser) {
         setNodeAPI(node._id, { node, metadata, settings: settings })
     }
+
+    const { edges } = useStore()
+    let hasOutputNode = $derived($edges.some(edge => edge.source === node._id))
 </script>
 
 <div bind:clientWidth={clientWidth} bind:clientHeight={clientHeight} class="h-full">
     {#if metadata?.input !== null}
-        <Handle type="target" position={Position.Left}/>
+        <Handle type="target"
+                position={Position.Left}
+                class={metadata.position === "START" ? "!bg-green-500" : ""}/>
     {/if}
     <div class="h-full cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 block overflow-auto border">
         <NodeResizeControl minWidth={150} minHeight={50}>
@@ -94,6 +99,8 @@
         {/if}
     </div>
     {#if metadata?.output !== null}
-        <Handle type="source" position={Position.Right}/>
+        <Handle type="source"
+                class={metadata?.position === "MIDDLE" && !hasOutputNode ? "!bg-red-500" : ""}
+                position={Position.Right}/>
     {/if}
 </div>
