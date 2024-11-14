@@ -32,7 +32,7 @@
     const filteredSettings = $derived(getFiltered(settings, path, excludedKeys))
 
     function getMetadata(key: string) {
-        return metadata?.settings.find(field => field.name === key);
+        return path?.length === 0 ? metadata?.settings.find(field => field.name === key) : null;
     }
 
     function getName(key: string) {
@@ -89,7 +89,7 @@
 <table class="table border-collapse">
     <tbody>
     {#each filteredSettings as [key, value], index}
-        {#if typeof value == "object"}
+        {#if typeof value == "object" && value !== null}
             {@const isMap = getMetadata(key)?.type === "Map"}
             {@const isList = getMetadata(key)?.type === "List"}
             <tr>
@@ -105,9 +105,11 @@
                             canDeleteFields={isMap || isList}
                             isListItem={isList}
                     />
-                    <button class="block m-auto" onclick={() => isList ? addItem(key, value) : addField(key)}>
-                        <Plus/>
-                    </button>
+                    {#if isMap || isList}
+                        <button class="block m-auto" onclick={() => isList ? addItem(key, value) : addField(key)}>
+                            <Plus/>
+                        </button>
+                    {/if}
                 </th>
             </tr>
         {:else}
@@ -132,7 +134,7 @@
                         onchange={(k, v) => isListItem ? onchangeList(index, v) : onchange(k, v)}
                         {key}
                         {value}
-                        metadata={path.length === 0 ? metadata?.settings.find(field => field.name === key) ?? {} : {}}
+                        metadata={getMetadata(key)}
                     />
                     {#if canDeleteFields}
                         <button onclick={() => isListItem ? removeIndex(index) : remove(key)}>

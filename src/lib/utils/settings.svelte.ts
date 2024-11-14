@@ -1,6 +1,6 @@
 import type { NodeMetadata, NodeSettings } from "$lib/model/nodes";
 import { deleteRecursively, renameRecursively, setRecursively } from "$lib/utils/settings-utils.svelte";
-import { getDefaultValue } from "$lib/model/node_field_details";
+import { getDefaultValue } from "$lib/model/node_field_defaults";
 
 export interface SettingsStore {
     settings: NodeSettings;

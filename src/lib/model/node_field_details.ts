@@ -46,63 +46,14 @@ export function isNumberType(type: string | undefined): boolean {
     return type === INT || type === LONG
 }
 
-export function getDefaultValue(field: NodeField): any {
-    const defaultValue = field.defaultValue
-    switch (field.type) {
-        case "Enum":
-            let constants = enumDetails(field)?.values;
-            return constants === undefined ? "" : tryParseEnum(defaultValue, constants) ?? constants[0].value
-        case "Boolean":
-            let result = tryParseBoolean(defaultValue);
-            return result === undefined ? false : result;
-        case "Plaintext":
-            return defaultValue ?? ""
-        case "Map":
-            return {}
-        case "List":
-            return []
-        default:
-            return ""
-    }
+export const OBJECT = "Object"
+type TObject = typeof OBJECT
+export interface ObjectDetails extends Details<TObject> {
+    type: TObject
+    className: string
+    schema: NodeField[]
 }
 
-export function getDefaultValueFormattedIfPresent(field: NodeField): any | null {
-    switch (field.type) {
-        case "Enum":
-            return enumDetails(field)!.values[0].displayName
-        case "Boolean":
-            return tryParseBoolean(field.defaultValue) ?? false
-        default:
-            return null
-    }
-}
-
-export function getPolyDetails(field: NodeField): Details<any> | undefined {
-    let split = field.type;
-    switch (split) {
-        case ENUM:
-            return enumDetails(field)
-        case PLAINTEXT:
-            return plaintextDetails(field)
-        default:
-            return undefined
-    }
-}
-
-function tryParseEnum(value: string | undefined, constants: EnumConstant[]): string | undefined {
-    if (value === undefined) {
-        return undefined
-    }
-    return constants.find(c => c.value === value)?.value
-}
-
-function tryParseBoolean(value: string | undefined): boolean | undefined {
-    switch (value?.toLowerCase()) {
-        case "true":
-            return true
-        case "false":
-            return false
-        default:
-            return undefined
-    }
+export function objectDetails(field: NodeField | undefined) {
+    return casted<TObject, ObjectDetails>(field?.details, OBJECT)
 }

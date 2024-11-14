@@ -2,11 +2,10 @@
     import type { NodeField } from "$lib/model/nodes";
     import {
         ENUM,
-        getDefaultValueFormattedIfPresent,
-        getPolyDetails,
         PLAINTEXT
     } from "$lib/model/node_field_details";
     import Code from "$lib/components/Code.svelte";
+    import { getDefaultValueFormattedIfPresent, getPolyDetails } from "$lib/model/node_field_defaults";
 
     interface Props {
         field: NodeField

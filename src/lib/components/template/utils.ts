@@ -8,4 +8,11 @@ export function getInputValue(id: string): string {
     return (document.getElementById(id) as HTMLInputElement).value;
 }
 
+export function authenticatedFetch(url: string, init: RequestInit): Promise<Response> {
+    return fetch(url, {
+        ...init,
+        credentials: "include"
+    });
+}
+
 export const getNodeAPI = nodeAPIGetter
