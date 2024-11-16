@@ -101,16 +101,18 @@
     {:else if isNumberType(type)}
         <input class="input-field" type="number" value={actualValue} onfocusin={clicked} onfocusout={changed} onchange={changed}/>
     {:else}
-        {#if expanded || (plaintextDetails(metadata)?.lines ?? 1) >= 1}
-            {#if expanded && metadata?.censored !== true}
+        {@const plain = plaintextDetails(metadata)}
+        {#if expanded || (plain?.lines ?? 1) >= 1 || plain?.language}
+            {#if (expanded || plain?.language) && metadata?.censored !== true}
                 <LazyCodemirrorSettingsField
                     value={displayState}
                     onchange={stringChanged}
+                    language={plain?.language}
                 />
             {:else}
                 <textarea
-                        rows={plaintextDetails(metadata)?.lines ?? 1}
-                        class:singleline={metadata ? (plaintextDetails(metadata)?.lines ?? 3) <= 1 : true}
+                        rows={plain?.lines ?? 1}
+                        class:singleline={metadata ? (plain?.lines ?? 3) <= 1 : true}
                         wrap="soft"
                         class="w-full input-field"
                         onfocusin={clicked} onfocusout={changed}

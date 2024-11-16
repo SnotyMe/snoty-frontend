@@ -6,6 +6,7 @@
     import Plus from "lucide-svelte/icons/plus";
     import Minus from "lucide-svelte/icons/minus";
     import { getRecursively } from "$lib/utils/settings-utils.svelte";
+    import { COLLECTION, collectionDetails } from "$lib/model/node_field_details";
 
     interface Props {
         settings: SettingsStore
@@ -32,7 +33,20 @@
     const filteredSettings = $derived(getFiltered(settings, path, excludedKeys))
 
     function getMetadata(key: string) {
-        return path?.length === 0 ? metadata?.settings.find(field => field.name === key) : null;
+        if (path?.length === 0) {
+            return metadata?.settings.find(field => field.name === key);
+        } else if (isListItem) {
+            const field = metadata?.settings.find(field => field.name === path[path.length - 1]);
+            if (!field) return null;
+
+            // instead of the collection details, we want the details of the list items
+            return {
+                ...field,
+                details: collectionDetails(field)?.elementDetails,
+            }
+        } else {
+            return null;
+        }
     }
 
     function getName(key: string) {
@@ -91,7 +105,7 @@
     {#each filteredSettings as [key, value], index}
         {#if typeof value == "object" && value !== null}
             {@const isMap = getMetadata(key)?.type === "Map"}
-            {@const isList = getMetadata(key)?.type === "List"}
+            {@const isList = getMetadata(key)?.type === "List" || getMetadata(key)?.type === COLLECTION}
             <tr>
                 <th colspan="2">
                     <p title={getDescription(key)}>{getName(key)}</p>

@@ -25,6 +25,7 @@ export function getDefaultValue(field: NodeField): any {
             const details = objectDetails(field)?.schema
             return details === undefined ? {} : Object.fromEntries(details.map(f => [f.name, getDefaultValue(f)]))
         case "List":
+        case "Collection":
             return []
         default:
             return ""

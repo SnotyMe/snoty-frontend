@@ -34,6 +34,7 @@ type TPlaintext = typeof PLAINTEXT
 export interface PlaintextDetails extends Details<TPlaintext> {
     type: TPlaintext
     lines: number
+    language?: string
 }
 
 export function plaintextDetails(field: NodeField | undefined) {
@@ -56,4 +57,15 @@ export interface ObjectDetails extends Details<TObject> {
 
 export function objectDetails(field: NodeField | undefined) {
     return casted<TObject, ObjectDetails>(field?.details, OBJECT)
+}
+
+export const COLLECTION = "Collection"
+type TCollection = typeof COLLECTION
+export interface CollectionDetails extends Details<TCollection> {
+    type: TCollection
+    elementDetails: Details<any>
+}
+
+export function collectionDetails(field: NodeField | undefined) {
+    return casted<TCollection, CollectionDetails>(field?.details, COLLECTION)
 }
