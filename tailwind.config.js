@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-import { join } from "path";
-import { skeleton } from "@skeletonlabs/skeleton/plugin"
+import { skeleton, contentPath } from "@skeletonlabs/skeleton/plugin"
 import forms from "@tailwindcss/forms"
 import * as themes from "@skeletonlabs/skeleton/themes"
 
@@ -459,9 +458,10 @@ const dracula = {
 
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "selector",
   content: [
       "./src/**/*.{html,js,svelte,ts}",
-      join(require.resolve('@skeletonlabs/skeleton-svelte'), '../**/*.{html,js,svelte,ts}')
+      contentPath(import.meta.url, 'svelte'),
   ],
   theme: {
     extend: {

@@ -26,11 +26,10 @@
 <Page title="Flow">
     <SvelteFlowProvider>
         {#await Promise.all([data.flow, data.metadatas, data.templates])}
-            <FlowLoading colorScheme={data.colorScheme}/>
+            <FlowLoading/>
         {:then [flow, metadatas, templates]}
             {#if flow}
                 <Flow
-                        colorScheme={data.colorScheme}
                         {apiProps}
                         metadatas={metadatas}
                         templates={templates}

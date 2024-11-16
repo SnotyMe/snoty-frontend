@@ -3,6 +3,32 @@
     --flow-control-button-size: 2em;
 }
 
+.svelte-flow {
+    --xy-background-color: rgb(var(--color-surface-50));
+    --xy-controls-button-background: rgb(var(--color-surface-100));
+    --xy-controls-button-background-color-hover: rgb(var(--color-surface-200));
+    --xy-minimap-background-color: rgb(var(--color-surface-50));
+    --xy-minimap-mask-background-color: rgb(var(--color-surface-500) / 0.5);
+    --xy-minimap-node-background-color: rgb(var(--color-surface-100));
+    --xy-handle-background-color: rgb(var(--color-surface-100));
+    --xy-controls-box-shadow: 0 0 2px 1px rgb(var(--color-surface-900) / 0.28);
+}
+
+.dark .svelte-flow {
+    --xy-background-color: rgb(var(--color-surface-950));
+    --xy-controls-button-background: rgb(var(--color-surface-900));
+    --xy-controls-button-background-color-hover: rgb(var(--color-surface-800));
+    --xy-minimap-background-color: rgb(var(--color-surface-950));
+    --xy-minimap-mask-background-color: rgb(var(--color-surface-900) / 0.5);
+    --xy-minimap-node-background-color: rgb(var(--color-surface-800));
+    --xy-handle-background-color: rgb(var(--color-surface-800));
+    --xy-controls-box-shadow: 0 0 15px 5px rgb(var(--color-surface-950) / 0.88);
+}
+
+.svelte-flow__controls-button.svelte-flow__controls-button {
+    @apply preset-filled-surface-100-900 rounded-none;
+}
+
 .svelte-flow__handle.svelte-flow__handle {
     width: 12px;
     height: 12px;
@@ -20,11 +46,6 @@ button.svelte-flow__controls-button svg {
 
 div.svelte-flow__panel {
     margin: var(--flow-control-padding);
-}
-
-.svelte-flow__controls.svelte-flow__controls-horizontal {
-    flex-direction: row;
-    align-items: center;
 }
 
 .svelte-flow__controls-horizontal .svelte-flow__controls-button {
