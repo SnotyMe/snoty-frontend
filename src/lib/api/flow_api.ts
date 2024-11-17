@@ -50,8 +50,8 @@ export async function getFlowLogs(props: ApiProps, id: string): Promise<NodeLogE
         );
 }
 
-export async function getFlowExecutions(props: ApiProps, id: string): Promise<FlowExecution[]> {
-    return authenticatedApiFetch(props, `wiring/flow/${id}/executions`)
+export async function getFlowExecutions(props: ApiProps, id: string, startFrom: null | String = null): Promise<FlowExecution[]> {
+    return authenticatedApiFetch(props, `wiring/flow/${id}/executions?startFrom=${startFrom ?? ""}`)
         .then((res) => res.json() as Promise<({ startDate: string, logs: ({ timestamp: string } & NodeLogEntry)[] } & FlowExecution)[]>)
         .then((executions) => executions.map(execution => (
                 {

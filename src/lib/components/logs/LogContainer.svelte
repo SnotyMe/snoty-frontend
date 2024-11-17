@@ -6,6 +6,14 @@
     import NodeDrawer from "$lib/components/node/control/NodeDrawer.svelte";
     import ExecutionStatusIcon from "../../../routes/flows/ExecutionStatusIcon.svelte";
     import { formatDate } from "$lib/utils/date_utils";
+    import { Pagination } from "@skeletonlabs/skeleton-svelte";
+    import type { FlowExecution } from "$lib/model/flows";
+    import IconArrowLeft from 'lucide-svelte/icons/arrow-left';
+    import IconArrowRight from 'lucide-svelte/icons/arrow-right';
+    import IconEllipsis from 'lucide-svelte/icons/ellipsis';
+    import IconFirst from 'lucide-svelte/icons/chevrons-left';
+    import IconLast from 'lucide-svelte/icons/chevron-right';
+    import type { PageChangeDetails } from "@zag-js/pagination"
 
     interface Props {
         isOpen: boolean
@@ -13,19 +21,49 @@
         apiProps: ApiProps
     }
     const { isOpen, flowId, apiProps }: Props = $props();
+
+    let allExecutions: FlowExecution[] = $state([]);
+    const initialPromise = getFlowExecutions(apiProps, flowId)
+        .then(fetched => {
+            allExecutions = fetched
+            return fetched
+        })
+
+    let page = $state(1);
+    let pageSize = $state(10);
+    const slicedSource = $derived((s: FlowExecution[]) => s.slice((page - 1) * pageSize, page * pageSize));
+
+    function pageChanged(changeDetails: PageChangeDetails) {
+        page = changeDetails.page
+        if (page > 0 && pageSize * page >= allExecutions.length) {
+            const lastNode = allExecutions[allExecutions.length - 1].jobId
+            getFlowExecutions(apiProps, flowId, lastNode)
+                .then(newExecutions => allExecutions = allExecutions.concat(newExecutions))
+        }
+    }
 </script>
 
-<NodeDrawer horizontalAlign="right" width="70%" height="70%" {isOpen} innerClass="overflow-hidden">
-    {#await getFlowExecutions(apiProps, flowId)}
+<NodeDrawer horizontalAlign="right" width="70%" height="70%" {isOpen} innerClass="overflow-hidden flex flex-col justify-between">
+    {#await initialPromise}
         Loading logs...
-    {:then executions}
-        {#each executions as execution}
-            <ExecutionStatusIcon status={execution.status}/>
-            {execution.triggeredBy.type} @ {formatDate(execution.startDate)}
-            <div class="bg-surface-200-800 p-1 border-2 border-surface-900-100 rounded mb-2">
-                <LogTable logs={execution.logs}/>
-            </div>
-        {/each}
+    {:then _}
+        <div class="overflow-auto flex-shrink">
+            {#each slicedSource(allExecutions) as execution}
+                <ExecutionStatusIcon status={execution.status}/>
+                {execution.triggeredBy.type} @ {formatDate(execution.startDate)}
+                <div class="bg-surface-200-800 p-1 border-2 border-surface-900-100 rounded mb-2">
+                    <LogTable logs={execution.logs}/>
+                </div>
+            {/each}
+        </div>
+
+        <Pagination classes="flex-shrink-0 justify-center" data={allExecutions} bind:page bind:pageSize onPageChange={pageChanged} alternative>
+            {#snippet labelEllipsis()}<IconEllipsis class="size-4" />{/snippet}
+            {#snippet labelNext()}<IconArrowRight class="size-4" />{/snippet}
+            {#snippet labelPrevious()}<IconArrowLeft class="size-4" />{/snippet}
+            {#snippet labelFirst()}<IconFirst class="size-4" />{/snippet}
+            {#snippet labelLast()}<IconLast class="size-4" />{/snippet}
+        </Pagination>
     {:catch error}
         <p>{error.message}</p>
     {/await}
