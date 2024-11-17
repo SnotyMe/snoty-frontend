@@ -2,7 +2,7 @@
     import Page from "$lib/components/Page.svelte";
     import type { PageData } from "./$types";
     import IconPlus from "lucide-svelte/icons/plus"
-    import { createFlow, renameFlow } from "$lib/api/flow_api";
+    import { createFlow, deleteFlow, renameFlow } from "$lib/api/flow_api";
     import type { ApiProps } from "$lib/api/api";
     import { goto } from "$app/navigation";
     import SettingsField from "$lib/components/node/SettingsField.svelte";
@@ -10,7 +10,7 @@
     import List from "$lib/components/list/List.svelte";
     import ListItem from "$lib/components/list/ListItem.svelte";
     import LoadingButton from "$lib/components/LoadingButton.svelte";
-    import DeleteDialog from "./DeleteDialog.svelte";
+    import DeleteButton from "$lib/components/delete/DeleteButton.svelte";
 
     interface Props {
         data: PageData;
@@ -48,7 +48,11 @@
                         <span>View</span>
                         <span>&rarr;</span>
                     </a>
-                    <DeleteDialog flowId={flow._id} {apiProps}/>
+                    <DeleteButton onconfirmed={async () => { await deleteFlow(apiProps, flow._id); window.location.reload() }}>
+                        {#snippet body()}
+                            The flow will be deleted, along with all its nodes, data, logs, just, everything!
+                        {/snippet}
+                    </DeleteButton>
                 </ListItem>
             {/each}
             <div class="flex justify-center">

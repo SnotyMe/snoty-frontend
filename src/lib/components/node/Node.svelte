@@ -5,7 +5,6 @@
     import { createSettings } from "$lib/utils/settings.svelte";
     import IconGripVertical from "lucide-svelte/icons/grip-vertical";
     import NodeName from "$lib/components/node/NodeName.svelte";
-    import NodeDeleteButton from "$lib/components/node/NodeDeleteButton.svelte";
     import NodeDetailsButton from "$lib/components/node/NodeDetailsButton.svelte";
     import Liquid from "$lib/components/template/Liquid.svelte";
     import { config } from "$lib/components/template/config";
@@ -16,6 +15,7 @@
     import { setNodeAPI } from "$lib/components/template/node";
     import type { ApiProps } from "$lib/api/api";
     import NodeLogLevel from "$lib/components/node/NodeLogLevel.svelte";
+    import DeleteButton from "$lib/components/delete/DeleteButton.svelte";
 
     interface Props extends NodeProps {
         data: {
@@ -81,7 +81,11 @@
                 </details>
             {/if}
             <div class="mt-2 w-full flex justify-between gap-2">
-                <NodeDeleteButton ondelete={data.ondelete}/>
+                <DeleteButton onconfirmed={data.ondelete}>
+                    {#snippet body()}
+                        Are you sure you want to delete this node? All states will be lost.
+                    {/snippet}
+                </DeleteButton>
                 <div class="flex gap-1">
                     <NodeLogLevel {node} {apiProps}/>
                     <NodeHelpButton {metadata}/>
