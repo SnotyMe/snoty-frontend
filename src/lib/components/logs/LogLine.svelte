@@ -30,7 +30,6 @@
 
 <style>
     tr {
-        margin-top: 20px;
         vertical-align: top;
     }
 
@@ -66,15 +65,15 @@
     }
 </style>
 
-<tr class="logline w-full my-4 overflow-auto" onmousedown={() => toggleExpanded("container")}>
+<tr class="logline flex w-full overflow-auto" onmousedown={() => toggleExpanded("container")}>
     <td class="level after:bg-{getLevelColor(log.level)}"></td>
-    <td class="w-0 cursor-pointer" onmouseup={() => toggleExpanded("handle")}>
+    <td class="pl-1 cursor-pointer" onmouseup={() => toggleExpanded("handle")}>
         {#if expanded}<ArrowDown/>{:else}<ArrowRight/>{/if}
     </td>
-    <td class="w-0 text-nowrap pr-3">
+    <td class="text-nowrap pr-3">
         {formatDate(log.timestamp)}
     </td>
-    <td class="message" class:expanded={expanded}>
+    <td class="w-0 flex-grow message" class:expanded={expanded}>
         {log.message}
     </td>
 </tr>

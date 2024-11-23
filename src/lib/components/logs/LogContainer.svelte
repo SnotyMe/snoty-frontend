@@ -22,22 +22,23 @@
     }
     const { isOpen, flowId, apiProps }: Props = $props();
 
+    const requestPageSize = 10;
     let allExecutions: FlowExecution[] = $state([]);
-    const initialPromise = getFlowExecutions(apiProps, flowId)
+    const initialPromise = getFlowExecutions(apiProps, flowId, null, requestPageSize * 2)
         .then(fetched => {
             allExecutions = fetched
             return fetched
         })
 
     let page = $state(1);
-    let pageSize = $state(10);
+    let pageSize = $state(requestPageSize);
     const slicedSource = $derived((s: FlowExecution[]) => s.slice((page - 1) * pageSize, page * pageSize));
 
     function pageChanged(changeDetails: PageChangeDetails) {
         page = changeDetails.page
-        if (page > 0 && pageSize * page >= allExecutions.length) {
+        if (page > 0 && requestPageSize * page >= allExecutions.length - 1) {
             const lastNode = allExecutions[allExecutions.length - 1].jobId
-            getFlowExecutions(apiProps, flowId, lastNode)
+            getFlowExecutions(apiProps, flowId, lastNode, requestPageSize)
                 .then(newExecutions => allExecutions = allExecutions.concat(newExecutions))
         }
     }
@@ -57,7 +58,7 @@
             {/each}
         </div>
 
-        <Pagination classes="flex-shrink-0 justify-center" data={allExecutions} bind:page bind:pageSize onPageChange={pageChanged} alternative>
+        <Pagination classes="flex-shrink-0 mt-1 justify-center" data={allExecutions} bind:page bind:pageSize onPageChange={pageChanged} alternative>
             {#snippet labelEllipsis()}<IconEllipsis class="size-4" />{/snippet}
             {#snippet labelNext()}<IconArrowRight class="size-4" />{/snippet}
             {#snippet labelPrevious()}<IconArrowLeft class="size-4" />{/snippet}
