@@ -4,7 +4,6 @@
     import IconSun from "lucide-svelte/icons/sun"
     import { themes } from "$lib/components/theme/index";
     import { Switch } from "@skeletonlabs/skeleton-svelte";
-    import { untrack } from "svelte";
 
     interface Props {
         currentTheme: string;
@@ -14,32 +13,15 @@
     }
 
     const { currentTheme, setTheme, toggleColorScheme, currentColorScheme }: Props = $props()
-    let mode = $state(currentColorScheme === "light");
-
-    function explicitEffect(fn, depsFn) {
-        $effect(() => {
-            depsFn();
-            untrack(fn);
-        });
-    }
-
-    let initial = true;
-    explicitEffect(() => {
-        if (initial) {
-            initial = false
-            return
-        }
-        toggleColorScheme()
-    }, () => [mode])
 </script>
 
 <div class="flex flex-col justify-center text-center">
     <h2 class="h2">Theme</h2>
     <div class="flex flex-row">
         <!-- TODO: use onchange (https://github.com/skeletonlabs/skeleton/issues/2882) -->
-        <Switch name="mode" controlActive="bg-surface-200" bind:checked={mode}>
-            {#snippet inactiveChild()}<IconMoon size="14" />{/snippet}
-            {#snippet activeChild()}<IconSun size="14" />{/snippet}
+        <Switch name="mode" controlActive="bg-surface-200" checked={currentColorScheme === "light"} onCheckedChange={toggleColorScheme}>
+            {#snippet inactiveChild()}<IconMoon size="14"/>{/snippet}
+            {#snippet activeChild()}<IconSun size="14"/>{/snippet}
         </Switch>
         <div class="input-group grid-cols-[auto_1fr] hover:preset-tonal">
             <div class="input-group-cell">
