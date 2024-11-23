@@ -25,9 +25,8 @@
         metadatas: NodeMetadataMap
         templates: NodeTemplatesMap
         apiProps: ApiProps
-        colorScheme: string
     }
-    const { flow, metadatas, templates, apiProps, colorScheme }: Props = $props()
+    const { flow, metadatas, templates, apiProps }: Props = $props()
 
     function createNodeFromNode(node: StandaloneNode) {
         return {
@@ -105,7 +104,6 @@
 {/if}
 
 <SvelteFlow proOptions={{hideAttribution: true}}
-            colorMode="{colorScheme}"
             {nodeTypes}
             {edgeTypes}
             nodes={nodesStore}

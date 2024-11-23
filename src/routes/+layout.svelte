@@ -1,6 +1,6 @@
 <script>
     import "../app.css";
-    import { Nav, Avatar } from "@skeletonlabs/skeleton-svelte";
+    import { Navigation, Avatar } from "@skeletonlabs/skeleton-svelte";
     import IconSettings from "lucide-svelte/icons/settings";
     import IconHome from "lucide-svelte/icons/house";
     import IconWorkflow from "lucide-svelte/icons/workflow";
@@ -31,44 +31,44 @@
 </script>
 
 <div class="card border-surface-100-900 grid h-full w-full grid-cols-[auto_1fr] border-[1px]">
-    <Nav.Rail value="nothing" classes="navbar overflow-y-auto" {expanded}>
+    <Navigation.Rail value="nothing" classes="navbar overflow-y-auto" {expanded}>
         {#snippet header()}
-        <Nav.Tile id="menu" labelExpanded="Menu" title="menu" onclick={() => expanded = !expanded} {...tileProps}>
+        <Navigation.Tile id="menu" labelExpanded="Menu" title="menu" onclick={() => expanded = !expanded} {...tileProps}>
             <IconMenu/>
-        </Nav.Tile>
+        </Navigation.Tile>
         {/snippet}
         {#snippet tiles()}
-        <Nav.Tile id="home" labelExpanded="Home" label="Home" href="/" {...tileProps}>
+        <Navigation.Tile id="home" labelExpanded="Home" label="Home" href="/" {...tileProps}>
             <IconHome/>
-        </Nav.Tile>
+        </Navigation.Tile>
         {#if data.user != null}
-            <Nav.Tile id="flows" labelExpanded="My Flows" label="Flows" href="/flows" {...tileProps}>
+            <Navigation.Tile id="flows" labelExpanded="My Flows" label="Flows" href="/flows" {...tileProps}>
                 <IconWorkflow/>
-            </Nav.Tile>
+            </Navigation.Tile>
         {/if}
-        <Nav.Tile id="about" labelExpanded="About Snoty" label="About" href="/about" {...tileProps}>
+        <Navigation.Tile id="about" labelExpanded="About Snoty" label="About" href="/about" {...tileProps}>
             <IconInfo/>
-        </Nav.Tile>
+        </Navigation.Tile>
         {#if data.roles?.includes("admin")}
-            <Nav.Tile id="admin" labelExpanded="Admin" label="Admin" href="/admin" {...tileProps}>
+            <Navigation.Tile id="admin" labelExpanded="Admin" label="Admin" href="/admin" {...tileProps}>
                 <IconMonitorCog/>
-            </Nav.Tile>
+            </Navigation.Tile>
         {/if}
         {/snippet}
         {#snippet footer()}
-        <Nav.Tile id="settings" labelExpanded="Settings" href="/settings" title="settings" {...tileProps}>
+        <Navigation.Tile id="settings" labelExpanded="Settings" href="/settings" title="settings" {...tileProps}>
             <IconSettings/>
-        </Nav.Tile>
+        </Navigation.Tile>
         {#if user != null}
-            <Nav.Tile id="avatar" labelExpanded={data.user?.name} title="user" onclick={() => profileMenuShown = !profileMenuShown} {...tileProps}>
+            <Navigation.Tile id="avatar" labelExpanded={data.user?.name} title="user" onclick={() => profileMenuShown = !profileMenuShown} {...tileProps}>
                 <Avatar src={undefined} classes="flex justify-center items-center">{initials}</Avatar>
-            </Nav.Tile>
+            </Navigation.Tile>
             {#if profileMenuShown}
                 <UserMenu/>
             {/if}
         {/if}
         {/snippet}
-    </Nav.Rail>
+    </Navigation.Rail>
     <div class="flex items-center justify-center h-full overflow-y-auto">
         <slot/>
     </div>

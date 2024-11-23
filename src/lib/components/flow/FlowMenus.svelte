@@ -34,20 +34,22 @@
     }
 </style>
 
-<Panel position="top-left" class="svelte-flow__controls svelte-flow__controls-horizontal">
-    <ControlButton
-            on:click={() => toggleOpen(ADD)}
-            class="svelte-flow__controls-addnode"
-            title="add node"
-            aria-label="add node"
-    >
-        <IconAdd/>
-    </ControlButton>
+<Panel position="top-left" class="flex flex-row items-center">
+    <div class="svelte-flow__controls">
+        <ControlButton
+                on:click={() => toggleOpen(ADD)}
+                class="svelte-flow__controls-addnode"
+                title="add node"
+                aria-label="add node"
+        >
+            <IconAdd/>
+        </ControlButton>
+    </div>
     <SettingsField
             key="name"
             onchange={(_, value) => renameFlow(props.apiProps, props.flow._id, value)}
             value={props.flow.name}
-            class="ml-2"
+            class="ml-2 border-none flex justify-center items-center"
     />
 </Panel>
 
