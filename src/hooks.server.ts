@@ -1,6 +1,7 @@
 import { handle as auth } from "./auth"
 import { sequence } from "@sveltejs/kit/hooks";
 import type { Handle } from "@sveltejs/kit";
+import { themes } from "$lib/components/theme";
 
 const theme: Handle = async ({ event, resolve }) => {
     const cookies = event.cookies
@@ -13,11 +14,14 @@ const theme: Handle = async ({ event, resolve }) => {
     event.locals.colorScheme = colorScheme
 
     let theme = cookies.get("theme") ?? "cerberus"
+    if (themes.find((t) => t.name === theme) === undefined) {
+        theme = "cerberus"
+    }
     event.locals.theme = theme
 
     return resolve(event, {
         transformPageChunk(input: { html: string; done: boolean }) {
-            input.html = input.html.replace("[colorScheme]", colorScheme ?? "")
+            input.html = input.html.replace("[colorScheme]", colorScheme ?? "dark")
             input.html = input.html.replace("[theme]", theme)
             return input.html
         }
