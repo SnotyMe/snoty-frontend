@@ -9,6 +9,7 @@
     import IconRocket from "lucide-svelte/icons/rocket";
     import SettingsField from "$lib/components/node/SettingsField.svelte";
     import { renameFlow, triggerFlow } from "$lib/api/flow_api";
+    import ExportFlow from "$lib/components/flow/export/ExportFlow.svelte";
 
     type Props = Omit<AddNodeProps, "isOpen">
     const props: Props = $props()
@@ -76,6 +77,7 @@
     >
         <IconRocket/>
     </ControlButton>
+    <ExportFlow flow={props.flow}/>
 </Panel>
 
 <LogContainer flowId={props.flow._id} isOpen={openStates[LOGS]} {...props}/>

@@ -25,6 +25,8 @@
     --xy-controls-box-shadow: 0 0 15px 5px rgb(var(--color-surface-950) / 0.88);
 }
 
+/* repeated selectors to increase priority */
+
 .svelte-flow__controls-button.svelte-flow__controls-button {
     @apply preset-filled-surface-100-900 rounded-none;
 }
@@ -34,12 +36,12 @@
     height: 12px;
 }
 
-button.svelte-flow__controls-button {
+.svelte-flow__controls-button.svelte-flow__controls-button {
     width: var(--flow-control-button-size);
     height: var(--flow-control-button-size);
 }
 
-button.svelte-flow__controls-button svg {
+.svelte-flow__controls-button.svelte-flow__controls-button svg {
     max-width: 16px;
     max-height: 16px;
 }

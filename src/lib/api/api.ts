@@ -3,12 +3,14 @@ import { env } from "$env/dynamic/public"
 
 export type Fetch = typeof fetch;
 
+export const API_URL = env.PUBLIC_API_HOST ?? PUBLIC_API_HOST;
+
 export async function apiFetch(props: UnauthenticatedApiProps, url: string, options: RequestInit = {}): Promise<Response> {
     options.headers = {
         ...options.headers,
         "Content-Type": "application/json"
     };
-    return await props.fetch(`${env.PUBLIC_API_HOST ?? PUBLIC_API_HOST}/${url}`, options);
+    return await props.fetch(`${API_URL}/${url}`, options);
 }
 
 export async function authenticatedApiFetch(props: ApiProps, url: string, options: RequestInit = {}): Promise<Response> {

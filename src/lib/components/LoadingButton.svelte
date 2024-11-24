@@ -13,6 +13,7 @@
         error?: Snippet<[string]>
     }
 
+    const props = $props();
     const {
         onclick: handler,
         onloaddone,
@@ -21,7 +22,7 @@
         loading: loadingSnippet,
         done: doneSnippet,
         error: errorSnippet,
-    }: Props = $props();
+    }: Props = props;
 
     let doing = $state(false)
     let done = $state(false)
@@ -41,7 +42,7 @@
     }
 </script>
 
-<button class={clazz} class:disabled={doing} {onclick}>
+<button class={clazz} class:disabled={doing} {onclick} {...props}>
     {#if done && doneSnippet}
         {@render doneSnippet()}
     {:else if doing}
