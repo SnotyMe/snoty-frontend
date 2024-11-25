@@ -45,7 +45,8 @@
     </FileUpload>
 
     {#if template}
-        <!-- TODO: potentially use {#key} to rerender everything when another template is selected -->
-        <ImportFlowSettings {template} {metadatas} bind:flow/>
+        {#key template}
+            <ImportFlowSettings {template} {metadatas} bind:flow/>
+        {/key}
     {/if}
 </div>
