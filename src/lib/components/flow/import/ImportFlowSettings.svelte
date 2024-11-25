@@ -30,7 +30,10 @@
 
     {#each flow.nodes as node}
         <div class="flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 block overflow-auto border">
-            <SettingsField value={node.settingsStore.settings["name"]} onchange={name => node.settingsStore.setProperty(["name"], name)}/>
+            <SettingsField
+                value={node.settingsStore.settings["name"]}
+                onchange={(_, newName) => node.settingsStore.setProperty(["name"], newName)}
+            />
             <NodeSettings settings={node.settingsStore} metadata={getNodeMetadata(metadatas, node.descriptor)}/>
         </div>
     {/each}

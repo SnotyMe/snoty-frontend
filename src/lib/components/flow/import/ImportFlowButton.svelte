@@ -4,11 +4,11 @@
     import IconRocket from "lucide-svelte/icons/rocket";
     import ImportFlow from "$lib/components/flow/import/ImportFlow.svelte";
     import LoadingButton from "$lib/components/LoadingButton.svelte";
-    import type { ImportFlowDTO } from "$lib/model/flow_import_export";
     import type { NodeMetadataMap } from "$lib/model/nodes";
     import { importFlow } from "$lib/api/flow_export_import_api";
     import type { ApiProps } from "$lib/api/api";
     import { goto } from "$app/navigation";
+    import type { FlowWithSettingsStore } from "$lib/components/flow/import/utils";
 
     interface Props {
         metadatas: Promise<NodeMetadataMap>
@@ -18,15 +18,25 @@
 
     let shown = $state(false)
 
-    let flow: ImportFlowDTO | null = $state(null)
+    let flow: FlowWithSettingsStore | null = $state(null)
 
     async function create() {
         if (!flow) {
             console.error("Flow is null")
             return
         }
-        const createdId = await importFlow(apiProps, flow);
-        goto(`/flow/${createdId}`)
+
+        const mappedFlow = {
+            ...flow,
+            nodes: flow.nodes.map(node => ({
+                ...node,
+                settings: $state.snapshot(node.settingsStore.settings),
+                settingsStore: null,
+            }))
+        }
+
+        const createdId = await importFlow(apiProps, mappedFlow);
+        await goto(`/flow/${createdId}`)
     }
 </script>
 
