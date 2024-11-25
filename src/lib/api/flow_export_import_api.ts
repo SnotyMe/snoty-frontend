@@ -6,5 +6,9 @@ export async function importFlow(props: ApiProps, flow: ImportFlowDTO): Promise<
         method: "POST",
         body: JSON.stringify(flow),
     });
-    return await res.text();
+    const content = await res.text();
+    if (!res.ok) {
+        throw new Error("Failed to import flow: " + content);
+    }
+    return content;
 }
