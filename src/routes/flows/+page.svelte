@@ -11,6 +11,7 @@
     import ListItem from "$lib/components/list/ListItem.svelte";
     import LoadingButton from "$lib/components/LoadingButton.svelte";
     import DeleteButton from "$lib/components/delete/DeleteButton.svelte";
+    import ImportFlowButton from "$lib/components/flow/import/ImportFlowButton.svelte";
 
     interface Props {
         data: PageData;
@@ -55,12 +56,13 @@
                     </DeleteButton>
                 </ListItem>
             {/each}
-            <div class="flex justify-center">
+            <div class="flex justify-center gap-2">
                 <LoadingButton class="px-4 py-2" onclick={oncreateflow}>
                     {#snippet idle()}
                         <IconPlus/>
                     {/snippet}
                 </LoadingButton>
+                <ImportFlowButton {apiProps} metadatas={data.metadatas}/>
             </div>
         </List>
     {:catch error}

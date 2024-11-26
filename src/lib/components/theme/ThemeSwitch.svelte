@@ -18,7 +18,6 @@
 <div class="flex flex-col justify-center text-center">
     <h2 class="h2">Theme</h2>
     <div class="flex flex-row">
-        <!-- TODO: use onchange (https://github.com/skeletonlabs/skeleton/issues/2882) -->
         <Switch name="mode" controlActive="bg-surface-200" checked={currentColorScheme === "light"} onCheckedChange={toggleColorScheme}>
             {#snippet inactiveChild()}<IconMoon size="14"/>{/snippet}
             {#snippet activeChild()}<IconSun size="14"/>{/snippet}
