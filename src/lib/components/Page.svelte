@@ -6,12 +6,15 @@
 
     interface Props {
         pageName: string;
+        description?: string;
         children: any;
     }
 
     const {
         pageName,
+        description,
     }: Props = $props();
+    const fullPageName = $derived(pageName ? pageName + " | Snoty" : "Snoty");
 </script>
 
 <svelte:head>
@@ -19,7 +22,10 @@
         <script type="text/javascript" src={EXTRA_SCRIPT_URL} crossorigin="anonymous" defer></script>
     {/if}
     <!-- either 'pageName | Snoty' or 'Snoty' -->
-    <title>{pageName ? pageName + " | " : ""}Snoty</title>
+    <title>{fullPageName}</title>
+    <meta property="og:title" content={fullPageName}/>
+    <meta property="og:image" content="/favicon.png"/>
+    <meta property="og:description" content={description ?? "A low-code automation platform, specifically made for the educational sector."}/>
 </svelte:head>
 
 <!-- svelte 5 wants {@render children()} but it is buggy, duplicating content but only if <sveltekit:head> is present -->

@@ -83,7 +83,7 @@
             <div class="mt-2 w-full flex justify-between gap-2">
                 <DeleteButton onconfirmed={data.ondelete}>
                     {#snippet body()}
-                        Are you sure you want to delete this node? All states will be lost.
+                        Are you sure you want to delete this node? All data associated with this node will be lost.
                     {/snippet}
                 </DeleteButton>
                 <div class="flex gap-1">
