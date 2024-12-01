@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Modal } from "@skeletonlabs/skeleton-svelte";
+    import { Modal, Switch } from "@skeletonlabs/skeleton-svelte";
     import IconUpload from "lucide-svelte/icons/upload";
     import IconRocket from "lucide-svelte/icons/rocket";
     import ImportFlow from "$lib/components/flow/import/ImportFlow.svelte";
@@ -17,6 +17,7 @@
     let { apiProps, metadatas }: Props = $props()
 
     let shown = $state(false)
+    let showIntermediate = $state(false)
 
     let flow: FlowWithSettingsStore | null = $state(null)
 
@@ -58,10 +59,15 @@
             {#await metadatas}
                 <p>Loading...</p>
             {:then metadatas}
-                <ImportFlow bind:flow {metadatas}/>
+                <ImportFlow bind:flow {showIntermediate} {metadatas}/>
             {/await}
             <div class="w-full flex justify-between px-2">
-                <button class="btn preset-filled" onclick={() => shown = false}>Close</button>
+                <div class="flex flex-row items-center gap-2">
+                    <button class="btn preset-filled" onclick={() => shown = false}>Close</button>
+                    <Switch base="inline-flex items-center gap-1" labelClasses="!ring-0 !ring-transparent" name="show-intermediate-nodes" bind:checked={showIntermediate}>
+                        Show intermediate nodes
+                    </Switch>
+                </div>
                 <LoadingButton disabled={flow == null} onclick={create}>
                     {#snippet idle()}
                         <IconRocket/>Import
