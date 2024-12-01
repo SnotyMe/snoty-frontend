@@ -11,8 +11,9 @@
         metadatas: NodeMetadataMap
         template: ExportedFlow
         flow: ImportFlowDTO & { nodes: (ImportNodeDTO & { settingsStore: SettingsStore })[] }
+        showIntermediate?: boolean
     }
-    let { metadatas, template, flow = $bindable() }: Props = $props();
+    let { metadatas, template, flow = $bindable(), showIntermediate }: Props = $props();
     flow = {
         name: template.templateName,
         nodes: template.nodes.map(node => ({
@@ -28,7 +29,7 @@
         <input type="text" id="name" bind:value={flow.name} class="input"/>
     </div>
 
-    {#each flow.nodes as node}
+    {#each flow.nodes.filter(node => showIntermediate || getNodeMetadata(metadatas, node.descriptor)?.position !== "MIDDLE") as node}
         <div class="flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 block overflow-auto border">
             <SettingsField
                 value={node.settingsStore.settings["name"]}

@@ -11,8 +11,9 @@
     interface Props {
         metadatas: NodeMetadataMap
         flow: ImportFlowDTO | null
+        showIntermediate?: boolean
     }
-    let { metadatas, flow = $bindable() }: Props = $props();
+    let { metadatas, flow = $bindable(), showIntermediate }: Props = $props();
     let template: ExportedFlow | null = $state(null);
 
     let file: File | null = null;
@@ -46,7 +47,7 @@
 
     {#if template}
         {#key template}
-            <ImportFlowSettings {template} {metadatas} bind:flow/>
+            <ImportFlowSettings {template} {metadatas} {showIntermediate} bind:flow/>
         {/key}
     {/if}
 </div>
