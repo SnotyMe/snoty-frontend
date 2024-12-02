@@ -9,4 +9,6 @@ export function buildBackendUrl(parts: string[]) {
     return (env.PUBLIC_API_HOST ?? PUBLIC_API_HOST) + parts.join("")
 }
 
-export const redirectUrl = `${env.PUBLIC_APP_URL ?? PUBLIC_APP_URL}/auth/callback`
+export function redirectUrl(url: URL) {
+    return (url ? (url.protocol + "//" + url.host) : env.PUBLIC_APP_URL ?? PUBLIC_APP_URL) + "/auth/callback"
+}
