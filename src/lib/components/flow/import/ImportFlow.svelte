@@ -6,14 +6,15 @@
     import type { ExportedFlow, ImportFlowDTO } from "$lib/model/flow_import_export";
     import type { FileChangeDetails } from "@zag-js/file-upload"
     import ImportFlowSettings from "$lib/components/flow/import/ImportFlowSettings.svelte";
-    import type { NodeMetadataMap } from "$lib/model/nodes";
+    import type { NodeMetadataMap, NodeTemplatesMap } from "$lib/model/nodes";
 
     interface Props {
         metadatas: NodeMetadataMap
+        templates: NodeTemplatesMap
         flow: ImportFlowDTO | null
         showIntermediate?: boolean
     }
-    let { metadatas, flow = $bindable(), showIntermediate }: Props = $props();
+    let { metadatas, templates, flow = $bindable(), showIntermediate }: Props = $props();
     let template: ExportedFlow | null = $state(null);
 
     let file: File | null = null;
@@ -47,7 +48,7 @@
 
     {#if template}
         {#key template}
-            <ImportFlowSettings {template} {metadatas} {showIntermediate} bind:flow/>
+            <ImportFlowSettings {template} {metadatas} {templates} {showIntermediate} bind:flow/>
         {/key}
     {/if}
 </div>

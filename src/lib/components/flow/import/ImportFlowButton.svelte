@@ -4,7 +4,7 @@
     import IconRocket from "lucide-svelte/icons/rocket";
     import ImportFlow from "$lib/components/flow/import/ImportFlow.svelte";
     import LoadingButton from "$lib/components/LoadingButton.svelte";
-    import type { NodeMetadataMap } from "$lib/model/nodes";
+    import type { NodeMetadataMap, NodeTemplatesMap } from "$lib/model/nodes";
     import { importFlow } from "$lib/api/flow_export_import_api";
     import type { ApiProps } from "$lib/api/api";
     import { goto } from "$app/navigation";
@@ -12,9 +12,10 @@
 
     interface Props {
         metadatas: Promise<NodeMetadataMap>
+        templates: Promise<NodeTemplatesMap>
         apiProps: ApiProps
     }
-    let { apiProps, metadatas }: Props = $props()
+    let { apiProps, metadatas, templates }: Props = $props()
 
     let shown = $state(false)
     let showIntermediate = $state(false)
@@ -56,10 +57,10 @@
     {/snippet}
     {#snippet content()}
         <div class="h-full flex flex-col justify-between gap-2">
-            {#await metadatas}
+            {#await Promise.all([metadatas, templates])}
                 <p>Loading...</p>
-            {:then metadatas}
-                <ImportFlow bind:flow {showIntermediate} {metadatas}/>
+            {:then [metadatas, templates]}
+                <ImportFlow bind:flow {showIntermediate} {metadatas} {templates}/>
             {/await}
             <div class="w-full flex justify-between px-2">
                 <div class="flex flex-row items-center gap-2">

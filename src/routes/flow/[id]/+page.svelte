@@ -3,8 +3,6 @@
     import Page from "$lib/components/Page.svelte";
     import type { PageData } from "./$types";
     import type { ApiProps } from "$lib/api/api";
-    import * as templateAPI from "$lib/components/template/utils";
-    import { browser } from "$app/environment";
     import FlowLoading from "$lib/components/flow/FlowLoading.svelte";
     import Flow from "$lib/components/flow/Flow.svelte";
 
@@ -17,10 +15,6 @@
         token: data.access_token!!,
         fetch: fetch
     }
-
-    // load template API to global context
-    if (browser)
-        window.templateAPI = templateAPI;
 </script>
 
 <Page title="Flow">
