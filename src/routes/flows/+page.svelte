@@ -62,7 +62,7 @@
                         <IconPlus/>
                     {/snippet}
                 </LoadingButton>
-                <ImportFlowButton {apiProps} metadatas={data.metadatas}/>
+                <ImportFlowButton {apiProps} metadatas={data.metadatas} templates={data.templates}/>
             </div>
         </List>
     {:catch error}

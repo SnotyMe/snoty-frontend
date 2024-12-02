@@ -28,6 +28,13 @@
     const tileProps = {
         active: "",
     }
+
+    import { browser } from "$app/environment";
+    import * as templateAPI from "$lib/components/template/utils";
+
+    // load template API to global context
+    if (browser)
+        window.templateAPI = templateAPI;
 </script>
 
 <div class="card border-surface-100-900 grid h-full w-full grid-cols-[auto_1fr] border-[1px]">
