@@ -7,7 +7,7 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
     const result = await fetch(buildBackendUrl([
             "/auth/token",
             `?code=${params.get("code")}`,
-            `&redirect_url=${redirectUrl}`,
+            `&redirect_url=${redirectUrl(url)}`,
         ]),
         {
             method: "POST"
@@ -20,7 +20,11 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
             return json.then(Promise.reject.bind(Promise));
         })
         .then(res => {
-            let ops = { expires: new Date(new Date().getTime() + res.expires_in * 1000), path: "/" };
+            let ops = {
+                secure: url.protocol.includes("https"),
+                expires: new Date(new Date().getTime() + res.expires_in * 1000),
+                path: "/",
+            };
             cookies.set("access_token", res.access_token, ops)
             cookies.set("refresh_token", res.refresh_token, ops)
             cookies.set("id_token", res.id_token, ops)
