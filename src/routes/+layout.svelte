@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import "../app.css";
     import { Navigation, Avatar } from "@skeletonlabs/skeleton-svelte";
     import IconSettings from "lucide-svelte/icons/settings";
@@ -30,11 +30,17 @@
     }
 
     import { browser } from "$app/environment";
-    import * as templateAPI from "$lib/components/template/utils";
+    import type { ApiProps } from "$lib/api/api";
+    import { TemplateAPI } from "$lib/components/template/api";
+
+    const apiProps: ApiProps = {
+        token: data.access_token!!,
+        fetch: fetch
+    }
 
     // load template API to global context
     if (browser)
-        window.templateAPI = templateAPI;
+        window.templateAPI = new TemplateAPI(apiProps);
 </script>
 
 <div class="card border-surface-100-900 grid h-full w-full grid-cols-[auto_1fr] border-[1px]">
