@@ -1,17 +1,28 @@
 import type { Handle } from "@sveltejs/kit";
-import { refreshToken, shouldRefreshToken } from "$lib/auth/refresh";
+import { refreshAccessToken, shouldRefreshToken } from "$lib/auth/refresh";
 import { parseToken } from "$lib/auth/parse";
+import { setAuthCookies } from "./routes/auth/callback/auth-cookies";
 
 export const handle: Handle = async ({ event, resolve }) => {
     let accessToken = event.cookies.get("access_token");
-    if (accessToken != undefined) {
-        const parsed = parseToken(accessToken);
+    const refreshToken = event.cookies.get("refresh_token");
+
+    let parsed = accessToken != undefined ? parseToken(accessToken) : undefined;
+    if ((accessToken == undefined && refreshToken != undefined) || (parsed && shouldRefreshToken(parsed))) {
+        const refreshed = await refreshAccessToken(event.fetch, refreshToken);
+
+        // refresh may fail, no biggie
+        if (refreshed != null) {
+            event.locals.access_token = refreshed;
+            setAuthCookies(event.url, refreshed, event.cookies);
+            accessToken = refreshed.access_token;
+            parsed = parseToken(refreshed.access_token);
+        }
+    }
+
+    if (accessToken != null && parsed != undefined) {
         event.locals.user = parsed.user
         event.locals.access_token = accessToken;
-
-        if (shouldRefreshToken(parsed)) {
-            refreshToken(event.cookies.get("refresh_token")!);
-        }
     }
 
     return resolve(event);
