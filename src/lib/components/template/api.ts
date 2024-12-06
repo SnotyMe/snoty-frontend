@@ -1,4 +1,4 @@
-import { type ApiProps } from "$lib/api/api";
+import { type ApiProps, authenticatedApiFetch } from "$lib/api/api";
 import { getNodeAPI as nodeAPIGetter } from "$lib/components/template/node";
 
 export class TemplateAPI {
@@ -26,5 +26,9 @@ export class TemplateAPI {
                 ...init.headers,
             },
         })
+    }
+
+    backendFetch(url: string, init: RequestInit): Promise<Response> {
+        return authenticatedApiFetch(this.apiProps, url, init)
     }
 }
