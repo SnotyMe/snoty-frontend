@@ -76,8 +76,8 @@ importers:
         specifier: ^20.17.9
         version: 20.17.9
       '@zag-js/file-upload':
-        specifier: ^0.77.1
-        version: 0.77.1
+        specifier: ^0.78.0
+        version: 0.78.2
       '@zag-js/pagination':
         specifier: ^0.78.0
         version: 0.78.2
@@ -881,14 +881,14 @@ packages:
   '@zag-js/file-upload@0.75.0':
     resolution: {integrity: sha512-Xn14aOZ2u5UuJjrOtZpxV9Lqcqv6bOjlcu/iU6PI76JpPdI0/AaVXU7CYItLrPBbUsctBsjYW79/HOcHqZwhLQ==}
 
-  '@zag-js/file-upload@0.77.1':
-    resolution: {integrity: sha512-0MaVDnAuzsL4NO1gssRutuCacFqLql76uF4qaXt6GWygmGpLP24gVfcBeXaBD2HHRB3IZ70MQx8oBq91sNaYMQ==}
+  '@zag-js/file-upload@0.78.2':
+    resolution: {integrity: sha512-kOFIGCrmKCWrKzAQFW49viEn4GhwRUNtGsec5hF16qWjXdTXPh+MaSSTu28fOXh8haf9mfERchtBgpbpExAdGQ==}
 
   '@zag-js/file-utils@0.75.0':
     resolution: {integrity: sha512-ORCEM0LN516luYmF4PYegieksNWolDlcZ1jiiLSXr6ylTyUNYFmPDs/UFByZx4FsXgRTu2FJMAaG6jBRpp50dQ==}
 
-  '@zag-js/file-utils@0.77.1':
-    resolution: {integrity: sha512-lBGdjIdoETUdDlL5NxFtKdl5aSd9JvkokuNHTj1VJjBaW1KHQjzDNMJMgPabDyekQWcIOxNok33MhtiW3y3rNA==}
+  '@zag-js/file-utils@0.78.2':
+    resolution: {integrity: sha512-2UgC/OjyvWXuvnomvHOzaIv5P04QIlKkvbJK3asKxdhUzwHRgYBu76s10k4W+KIA/QMMcmvzA+EriamAZhiWeQ==}
 
   '@zag-js/focus-visible@0.75.0':
     resolution: {integrity: sha512-2Uin+VcveAT+dwD02Krn1L+cCA6U/YHGQeu8SJ9H06hnqjzVqE2maeHc6tyTqH0K1wQKvWHZFcWIpfF64QviMg==}
@@ -899,8 +899,8 @@ packages:
   '@zag-js/i18n-utils@0.75.0':
     resolution: {integrity: sha512-5mIVuSmEfK/9Pk66R5Njbxu9l+PqUfRYrtr9HJItW8ijjmIrISfW9D0xRazKcVExVarYuHEk6Fzk1nsJnzqZmg==}
 
-  '@zag-js/i18n-utils@0.77.1':
-    resolution: {integrity: sha512-HJAaCXf6r8b72JajIEQmnekRX/7Dz2sBMrAqpvIV6dpMDjCVcyow8WgfDqE46ipdNLi2XL1lgwaW3h5ckYEL+Q==}
+  '@zag-js/i18n-utils@0.78.2':
+    resolution: {integrity: sha512-WxwTPOMf3/FkgzxA1hj9RS3yXR8Bm9A6Oq4Ba/OhzRhdwCvDTVxAL3cw/TuCUg4bFOeKiRfc+HnDe/7Sn4zFlw==}
 
   '@zag-js/interact-outside@0.75.0':
     resolution: {integrity: sha512-F3+BMMx57EaY1CPW7007MEJCBe3hgR1NJuDzvDmqPyjy+M0BwNzd7Tqg5YxaDSuvAA4r71AlxqRpBU5RNh44lA==}
@@ -2749,23 +2749,23 @@ snapshots:
       '@zag-js/types': 0.75.0
       '@zag-js/utils': 0.75.0
 
-  '@zag-js/file-upload@0.77.1':
+  '@zag-js/file-upload@0.78.2':
     dependencies:
-      '@zag-js/anatomy': 0.77.1
-      '@zag-js/core': 0.77.1
-      '@zag-js/dom-query': 0.77.1
-      '@zag-js/file-utils': 0.77.1
-      '@zag-js/i18n-utils': 0.77.1
-      '@zag-js/types': 0.77.1
-      '@zag-js/utils': 0.77.1
+      '@zag-js/anatomy': 0.78.2
+      '@zag-js/core': 0.78.2
+      '@zag-js/dom-query': 0.78.2
+      '@zag-js/file-utils': 0.78.2
+      '@zag-js/i18n-utils': 0.78.2
+      '@zag-js/types': 0.78.2
+      '@zag-js/utils': 0.78.2
 
   '@zag-js/file-utils@0.75.0':
     dependencies:
       '@zag-js/i18n-utils': 0.75.0
 
-  '@zag-js/file-utils@0.77.1':
+  '@zag-js/file-utils@0.78.2':
     dependencies:
-      '@zag-js/i18n-utils': 0.77.1
+      '@zag-js/i18n-utils': 0.78.2
 
   '@zag-js/focus-visible@0.75.0':
     dependencies:
@@ -2777,9 +2777,9 @@ snapshots:
     dependencies:
       '@zag-js/dom-query': 0.75.0
 
-  '@zag-js/i18n-utils@0.77.1':
+  '@zag-js/i18n-utils@0.78.2':
     dependencies:
-      '@zag-js/dom-query': 0.77.1
+      '@zag-js/dom-query': 0.78.2
 
   '@zag-js/interact-outside@0.75.0':
     dependencies:
