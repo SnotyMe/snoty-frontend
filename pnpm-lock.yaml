@@ -56,16 +56,16 @@ importers:
         version: 1.0.0-next.15(svelte@5.0.0)
       '@sveltejs/adapter-auto':
         specifier: ^3.3.1
-        version: 3.3.1(@sveltejs/kit@2.9.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))
+        version: 3.3.1(@sveltejs/kit@2.10.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))
       '@sveltejs/adapter-cloudflare':
         specifier: ^4.8.0
-        version: 4.8.0(@sveltejs/kit@2.9.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(wrangler@3.82.0(@cloudflare/workers-types@4.20241205.0))
+        version: 4.8.0(@sveltejs/kit@2.10.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(wrangler@3.82.0(@cloudflare/workers-types@4.20241205.0))
       '@sveltejs/adapter-node':
         specifier: ^5.2.9
-        version: 5.2.9(@sveltejs/kit@2.9.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))
+        version: 5.2.9(@sveltejs/kit@2.10.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))
       '@sveltejs/kit':
         specifier: ^2.9.1
-        version: 2.9.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1))
+        version: 2.10.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1))
       '@sveltejs/vite-plugin-svelte':
         specifier: 5.0.1
         version: 5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1))
@@ -735,8 +735,8 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^2.4.0
 
-  '@sveltejs/kit@2.9.1':
-    resolution: {integrity: sha512-D+yH3DTvvkjXdl3Xv7akKmolrArDZRtsFv3nlxJPjlIKsZEpkkInnomKJuAql2TrNGJ2dJMGBO1YYgVn2ILmag==}
+  '@sveltejs/kit@2.10.1':
+    resolution: {integrity: sha512-2aormKTn94aU8Lfxj4gcbRGh1Dyw0hCFlNo51+njdRDn9P2ERuWC4bOtTuoy5HJpPYR3AH8oaaEjKDWUHbi1OA==}
     engines: {node: '>=18.13'}
     hasBin: true
     peerDependencies:
@@ -824,9 +824,6 @@ packages:
   '@zag-js/anatomy@0.75.0':
     resolution: {integrity: sha512-YtVz2387Xy3cXeL86/jWtZ+NT9wojFsXZbOnRoXG5P5QaiD7tKeWYWJZBzxNBPYfWhSy1N93cAxhL65xJah1Qw==}
 
-  '@zag-js/anatomy@0.77.1':
-    resolution: {integrity: sha512-VMj+z4kco9zVKDEsabQDy8IYCqXdMqdZ2Z+n4IeEOV93oX7iG86vNHgZ7NXykN2jSR/Bka+LcGtAstaUvVw2dA==}
-
   '@zag-js/anatomy@0.78.2':
     resolution: {integrity: sha512-U1A4s3QTSwlfzGniHMdEV6l3k5QiS8daPkQTdBRRRqKajOCFjmqB7QkiLUNBuh4JoBTk7Zzw7mS6hCsltWuV8g==}
 
@@ -848,9 +845,6 @@ packages:
   '@zag-js/core@0.75.0':
     resolution: {integrity: sha512-nkfHHWLTHiHW/hvk/O4y9sbtxE5Bxbj1vetElAlXqCDrQMgqNGOBEtxcjQVX65CJMjx1wHHcjG7lV0JOY6cpCw==}
 
-  '@zag-js/core@0.77.1':
-    resolution: {integrity: sha512-tY5A/XayGdtiSutjQl4jBzoj2xdka8JD4JuzffsAT7aWJklbfiuIKc0R7dbAviRQ1vFe0Jvmrd3FZz85aJJfdg==}
-
   '@zag-js/core@0.78.2':
     resolution: {integrity: sha512-9gCSZBBG5NrmeLDHOCGlwXq8hlLXM9Gb16WzYLbxdsVZyfmbI1+11U0iPGsfaKIO5n1be4LJnYuxewcKZz2aBg==}
 
@@ -865,9 +859,6 @@ packages:
 
   '@zag-js/dom-query@0.75.0':
     resolution: {integrity: sha512-PrCX29VbxKW4YQCAo6juttlwW563Os03dId/0V7WCN4daj+ocpI169mMm/XxgXfI9kgebZuYvY9ngIJeHdJHSA==}
-
-  '@zag-js/dom-query@0.77.1':
-    resolution: {integrity: sha512-hr+4lzx4wHqhunjMzAmNp7sma5K58o0ti1h5gXpei1puoeGs8epZfzjW/ZTsKyuVgH3+0f80YOC+oTK6rDAhcw==}
 
   '@zag-js/dom-query@0.78.2':
     resolution: {integrity: sha512-YHqaDUqETwp5dZK/lMLrhZ7X7Li4RbXcWR6lpoWoquSFXlhogWYm2JozNl3LkCmcIF9YwKzpG5yt3rKfmFs3hg==}
@@ -941,9 +932,6 @@ packages:
   '@zag-js/store@0.75.0':
     resolution: {integrity: sha512-kAzqLKfCLRIYfnsLuQdHOdrIwBdO4nqJ6kjCYlWvhSe81oDWCrC5MY2fv7mIYFjW+ZPpH3xmgGvj5ugqfAsqoA==}
 
-  '@zag-js/store@0.77.1':
-    resolution: {integrity: sha512-qk9uuXehAiq9BG0Rhd6nGwYI1WiXa3KcFydxbiMnlGiET8/zAeNTw5biYW5riptAmZ6xiwVUNtzg0T58+3YIag==}
-
   '@zag-js/store@0.78.2':
     resolution: {integrity: sha512-93etMJB9iPPrqMtaNxYvL/xebgKpxvzwBGYiI16+PObYF/h5d/THX86TTWZsChP/ZEjfRPtixSevbGtfB2YugQ==}
 
@@ -970,17 +958,11 @@ packages:
   '@zag-js/types@0.75.0':
     resolution: {integrity: sha512-NG2wJeFzgSX7TKg015r1nxV3oSy9RJ94iQpoQLv66hH5XDvAJbV4jCf0yAo8awwK+5x8Opz3awJrGVnbo0B/eQ==}
 
-  '@zag-js/types@0.77.1':
-    resolution: {integrity: sha512-GtZKdiltPDxp19qmXa/L+a1ffL67bmSxAPlT/wVv2G7uLtL82GKKT86m2yaUqKq+VUE47kXjarj9pTcTrwTSVQ==}
-
   '@zag-js/types@0.78.2':
     resolution: {integrity: sha512-nxOKJ7/oEsyeBE2ASnqCjDds9AoqHoAB7s2Ru9t1d0a0InOP4REsC5lsuT6LEvrkc8RWqqa6c3PsVQ8jFq7g+w==}
 
   '@zag-js/utils@0.75.0':
     resolution: {integrity: sha512-68zu+3zBs5QtgYcdcoUOpYMdyf5tecoaNbttjAR3Xnmgva3PYnS/l08ZnV8wyGvixGFSRg1gJNZfWFm2WGCmIw==}
-
-  '@zag-js/utils@0.77.1':
-    resolution: {integrity: sha512-sYCRwWQlQeYuRUvuDX0ji6Dnt/Ld6bIbVXV7NtbHCpz/G0sOnVaHJLTOoIFt1KEIrm9QvDtj/JFJGNi9Jc1Bew==}
 
   '@zag-js/utils@0.78.2':
     resolution: {integrity: sha512-FgRTrlP0HpxofCQkoW2fb46vTw7/Mlo0XOrI1SBX+w5XazEK9/pn7BduAHsBcDbhsEMnXYRiv8nWMQtU4ZenYA==}
@@ -2504,28 +2486,28 @@ snapshots:
     dependencies:
       svelte: 5.0.0
 
-  '@sveltejs/adapter-auto@3.3.1(@sveltejs/kit@2.9.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))':
+  '@sveltejs/adapter-auto@3.3.1(@sveltejs/kit@2.10.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))':
     dependencies:
-      '@sveltejs/kit': 2.9.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1))
+      '@sveltejs/kit': 2.10.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1))
       import-meta-resolve: 4.1.0
 
-  '@sveltejs/adapter-cloudflare@4.8.0(@sveltejs/kit@2.9.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(wrangler@3.82.0(@cloudflare/workers-types@4.20241205.0))':
+  '@sveltejs/adapter-cloudflare@4.8.0(@sveltejs/kit@2.10.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(wrangler@3.82.0(@cloudflare/workers-types@4.20241205.0))':
     dependencies:
       '@cloudflare/workers-types': 4.20241205.0
-      '@sveltejs/kit': 2.9.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1))
+      '@sveltejs/kit': 2.10.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1))
       esbuild: 0.24.0
       worktop: 0.8.0-next.18
       wrangler: 3.82.0(@cloudflare/workers-types@4.20241205.0)
 
-  '@sveltejs/adapter-node@5.2.9(@sveltejs/kit@2.9.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))':
+  '@sveltejs/adapter-node@5.2.9(@sveltejs/kit@2.10.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))':
     dependencies:
       '@rollup/plugin-commonjs': 28.0.1(rollup@4.28.1)
       '@rollup/plugin-json': 6.1.0(rollup@4.28.1)
       '@rollup/plugin-node-resolve': 15.3.0(rollup@4.28.1)
-      '@sveltejs/kit': 2.9.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1))
+      '@sveltejs/kit': 2.10.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1))
       rollup: 4.28.1
 
-  '@sveltejs/kit@2.9.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1))':
+  '@sveltejs/kit@2.10.1(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)))(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1))':
     dependencies:
       '@sveltejs/vite-plugin-svelte': 5.0.1(svelte@5.0.0)(vite@6.0.3(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1))
       '@types/cookie': 0.6.0
@@ -2649,8 +2631,6 @@ snapshots:
 
   '@zag-js/anatomy@0.75.0': {}
 
-  '@zag-js/anatomy@0.77.1': {}
-
   '@zag-js/anatomy@0.78.2': {}
 
   '@zag-js/aria-hidden@0.75.0':
@@ -2692,12 +2672,6 @@ snapshots:
       '@zag-js/utils': 0.75.0
       klona: 2.0.6
 
-  '@zag-js/core@0.77.1':
-    dependencies:
-      '@zag-js/store': 0.77.1
-      '@zag-js/utils': 0.77.1
-      klona: 2.0.6
-
   '@zag-js/core@0.78.2':
     dependencies:
       '@zag-js/store': 0.78.2
@@ -2730,8 +2704,6 @@ snapshots:
       '@zag-js/types': 0.75.0
 
   '@zag-js/dom-query@0.75.0': {}
-
-  '@zag-js/dom-query@0.77.1': {}
 
   '@zag-js/dom-query@0.78.2': {}
 
@@ -2875,10 +2847,6 @@ snapshots:
     dependencies:
       proxy-compare: 3.0.0
 
-  '@zag-js/store@0.77.1':
-    dependencies:
-      proxy-compare: 3.0.0
-
   '@zag-js/store@0.78.2':
     dependencies:
       proxy-compare: 3.0.1
@@ -2942,17 +2910,11 @@ snapshots:
     dependencies:
       csstype: 3.1.3
 
-  '@zag-js/types@0.77.1':
-    dependencies:
-      csstype: 3.1.3
-
   '@zag-js/types@0.78.2':
     dependencies:
       csstype: 3.1.3
 
   '@zag-js/utils@0.75.0': {}
-
-  '@zag-js/utils@0.77.1': {}
 
   '@zag-js/utils@0.78.2': {}
 
