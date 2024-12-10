@@ -58,7 +58,7 @@
             {/each}
         </div>
 
-        <Pagination classes="flex-shrink-0 mt-1 justify-center" data={allExecutions} bind:page bind:pageSize onPageChange={pageChanged} alternative>
+        <Pagination classes="flex-shrink-0 mt-1 justify-center" data={allExecutions} bind:page bind:pageSize onPageChange={pageChanged}>
             {#snippet labelEllipsis()}<IconEllipsis class="size-4" />{/snippet}
             {#snippet labelNext()}<IconArrowRight class="size-4" />{/snippet}
             {#snippet labelPrevious()}<IconArrowLeft class="size-4" />{/snippet}
