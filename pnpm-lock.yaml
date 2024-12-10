@@ -39,8 +39,8 @@ importers:
         specifier: ^10.19.0
         version: 10.19.0
       lucide-svelte:
-        specifier: ^0.454.0
-        version: 0.454.0(svelte@5.0.0)
+        specifier: ^0.468.0
+        version: 0.468.0(svelte@5.0.0)
       svelte-codemirror-editor:
         specifier: ^1.4.1
         version: 1.4.1(codemirror@6.0.1(@lezer/common@1.2.3))(svelte@5.0.0)
@@ -824,9 +824,6 @@ packages:
   '@zag-js/anatomy@0.75.0':
     resolution: {integrity: sha512-YtVz2387Xy3cXeL86/jWtZ+NT9wojFsXZbOnRoXG5P5QaiD7tKeWYWJZBzxNBPYfWhSy1N93cAxhL65xJah1Qw==}
 
-  '@zag-js/anatomy@0.77.1':
-    resolution: {integrity: sha512-VMj+z4kco9zVKDEsabQDy8IYCqXdMqdZ2Z+n4IeEOV93oX7iG86vNHgZ7NXykN2jSR/Bka+LcGtAstaUvVw2dA==}
-
   '@zag-js/anatomy@0.78.2':
     resolution: {integrity: sha512-U1A4s3QTSwlfzGniHMdEV6l3k5QiS8daPkQTdBRRRqKajOCFjmqB7QkiLUNBuh4JoBTk7Zzw7mS6hCsltWuV8g==}
 
@@ -848,9 +845,6 @@ packages:
   '@zag-js/core@0.75.0':
     resolution: {integrity: sha512-nkfHHWLTHiHW/hvk/O4y9sbtxE5Bxbj1vetElAlXqCDrQMgqNGOBEtxcjQVX65CJMjx1wHHcjG7lV0JOY6cpCw==}
 
-  '@zag-js/core@0.77.1':
-    resolution: {integrity: sha512-tY5A/XayGdtiSutjQl4jBzoj2xdka8JD4JuzffsAT7aWJklbfiuIKc0R7dbAviRQ1vFe0Jvmrd3FZz85aJJfdg==}
-
   '@zag-js/core@0.78.2':
     resolution: {integrity: sha512-9gCSZBBG5NrmeLDHOCGlwXq8hlLXM9Gb16WzYLbxdsVZyfmbI1+11U0iPGsfaKIO5n1be4LJnYuxewcKZz2aBg==}
 
@@ -865,9 +859,6 @@ packages:
 
   '@zag-js/dom-query@0.75.0':
     resolution: {integrity: sha512-PrCX29VbxKW4YQCAo6juttlwW563Os03dId/0V7WCN4daj+ocpI169mMm/XxgXfI9kgebZuYvY9ngIJeHdJHSA==}
-
-  '@zag-js/dom-query@0.77.1':
-    resolution: {integrity: sha512-hr+4lzx4wHqhunjMzAmNp7sma5K58o0ti1h5gXpei1puoeGs8epZfzjW/ZTsKyuVgH3+0f80YOC+oTK6rDAhcw==}
 
   '@zag-js/dom-query@0.78.2':
     resolution: {integrity: sha512-YHqaDUqETwp5dZK/lMLrhZ7X7Li4RbXcWR6lpoWoquSFXlhogWYm2JozNl3LkCmcIF9YwKzpG5yt3rKfmFs3hg==}
@@ -941,9 +932,6 @@ packages:
   '@zag-js/store@0.75.0':
     resolution: {integrity: sha512-kAzqLKfCLRIYfnsLuQdHOdrIwBdO4nqJ6kjCYlWvhSe81oDWCrC5MY2fv7mIYFjW+ZPpH3xmgGvj5ugqfAsqoA==}
 
-  '@zag-js/store@0.77.1':
-    resolution: {integrity: sha512-qk9uuXehAiq9BG0Rhd6nGwYI1WiXa3KcFydxbiMnlGiET8/zAeNTw5biYW5riptAmZ6xiwVUNtzg0T58+3YIag==}
-
   '@zag-js/store@0.78.2':
     resolution: {integrity: sha512-93etMJB9iPPrqMtaNxYvL/xebgKpxvzwBGYiI16+PObYF/h5d/THX86TTWZsChP/ZEjfRPtixSevbGtfB2YugQ==}
 
@@ -970,17 +958,11 @@ packages:
   '@zag-js/types@0.75.0':
     resolution: {integrity: sha512-NG2wJeFzgSX7TKg015r1nxV3oSy9RJ94iQpoQLv66hH5XDvAJbV4jCf0yAo8awwK+5x8Opz3awJrGVnbo0B/eQ==}
 
-  '@zag-js/types@0.77.1':
-    resolution: {integrity: sha512-GtZKdiltPDxp19qmXa/L+a1ffL67bmSxAPlT/wVv2G7uLtL82GKKT86m2yaUqKq+VUE47kXjarj9pTcTrwTSVQ==}
-
   '@zag-js/types@0.78.2':
     resolution: {integrity: sha512-nxOKJ7/oEsyeBE2ASnqCjDds9AoqHoAB7s2Ru9t1d0a0InOP4REsC5lsuT6LEvrkc8RWqqa6c3PsVQ8jFq7g+w==}
 
   '@zag-js/utils@0.75.0':
     resolution: {integrity: sha512-68zu+3zBs5QtgYcdcoUOpYMdyf5tecoaNbttjAR3Xnmgva3PYnS/l08ZnV8wyGvixGFSRg1gJNZfWFm2WGCmIw==}
-
-  '@zag-js/utils@0.77.1':
-    resolution: {integrity: sha512-sYCRwWQlQeYuRUvuDX0ji6Dnt/Ld6bIbVXV7NtbHCpz/G0sOnVaHJLTOoIFt1KEIrm9QvDtj/JFJGNi9Jc1Bew==}
 
   '@zag-js/utils@0.78.2':
     resolution: {integrity: sha512-FgRTrlP0HpxofCQkoW2fb46vTw7/Mlo0XOrI1SBX+w5XazEK9/pn7BduAHsBcDbhsEMnXYRiv8nWMQtU4ZenYA==}
@@ -1430,8 +1412,8 @@ packages:
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
-  lucide-svelte@0.454.0:
-    resolution: {integrity: sha512-TgW17HI7M8LeFZ3NpaDp1LwPGBGMVjx/x81TtK+AacEQvmJcqetqeJNeBT18NMEJP9+zi/Wt+Zc8mo44K5Uszw==}
+  lucide-svelte@0.468.0:
+    resolution: {integrity: sha512-n0ecAFtCY5LEeL+PJ1Xj4n3c2gzj8tMpak0KMGnvoSJEjCsCnRB0mekBtJZAo7beyynW9Qj5Um1KfMBAeTNplw==}
     peerDependencies:
       svelte: ^3 || ^4 || ^5.0.0-next.42
 
@@ -2649,8 +2631,6 @@ snapshots:
 
   '@zag-js/anatomy@0.75.0': {}
 
-  '@zag-js/anatomy@0.77.1': {}
-
   '@zag-js/anatomy@0.78.2': {}
 
   '@zag-js/aria-hidden@0.75.0':
@@ -2692,12 +2672,6 @@ snapshots:
       '@zag-js/utils': 0.75.0
       klona: 2.0.6
 
-  '@zag-js/core@0.77.1':
-    dependencies:
-      '@zag-js/store': 0.77.1
-      '@zag-js/utils': 0.77.1
-      klona: 2.0.6
-
   '@zag-js/core@0.78.2':
     dependencies:
       '@zag-js/store': 0.78.2
@@ -2730,8 +2704,6 @@ snapshots:
       '@zag-js/types': 0.75.0
 
   '@zag-js/dom-query@0.75.0': {}
-
-  '@zag-js/dom-query@0.77.1': {}
 
   '@zag-js/dom-query@0.78.2': {}
 
@@ -2875,10 +2847,6 @@ snapshots:
     dependencies:
       proxy-compare: 3.0.0
 
-  '@zag-js/store@0.77.1':
-    dependencies:
-      proxy-compare: 3.0.0
-
   '@zag-js/store@0.78.2':
     dependencies:
       proxy-compare: 3.0.1
@@ -2942,17 +2910,11 @@ snapshots:
     dependencies:
       csstype: 3.1.3
 
-  '@zag-js/types@0.77.1':
-    dependencies:
-      csstype: 3.1.3
-
   '@zag-js/types@0.78.2':
     dependencies:
       csstype: 3.1.3
 
   '@zag-js/utils@0.75.0': {}
-
-  '@zag-js/utils@0.77.1': {}
 
   '@zag-js/utils@0.78.2': {}
 
@@ -3389,7 +3351,7 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lucide-svelte@0.454.0(svelte@5.0.0):
+  lucide-svelte@0.468.0(svelte@5.0.0):
     dependencies:
       svelte: 5.0.0
 
