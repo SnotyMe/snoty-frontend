@@ -10,7 +10,7 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
-		"@jridgewell/gen-mapping": "0.3.5",
+		"@jridgewell/gen-mapping": "0.3.8",
 		"@skeletonlabs/skeleton": "3.0.0-next.9",
 		"@skeletonlabs/skeleton-svelte": "1.0.0-next.15",
 		"@sveltejs/adapter-auto": "^3.3.1",
