@@ -15,24 +15,24 @@
     }
     const { flowId, apiProps, descriptor, settings, onnodecreated }: Props = $props()
 
-    let submitting = $state(false)
+    let submitting = $state(false);
 
     async function submit() {
-        submitting = true
+        submitting = true;
         try {
             const nodeCreateDTO: NodeCreateDTO = {
                 descriptor,
                 flowId,
                 settings: settings.settings
-            }
-            const createdNode = await createNode(apiProps, nodeCreateDTO)
+            };
+            const createdNode = await createNode(apiProps, nodeCreateDTO);
 
-            onnodecreated(createdNode)
+            onnodecreated(createdNode);
         } catch (e: any) {
-            console.error(e)
-            alert(`Failed to create node: ${e.message}`)
+            console.error(e);
+            alert(`Failed to create node: ${e.message}`);
         }
-        submitting = false
+        submitting = false;
     }
 </script>
 

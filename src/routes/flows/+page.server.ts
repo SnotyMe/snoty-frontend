@@ -6,11 +6,11 @@ import type { EnumeratedFlowExecution, Workflow } from "$lib/model/flows";
 export const load: PageServerLoad = async ({ locals, fetch }): Promise<App.Locals & {
     flows: Promise<(Workflow & { lastExecution: EnumeratedFlowExecution | undefined })[]>
 }> => {
-    const token = ensureLoggedIn(locals)
+    const token = ensureLoggedIn(locals);
     const apiProps = { token, fetch };
 
-    const flows = getFlows(apiProps)
-    const flowExecutions = enumerateFlowExecutions(apiProps)
+    const flows = getFlows(apiProps);
+    const flowExecutions = enumerateFlowExecutions(apiProps);
 
     return {
         ...locals,
@@ -21,5 +21,5 @@ export const load: PageServerLoad = async ({ locals, fetch }): Promise<App.Local
                     lastExecution: executions.find(exec => exec.flowId === flow._id)
                 }))
             )
-    }
+    };
 }

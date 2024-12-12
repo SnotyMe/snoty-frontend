@@ -4,11 +4,11 @@
 
     interface ScaleTransitionProps extends ScaleParams {}
 
-    const ogProps: ScaleTransitionProps = $props()
+    const ogProps: ScaleTransitionProps = $props();
     const transitionProps = {
         ...ogProps,
         duration: 400
-    }
+    };
 </script>
 
 <style>

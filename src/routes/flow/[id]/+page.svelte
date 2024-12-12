@@ -14,7 +14,7 @@
     const apiProps: ApiProps = {
         token: data.access_token!!,
         fetch: fetch
-    }
+    };
 </script>
 
 <Page title="Flow">

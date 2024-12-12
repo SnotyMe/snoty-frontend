@@ -12,8 +12,8 @@
     }
     const { field }: Props = $props();
 
-    const details = getPolyDetails(field)
-    const defaultValue = getDefaultValueFormattedIfPresent(field)
+    const details = getPolyDetails(field);
+    const defaultValue = getDefaultValueFormattedIfPresent(field);
 </script>
 
 <span class="chip preset-filled">{field.name}</span>

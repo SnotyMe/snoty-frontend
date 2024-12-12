@@ -1,7 +1,7 @@
 import type { Fetch } from "$lib/api/api";
 import { buildBackendUrl } from "$lib/auth/urls";
 
-export function shouldRefreshToken(token: {exp: number | undefined, iat: number | undefined}) {
+export function shouldRefreshToken(token: { exp: number | undefined, iat: number | undefined }) {
     // if there is no expiration, assume it is broken and don't refresh anything
     if (token.exp === undefined || token.iat === undefined) {
         return false;
@@ -20,7 +20,7 @@ export function shouldRefreshToken(token: {exp: number | undefined, iat: number 
 
 export async function refreshAccessToken(fetch: Fetch, refreshToken: string | undefined): Promise<null | any> {
     if (refreshToken === undefined) {
-        throw new Error("No refresh token provided")
+        throw new Error("No refresh token provided");
     }
 
     const response = await fetch(buildBackendUrl(["/auth/refresh"]), {
@@ -31,11 +31,12 @@ export async function refreshAccessToken(fetch: Fetch, refreshToken: string | un
         body: new URLSearchParams({
             refresh_token: refreshToken,
         }),
-    })
+    });
+
     if (!response.ok) {
         console.error("Failed to refresh token", response.status, response.statusText)
         return null;
     }
 
-    return await response.json()
+    return await response.json();
 }

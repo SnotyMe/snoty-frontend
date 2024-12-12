@@ -2,7 +2,7 @@
     function logout() {
         fetch('/auth/logout', {
             method: 'POST',
-        }).then(() => window.location.reload())
+        }).then(() => window.location.reload());
     }
 </script>
 

@@ -12,8 +12,8 @@ export interface CodemirrorProps {
 export function getLanguage(language: Language | undefined) {
     switch (language) {
         case "json":
-            return json()
+            return json();
         case "liquid":
-            return liquid()
+            return liquid();
     }
 }

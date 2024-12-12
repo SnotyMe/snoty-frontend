@@ -11,8 +11,8 @@
     import { renameFlow, triggerFlow } from "$lib/api/flow_api";
     import ExportFlow from "$lib/components/flow/export/ExportFlow.svelte";
 
-    type Props = Omit<AddNodeProps, "isOpen">
-    const props: Props = $props()
+    type Props = Omit<AddNodeProps, "isOpen">;
+    const props: Props = $props();
 
     const ADD = "add";
     const LOGS = "logs";

@@ -47,12 +47,12 @@ export function createSettings(
 }
 
 export function nodeSettingsFromMetadata(nodeMetadata: NodeMetadata): NodeSettings {
-    const fields = nodeMetadata.settings
+    const fields = nodeMetadata.settings;
 
-    const settings: NodeSettings = {}
+    const settings: NodeSettings = {};
     for (const field of fields) {
         settings[field.name] = getDefaultValue(field);
     }
-    settings.name = nodeMetadata.displayName
+    settings.name = nodeMetadata.displayName;
     return settings;
 }

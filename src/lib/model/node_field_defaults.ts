@@ -13,35 +13,35 @@ export function getDefaultValue(field: NodeField): any {
     switch (field.type) {
         case "Enum":
             let constants = enumDetails(field)?.values;
-            return constants === undefined ? "" : tryParseEnum(defaultValue, constants) ?? constants[0].value
+            return constants === undefined ? "" : tryParseEnum(defaultValue, constants) ?? constants[0].value;
         case "Boolean":
             let result = tryParseBoolean(defaultValue);
             return result === undefined ? false : result;
         case "Plaintext":
-            return defaultValue ?? ""
+            return defaultValue ?? "";
         case "Map":
-            return {}
+            return {};
         case "Object":
-            const details = objectDetails(field)?.schema
-            return details === undefined ? {} : Object.fromEntries(details.map(f => [f.name, getDefaultValue(f)]))
+            const details = objectDetails(field)?.schema;
+            return details === undefined ? {} : Object.fromEntries(details.map(f => [f.name, getDefaultValue(f)]));
         case "List":
         case "Collection":
-            return []
+            return [];
         default:
-            return ""
+            return "";
     }
 }
 
 export function getDefaultValueFormattedIfPresent(field: NodeField): any | null {
     switch (field.type) {
         case "Enum":
-            return enumDetails(field)!.values[0].displayName
+            return enumDetails(field)!.values[0].displayName;
         case "Boolean":
-            return tryParseBoolean(field.defaultValue) ?? false
+            return tryParseBoolean(field.defaultValue) ?? false;
         case "Object":
-            return objectDetails(field)!.schema.map(f => [f.name, getDefaultValueFormattedIfPresent(f)])
+            return objectDetails(field)!.schema.map(f => [f.name, getDefaultValueFormattedIfPresent(f)]);
         default:
-            return null
+            return null;
     }
 }
 
@@ -49,28 +49,28 @@ export function getPolyDetails(field: NodeField): Details<any> | undefined {
     let split = field.type;
     switch (split) {
         case ENUM:
-            return enumDetails(field)
+            return enumDetails(field);
         case PLAINTEXT:
-            return plaintextDetails(field)
+            return plaintextDetails(field);
         default:
-            return undefined
+            return undefined;
     }
 }
 
 function tryParseEnum(value: string | undefined, constants: EnumConstant[]): string | undefined {
     if (value === undefined) {
-        return undefined
+        return undefined;
     }
-    return constants.find(c => c.value === value)?.value
+    return constants.find(c => c.value === value)?.value;
 }
 
 function tryParseBoolean(value: string | undefined): boolean | undefined {
     switch (value?.toLowerCase()) {
         case "true":
-            return true
+            return true;
         case "false":
-            return false
+            return false;
         default:
-            return undefined
+            return undefined;
     }
 }

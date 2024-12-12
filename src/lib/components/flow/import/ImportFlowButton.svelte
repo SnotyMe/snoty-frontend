@@ -15,17 +15,17 @@
         templates: Promise<NodeTemplatesMap>
         apiProps: ApiProps
     }
-    let { apiProps, metadatas, templates }: Props = $props()
+    let { apiProps, metadatas, templates }: Props = $props();
 
-    let shown = $state(false)
-    let showIntermediate = $state(false)
+    let shown = $state(false);
+    let showIntermediate = $state(false);
 
-    let flow: FlowWithSettingsStore | null = $state(null)
+    let flow: FlowWithSettingsStore | null = $state(null);
 
     async function create() {
         if (!flow) {
-            console.error("Flow is null")
-            return
+            console.error("Flow is null");
+            return;
         }
 
         const mappedFlow = {
@@ -35,10 +35,10 @@
                 settings: $state.snapshot(node.settingsStore.settings),
                 settingsStore: null,
             }))
-        }
+        };
 
         const createdId = await importFlow(apiProps, mappedFlow);
-        await goto(`/flow/${createdId}`)
+        await goto(`/flow/${createdId}`);
     }
 </script>
 

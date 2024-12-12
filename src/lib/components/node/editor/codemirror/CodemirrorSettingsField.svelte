@@ -4,9 +4,9 @@
     import { type CodemirrorProps, getLanguage } from "$lib/components/node/editor/codemirror";
 
     let { value: initialValue, onchange, language }: CodemirrorProps = $props();
-    let value = $state(initialValue)
+    let value = $state(initialValue);
     $effect(() => {
-        value = initialValue
+        value = initialValue;
     })
 </script>
 

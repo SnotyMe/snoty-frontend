@@ -4,7 +4,7 @@ const dateTimeFormat = new Intl.DateTimeFormat(Intl.DateTimeFormat().resolvedOpt
 });
 
 export function formatDate(date: Date): string {
-    return dateTimeFormat.format(date)
+    return dateTimeFormat.format(date);
 }
 
 /**
@@ -15,4 +15,4 @@ export const formattedDateLength =
         .format(
             new Date(2000, 11, 31, 23, 59, 59)
         )
-        .length
+        .length;

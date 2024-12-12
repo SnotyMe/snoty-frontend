@@ -4,11 +4,11 @@ import { env } from "$env/dynamic/public";
 import { buildAuthUrl } from "$lib/auth/urls";
 
 export const POST: RequestHandler = async ({ cookies, fetch }) => {
-    const idToken = cookies.get("id_token")
+    const idToken = cookies.get("id_token");
 
-    cookies.delete("access_token", { path: "/" })
-    cookies.delete("refresh_token", { path: "/" })
-    cookies.delete("id_token", { path: "/" })
+    cookies.delete("access_token", { path: "/" });
+    cookies.delete("refresh_token", { path: "/" });
+    cookies.delete("id_token", { path: "/" });
 
     await fetch(buildAuthUrl([
         env.PUBLIC_AUTH_SIGNOUT_PATH ?? PUBLIC_AUTH_SIGNOUT_PATH,
@@ -18,7 +18,7 @@ export const POST: RequestHandler = async ({ cookies, fetch }) => {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
         },
-    })
+    });
 
-    return new Response()
+    return new Response();
 }

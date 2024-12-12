@@ -10,5 +10,5 @@ export const load: PageServerLoad = async ({ url }) => {
         `?client_id=${env.PUBLIC_AUTH_CLIENT_ID ?? PUBLIC_AUTH_CLIENT_ID}`,
         `&response_type=code&scope=openid${env.PUBLIC_AUTH_SCOPES ? ` ${env.PUBLIC_AUTH_SCOPES}` : ""}`,
         `&redirect_uri=${redirectUrl(url)}`
-    ]))
+    ]));
 }

@@ -20,7 +20,7 @@ export async function authenticatedApiFetch(props: ApiProps, url: string, option
             "Authorization": `Bearer ${props.token}`,
             ...options.headers,
         },
-    })
+    });
 }
 
 export interface ErrorJson {
@@ -29,7 +29,7 @@ export interface ErrorJson {
 }
 
 export function error_json(error: any): ErrorJson {
-    console.error("An error occurred!", error)
+    console.error("An error occurred!", error);
     return { error: true, message: error.message };
 }
 

@@ -47,11 +47,11 @@ export interface NodeMetadata {
 export type NodeMetadataMap = Map<string, NodeMetadata>
 
 export function descriptorAsString(descriptor: NodeDescriptor): string {
-    return descriptor.subsystem + ":" + descriptor.type
+    return descriptor.subsystem + ":" + descriptor.type;
 }
 
 export function getNodeMetadata(metadatas: NodeMetadataMap, descriptor: NodeDescriptor): NodeMetadata {
-    return metadatas.get(descriptorAsString(descriptor))!
+    return metadatas.get(descriptorAsString(descriptor))!;
 }
 
 /**
@@ -64,5 +64,5 @@ export type TemplateMap = Map<string, string>
 export type NodeTemplatesMap = Map<string, TemplateMap>
 
 export function getNodeTemplates(templates: NodeTemplatesMap, descriptor: NodeDescriptor): TemplateMap {
-    return templates.get(descriptorAsString(descriptor))!
+    return templates.get(descriptorAsString(descriptor))!;
 }

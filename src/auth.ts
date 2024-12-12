@@ -21,7 +21,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
 
     if (accessToken != null && parsed != undefined) {
-        event.locals.user = parsed.user
+        event.locals.user = parsed.user;
         event.locals.access_token = accessToken;
     }
 

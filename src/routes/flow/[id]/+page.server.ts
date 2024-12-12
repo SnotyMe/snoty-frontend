@@ -3,12 +3,12 @@ import { ensureLoggedIn } from "$lib/auth/protection";
 import { getFlow } from "$lib/api/flow_api";
 
 export const load: PageServerLoad = async ({ locals, fetch, params }) => {
-    const token = ensureLoggedIn(locals)
+    const token = ensureLoggedIn(locals);
 
-    const flow = getFlow({ token, fetch }, params.id)
+    const flow = getFlow({ token, fetch }, params.id);
 
     return {
         flow,
         colorScheme: locals.colorScheme
-    }
+    };
 }

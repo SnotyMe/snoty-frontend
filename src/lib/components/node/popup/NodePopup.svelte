@@ -16,7 +16,7 @@
 
         // when the user clicks on a <select> choice, the coordinates are 0/0
         // this prevents closing when selecting a value from a dropdown
-        const clickOnPopup = event.clientX == 0 && event.clientY == 0
+        const clickOnPopup = event.clientX == 0 && event.clientY == 0;
         const isInDialog =
             clickOnPopup
             || (rect.top <= event.clientY && event.clientY <= rect.top + rect.height

@@ -6,9 +6,9 @@
         inputs: Record<string, any>
     }
 
-    const { template, inputs }: Props = $props()
+    const { template, inputs }: Props = $props();
 
-    const engine = new liquidjs.Liquid()
+    const engine = new liquidjs.Liquid();
 </script>
 
 {#if template !== undefined}

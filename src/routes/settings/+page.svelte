@@ -12,12 +12,12 @@
 
     function setTheme(theme: string) {
         document.cookie = `theme=${theme}; path=/; max-age=${MAX_COOKIE_AGE}`;
-        document.body.setAttribute("data-theme", theme)
+        document.body.setAttribute("data-theme", theme);
     }
 
     function toggleColorScheme() {
-        const isItDarkNow = document.body.classList.toggle("dark")
-        document.body.classList.toggle("light")
+        const isItDarkNow = document.body.classList.toggle("dark");
+        document.body.classList.toggle("light");
         const colorScheme = isItDarkNow ? "dark" : "light";
         document.cookie = `colorScheme=${colorScheme}; path=/; max-age=${MAX_COOKIE_AGE}`;
     }

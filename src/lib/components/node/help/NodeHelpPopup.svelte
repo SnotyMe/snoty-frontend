@@ -7,7 +7,7 @@
     interface Props extends NodePopupProps {
         metadata: NodeMetadata
     }
-    let { metadata, dialog = $bindable() }: Props = $props()
+    let { metadata, dialog = $bindable() }: Props = $props();
 </script>
 
 <NodePopup bind:dialog>

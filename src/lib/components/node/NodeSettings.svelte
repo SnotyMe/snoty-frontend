@@ -30,7 +30,7 @@
         expanded = false
     }: Props = $props();
 
-    const filteredSettings = $derived(getFiltered(settings, path, excludedKeys))
+    const filteredSettings = $derived(getFiltered(settings, path, excludedKeys));
 
     function getMetadata(key: string) {
         if (path?.length === 0) {
@@ -43,7 +43,7 @@
             return {
                 ...field,
                 details: collectionDetails(field)?.elementDetails,
-            }
+            };
         } else {
             return null;
         }
@@ -58,7 +58,7 @@
     }
 
     function getClonedList(): any[] | undefined {
-        return getRecursively(settings.settings, path)?.slice()
+        return getRecursively(settings.settings, path)?.slice();
     }
 
     function onchangeList(index: number, changedValue: any) {
@@ -69,7 +69,7 @@
     }
 
     function onchange(key: string, value: string) {
-        settings.setProperty(pathKey(key), value)
+        settings.setProperty(pathKey(key), value);
     }
 
     function rename(oldKey: string, newKey: string) {
@@ -77,7 +77,7 @@
     }
 
     function removeIndex(index: number) {
-        const newValues = getClonedList()
+        const newValues = getClonedList();
         if (!newValues) return;
         newValues.splice(index, 1);
         settings.setProperty(path, newValues);

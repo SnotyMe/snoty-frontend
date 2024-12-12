@@ -22,11 +22,11 @@
     const apiProps: ApiProps = {
         token: data.access_token!!,
         fetch: fetch
-    }
+    };
 
     async function oncreateflow() {
-        const flow = await createFlow(apiProps, { name: "New Flow" })
-        goto(`/flow/${flow._id}`)
+        const flow = await createFlow(apiProps, { name: "New Flow" });
+        goto(`/flow/${flow._id}`);
     }
 </script>
 

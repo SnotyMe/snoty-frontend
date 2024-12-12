@@ -13,5 +13,5 @@ export const load: LayoutServerLoad = async ({locals, fetch}) => {
         }) : null,
         access_token: locals.access_token,
         colorScheme,
-    }
+    };
 }

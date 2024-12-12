@@ -32,7 +32,7 @@
         }
 
         if (!data.ondisconnect) {
-            del()
+            del();
         } else {
             const promise = data.ondisconnect?.(new CustomEvent('disconnect', { detail: { id } })) as Promise<any>;
             promise.then(del).catch(error => {

@@ -28,18 +28,18 @@
         .then(fetched => {
             allExecutions = fetched
             return fetched
-        })
+        });
 
     let page = $state(1);
     let pageSize = $state(requestPageSize);
     const slicedSource = $derived((s: FlowExecution[]) => s.slice((page - 1) * pageSize, page * pageSize));
 
     function pageChanged(changeDetails: PageChangeDetails) {
-        page = changeDetails.page
+        page = changeDetails.page;
         if (page > 0 && requestPageSize * page >= allExecutions.length - 1) {
-            const lastNode = allExecutions[allExecutions.length - 1].jobId
+            const lastNode = allExecutions[allExecutions.length - 1].jobId;
             getFlowExecutions(apiProps, flowId, lastNode, requestPageSize)
-                .then(newExecutions => allExecutions = allExecutions.concat(newExecutions))
+                .then(newExecutions => allExecutions = allExecutions.concat(newExecutions));
         }
     }
 </script>

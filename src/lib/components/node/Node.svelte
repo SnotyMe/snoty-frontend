@@ -34,16 +34,16 @@
         clientWidth = $bindable(),
         clientHeight = $bindable(),
     }: Props = $props()
-    const { apiProps, node, metadata, templates } = data
-    const settings = createSettings(node.settings, data.onsettingschange)
+    const { apiProps, node, metadata, templates } = data;
+    const settings = createSettings(node.settings, data.onsettingschange);
     function filterKeysHidden(hidden: boolean) {
         return Object.keys(node.settings)
-            .filter(key => metadata?.settings?.find(it => it.name == key)?.hidden === hidden)
+            .filter(key => metadata?.settings?.find(it => it.name == key)?.hidden === hidden);
     }
-    const hiddenSettings = filterKeysHidden(true)
-    const unhiddenSettings = filterKeysHidden(false)
+    const hiddenSettings = filterKeysHidden(true);
+    const unhiddenSettings = filterKeysHidden(false);
     if (browser) {
-        setNodeAPI(node._id, { node, metadata, settings: settings })
+        setNodeAPI(node._id, { node, metadata, settings: settings });
     }
 
     const { edges } = useStore()

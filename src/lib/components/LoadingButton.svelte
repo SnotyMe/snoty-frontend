@@ -24,21 +24,21 @@
         error: errorSnippet,
     }: Props = props;
 
-    let doing = $state(false)
-    let done = $state(false)
-    let errorMessage = $state<string | null>(null)
+    let doing = $state(false);
+    let done = $state(false);
+    let errorMessage = $state<string | null>(null);
 
     async function onclick() {
-        doing = true
+        doing = true;
         try {
-            await handler()
-            done = true
-            onloaddone?.()
+            await handler();
+            done = true;
+            onloaddone?.();
         } catch (e: any) {
-            console.error("Error while doing something", e)
-            errorMessage = e.message
+            console.error("Error while doing something", e);
+            errorMessage = e.message;
         }
-        doing = false
+        doing = false;
     }
 </script>
 

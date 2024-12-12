@@ -27,7 +27,7 @@
 
     const tileProps = {
         active: "",
-    }
+    };
 
     import { browser } from "$app/environment";
     import type { ApiProps } from "$lib/api/api";
@@ -36,7 +36,7 @@
     const apiProps: ApiProps = {
         token: data.access_token!!,
         fetch: fetch
-    }
+    };
 
     // load template API to global context
     if (browser)

@@ -16,7 +16,7 @@ export function renameRecursively(object: Record<any, any>, pathKey: string[], n
     if (oldKey === newKey) return false;
 
     const full = structuredClone($state.snapshot(object));
-    const subobj = getSubobjRecursively(full, pathKey) ?? {}
+    const subobj = getSubobjRecursively(full, pathKey) ?? {};
 
     subobj[newKey] = subobj[oldKey];
     delete subobj[oldKey];
@@ -26,7 +26,7 @@ export function renameRecursively(object: Record<any, any>, pathKey: string[], n
 
 export function deleteRecursively(object: Record<any, any>, pathKey: string[]): Record<any, any> {
     const full = structuredClone($state.snapshot(object));
-    const subobj = getSubobjRecursively(full, pathKey) ?? {}
+    const subobj = getSubobjRecursively(full, pathKey) ?? {};
 
     delete subobj[lastPart(pathKey)];
 

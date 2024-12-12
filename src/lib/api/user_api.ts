@@ -6,5 +6,7 @@ export async function getRoles(props: ApiProps): Promise<string[]> {
             if (res.ok) return res.json();
             throw new Error("Failed to fetch roles: " + res.statusText);
         })
-        .catch(res => null);
+        .catch(res => {
+            throw new Error("Failed to fetch roles: " + error_json(res).message);
+        });
 }

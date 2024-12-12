@@ -25,10 +25,10 @@ export class TemplateAPI {
                 "Authorization": `Bearer ${this.apiProps.token}`,
                 ...init.headers,
             },
-        })
+        });
     }
 
     backendFetch(url: string, init: RequestInit): Promise<Response> {
-        return authenticatedApiFetch(this.apiProps, url, init)
+        return authenticatedApiFetch(this.apiProps, url, init);
     }
 }

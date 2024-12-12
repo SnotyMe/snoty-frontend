@@ -33,7 +33,7 @@ export async function renameFlow(props: ApiProps, id: string, name: string): Pro
     return authenticatedApiFetch(props, `wiring/flow/${id}/rename`, {
         method: "PUT",
         body: name,
-    })
+    });
 }
 
 export async function getFlowLogs(props: ApiProps, id: string): Promise<NodeLogEntry[]> {

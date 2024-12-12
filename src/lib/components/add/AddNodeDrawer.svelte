@@ -11,30 +11,30 @@
     import IconArrowLeft from "lucide-svelte/icons/arrow-left"
 
     let { isOpen: ogOpen = $bindable(), flow, apiProps, metadatas, onnodecreated: onnodecreatedupstream }: AddNodeProps = $props()
-    let isOpen = $state(ogOpen)
+    let isOpen = $state(ogOpen);
     $effect(() => {
-        isOpen = ogOpen
+        isOpen = ogOpen;
     })
 
     let currentAdd: { metadata: NodeMetadata, settings: SettingsStore } | null = $state(null);
     let addDialog: HTMLDialogElement;
     function addNode(nodeDescriptor: NodeDescriptor) {
-        const metadata = getNodeMetadata(metadatas, nodeDescriptor)
-        const settingsStore = createSettings(nodeSettingsFromMetadata(metadata))
+        const metadata = getNodeMetadata(metadatas, nodeDescriptor);
+        const settingsStore = createSettings(nodeSettingsFromMetadata(metadata));
 
         currentAdd = { metadata, settings: settingsStore };
-        addDialog?.showModal()
+        addDialog?.showModal();
     }
 
     const onnodecreated: NodeCreatedHandler = async (node: StandaloneNode) => {
-        currentAdd = null
-        ogOpen = false
-        onnodecreatedupstream(node)
+        currentAdd = null;
+        ogOpen = false;
+        onnodecreatedupstream(node);
     }
 
-    let currentHelpMetadata: NodeMetadata | null = $state(null)
+    let currentHelpMetadata: NodeMetadata | null = $state(null);
     function showHelp(metadata: NodeMetadata) {
-        currentHelpMetadata = metadata
+        currentHelpMetadata = metadata;
     }
 </script>
 

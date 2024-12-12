@@ -17,10 +17,10 @@ export const load: LayoutServerLoad = async ({ locals, fetch }) => {
     const apiProps: ApiProps = {
         token: locals.access_token,
         fetch: fetch
-    }
+    };
 
     return {
         groups,
         tasks: getTasks(apiProps)
-    }
+    };
 }

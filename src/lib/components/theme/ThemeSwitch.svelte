@@ -12,7 +12,7 @@
         toggleColorScheme: () => void;
     }
 
-    const { currentTheme, setTheme, toggleColorScheme, currentColorScheme }: Props = $props()
+    const { currentTheme, setTheme, toggleColorScheme, currentColorScheme }: Props = $props();
 </script>
 
 <div class="flex flex-col justify-center text-center">

@@ -6,7 +6,7 @@ export function setAuthCookies(url: URL, res: any, cookies: any) {
         expires: new Date(new Date().getTime() + res.expires_in * 1000),
         path: "/",
     };
-    cookies.set("access_token", res.access_token, ops)
-    cookies.set("refresh_token", res.refresh_token, { ...ops, maxAge: MAX_COOKIE_AGE })
-    cookies.set("id_token", res.id_token, ops)
+    cookies.set("access_token", res.access_token, ops);
+    cookies.set("refresh_token", res.refresh_token, { ...ops, maxAge: MAX_COOKIE_AGE });
+    cookies.set("id_token", res.id_token, ops);
 }

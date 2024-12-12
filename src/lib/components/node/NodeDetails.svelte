@@ -18,7 +18,7 @@
         settings,
         instashow,
         dialog = $bindable()
-    }: Props = $props()
+    }: Props = $props();
 </script>
 
 <NodePopup bind:dialog {instashow}>

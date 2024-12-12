@@ -1,5 +1,4 @@
 import { type Edge, type Node, Position } from "@xyflow/svelte";
-import type { FlowNode, StandaloneNode as StandaloneNode } from "$lib/model/nodes";
 import type { ElkNode } from "elkjs/lib/elk-api";
 
 const elkOptions = {
@@ -8,7 +7,7 @@ const elkOptions = {
     // fixes overlapping nodes
     'elk.spacing.edgeNode': '150',
     'elk.edgeRouting': 'SPLINES',
-}
+};
 
 export async function getLayoutedElements(
     nodes: Node[],
@@ -67,25 +66,4 @@ export async function getLayoutedElements(
             target: e.targets[0]
         } as Edge))
     });
-}
-
-export function resolveNodes(node: FlowNode) {
-    const allNodes = new Set<FlowNode>();
-    const involvedNodes = new Map<string, StandaloneNode>();
-
-    function dfs(node: FlowNode) {
-        if (allNodes.has(node)) {
-            return;
-        }
-        allNodes.add(node);
-        const { next, ...standaloneNode } = node
-        involvedNodes.set(standaloneNode._id, standaloneNode as StandaloneNode);
-        node.next?.forEach(dfs);
-    }
-
-    dfs(node);
-
-    const allNodesArray = Array.from(allNodes);
-    const involvedNodesArray = Array.from(involvedNodes.values());
-    return { allNodes: allNodesArray, involvedNodes: involvedNodesArray };
 }

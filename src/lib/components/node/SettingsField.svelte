@@ -44,7 +44,7 @@
         } else {
             actualValue = (event.target as HTMLInputElement).value;
         }
-        displayState = render()
+        displayState = render();
         onchange?.(key, actualValue);
     }
 
@@ -54,7 +54,7 @@
         onchange?.(key, actualValue);
     }
 
-    const type = metadata?.type
+    const type = metadata?.type;
 </script>
 
 <style>

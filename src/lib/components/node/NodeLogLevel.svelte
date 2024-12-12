@@ -10,7 +10,7 @@
     }
     const { node, apiProps }: Props = $props();
 
-    let selected = $state(node.logLevel)
+    let selected = $state(node.logLevel);
 
     const LOG_LEVELS = [
         { level: "DEBUG", color: "surface" },
@@ -21,14 +21,14 @@
     ]
 
     function getLevel(level: string) {
-        return LOG_LEVELS.find(l => l.level === level) || LOG_LEVELS[LOG_LEVELS.length - 1]
+        return LOG_LEVELS.find(l => l.level === level) || LOG_LEVELS[LOG_LEVELS.length - 1];
     }
 
     const setSelected: ChangeEventHandler<HTMLSelectElement> = (({ target: { value: level } }) => {
         if (level === "") level = null;
-        selected = level
-        node.logLevel = level
-        updateLogLevel(apiProps, node._id, level)
+        selected = level;
+        node.logLevel = level;
+        updateLogLevel(apiProps, node._id, level);
     })
 </script>
 

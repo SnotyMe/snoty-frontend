@@ -9,7 +9,7 @@
     }
     const { metadata }: Props = $props();
 
-    const value = $state([])
+    const value = $state([]);
 </script>
 
 <div class="mt-0 m-1">

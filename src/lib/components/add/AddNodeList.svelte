@@ -10,14 +10,14 @@
         onnodeadd: (nodeDescriptor: NodeDescriptor) => void
     }
     const { metadatas, onshowhelp, onnodeadd }: Props = $props();
-    let filteredMetadatas = $state(metadatas)
+    let filteredMetadatas = $state(metadatas);
 
-    const currentValue: string[] = $state([])
+    const currentValue: string[] = $state([]);
 
     function updateFilter(event: Event) {
-        const value = (event.target as HTMLInputElement).value.toLowerCase()
+        const value = (event.target as HTMLInputElement).value.toLowerCase();
         filteredMetadatas = new Map(Array.from(metadatas.entries())
-            .filter(([_, metadata]) => metadata.displayName.toLowerCase().includes(value)))
+            .filter(([_, metadata]) => metadata.displayName.toLowerCase().includes(value)));
     }
 </script>
 

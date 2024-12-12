@@ -11,4 +11,4 @@ export const themes = [
         name: "crimson",
         displayName: "Crimson",
     },
-]
+];

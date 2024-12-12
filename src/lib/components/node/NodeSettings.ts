@@ -7,5 +7,5 @@ export function getFiltered(settings: SettingsStore, path: string[], excludedFie
     // name and type are special fields in the root settings that are shown exp
     return allValues
         .filter(([key, _]) => !excludedFields.includes(key))
-        .filter(([key, _]) => path.length > 0 || (key !== "type" && key !== "name"))
+        .filter(([key, _]) => path.length > 0 || (key !== "type" && key !== "name"));
 }

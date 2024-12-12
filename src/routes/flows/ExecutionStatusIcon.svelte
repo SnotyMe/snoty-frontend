@@ -4,9 +4,10 @@
     interface Props {
         status: FlowExecutionStatus
     }
+
     const {
         status,
-    }: Props = $props()
+    }: Props = $props();
 </script>
 
 <style>

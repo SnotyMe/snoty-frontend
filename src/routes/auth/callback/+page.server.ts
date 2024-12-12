@@ -22,10 +22,10 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
         })
         .then(res => {
             setAuthCookies(url, res, cookies);
-            return res
+            return res;
         })
-        .catch(error_json)
+        .catch(error_json);
     return {
         result
-    }
+    };
 }

@@ -40,7 +40,7 @@
                 onsettingschange: (newSettings: NodeSettings) => updateSettings(apiProps, node._id, newSettings),
                 ondelete: () => {
                     deleteNode(apiProps, node._id)
-                        .then(() => nodesStore.update(nodes => nodes.filter(n => n.id !== node._id)))
+                        .then(() => nodesStore.update(nodes => nodes.filter(n => n.id !== node._id)));
                 },
             },
             dragHandle: '.drag-handle',
@@ -60,15 +60,15 @@
         } as Edge))
     );
 
-    const nodesStore = writable<Node[]>([])
-    const edgesStore = writable<Edge[]>([])
+    const nodesStore = writable<Node[]>([]);
+    const edgesStore = writable<Edge[]>([]);
 
     // never-ending promise while the layout is being calculated
-    let promise: Promise<void> = $state(new Promise(() => {}))
-    let isLoading = $state(true)
+    let promise: Promise<void> = $state(new Promise(() => {}));
+    let isLoading = $state(true);
 
-    const heights: Record<string, number> = {}
-    const widths: Record<string, number> = {}
+    const heights: Record<string, number> = {};
+    const widths: Record<string, number> = {};
 
     onMount(() => {
         promise = getLayoutedElements(
@@ -78,16 +78,16 @@
             heights,
             { 'elk.direction': "RIGHT" }
         ).then(({ nodes: layoutedNodes, edges: layoutedEdges }) => {
-            $nodesStore = layoutedNodes
-            $edgesStore = layoutedEdges
-            isLoading = false
+            $nodesStore = layoutedNodes;
+            $edgesStore = layoutedEdges;
+            isLoading = false;
         })
     })
 
     const addNode: NodeCreatedHandler = async (node: StandaloneNode) => {
-        const newNode = createNodeFromNode(node)
-        newNode.width = Object.values(widths).reduce((acc, val) => acc + val, 0) / Object.keys(widths).length
-        nodesStore.update(nodes => [...nodes, newNode])
+        const newNode = createNodeFromNode(node);
+        newNode.width = Object.values(widths).reduce((acc, val) => acc + val, 0) / Object.keys(widths).length;
+        nodesStore.update(nodes => [...nodes, newNode]);
     }
 </script>
 

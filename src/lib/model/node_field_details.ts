@@ -5,12 +5,12 @@ export interface Details<T> {
 }
 
 function casted<DetailsTypeName, DetailsType>(details: any | null, detailsTypeName: DetailsTypeName): { type: DetailsTypeName } & DetailsType | undefined {
-    if (!details) return undefined
+    if (!details) return undefined;
 
     return {
         ...details as DetailsType | undefined,
         type: detailsTypeName
-    } as { type: DetailsTypeName } & DetailsType | undefined
+    } as { type: DetailsTypeName } & DetailsType | undefined;
 }
 
 export const ENUM = "Enum"
@@ -26,7 +26,7 @@ export interface EnumConstant {
 }
 
 export function enumDetails(field: NodeField | undefined) {
-    return casted<TEnum, EnumDetails>(field?.details, ENUM)
+    return casted<TEnum, EnumDetails>(field?.details, ENUM);
 }
 
 export const PLAINTEXT = "Plaintext"
@@ -38,13 +38,13 @@ export interface PlaintextDetails extends Details<TPlaintext> {
 }
 
 export function plaintextDetails(field: NodeField | undefined) {
-    return casted<TPlaintext, PlaintextDetails>(field?.details, PLAINTEXT)
+    return casted<TPlaintext, PlaintextDetails>(field?.details, PLAINTEXT);
 }
 
 const INT = "Int"
 const LONG = "Long"
 export function isNumberType(type: string | undefined): boolean {
-    return type === INT || type === LONG
+    return type === INT || type === LONG;
 }
 
 export const OBJECT = "Object"
@@ -56,7 +56,7 @@ export interface ObjectDetails extends Details<TObject> {
 }
 
 export function objectDetails(field: NodeField | undefined) {
-    return casted<TObject, ObjectDetails>(field?.details, OBJECT)
+    return casted<TObject, ObjectDetails>(field?.details, OBJECT);
 }
 
 export const COLLECTION = "Collection"
@@ -67,5 +67,5 @@ export interface CollectionDetails extends Details<TCollection> {
 }
 
 export function collectionDetails(field: NodeField | undefined) {
-    return casted<TCollection, CollectionDetails>(field?.details, COLLECTION)
+    return casted<TCollection, CollectionDetails>(field?.details, COLLECTION);
 }

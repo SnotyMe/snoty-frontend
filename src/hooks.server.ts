@@ -4,28 +4,28 @@ import type { Handle } from "@sveltejs/kit";
 import { themes } from "$lib/components/theme";
 
 const theme: Handle = async ({ event, resolve }) => {
-    const cookies = event.cookies
-    let colorScheme = cookies.get("colorScheme") ?? null
+    const cookies = event.cookies;
+    let colorScheme = cookies.get("colorScheme") ?? null;
     // colorScheme can only be one of "light" or "dark"
     if (colorScheme !== "light" && colorScheme !== "dark") {
         // default to "no colorScheme"
-        colorScheme = null
+        colorScheme = null;
     }
-    event.locals.colorScheme = colorScheme
+    event.locals.colorScheme = colorScheme;
 
-    let theme = cookies.get("theme") ?? "cerberus"
+    let theme = cookies.get("theme") ?? "cerberus";
     if (themes.find((t) => t.name === theme) === undefined) {
-        theme = "cerberus"
+        theme = "cerberus";
     }
-    event.locals.theme = theme
+    event.locals.theme = theme;
 
     return resolve(event, {
         transformPageChunk(input: { html: string; done: boolean }) {
-            input.html = input.html.replace("[colorScheme]", colorScheme ?? "dark")
-            input.html = input.html.replace("[theme]", theme)
-            return input.html
+            input.html = input.html.replace("[colorScheme]", colorScheme ?? "dark");
+            input.html = input.html.replace("[theme]", theme);
+            return input.html;
         }
     })
 }
 
-export const handle = sequence(auth, theme)
+export const handle = sequence(auth, theme);
