@@ -17,8 +17,8 @@ export interface FlowNode extends StandaloneNode {
 }
 
 export interface NodeDescriptor {
-    subsystem: string
-    type: string
+    namespace: string
+    name: string
 }
 
 export interface NodeField {
@@ -47,7 +47,7 @@ export interface NodeMetadata {
 export type NodeMetadataMap = Map<string, NodeMetadata>
 
 export function descriptorAsString(descriptor: NodeDescriptor): string {
-    return descriptor.subsystem + ":" + descriptor.type;
+    return descriptor.namespace + ":" + descriptor.name;
 }
 
 export function getNodeMetadata(metadatas: NodeMetadataMap, descriptor: NodeDescriptor): NodeMetadata {
