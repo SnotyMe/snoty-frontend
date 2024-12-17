@@ -10,7 +10,17 @@ export async function apiFetch(props: UnauthenticatedApiProps, url: string, opti
         ...options.headers,
         "Content-Type": "application/json"
     };
-    return await props.fetch(`${API_URL}/${url}`, options);
+    try {
+        return await props.fetch(`${API_URL}/${url}`, options);
+    } catch (e) {
+        // thank you javascript... welp CONNREFUSED is not an HTTP response but a network error that is thrown by fetch
+        return new Response(JSON.stringify({ code: 599, message: "Couldn't reach API" }), {
+            status: 599,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+    }
 }
 
 export async function authenticatedApiFetch(props: ApiProps, url: string, options: RequestInit = {}): Promise<Response> {
@@ -26,11 +36,24 @@ export async function authenticatedApiFetch(props: ApiProps, url: string, option
 export interface ErrorJson {
     error: boolean
     message: string
+    code?: number
 }
 
-export function error_json(error: any): ErrorJson {
+export function isErrorJson(obj: any): obj is ErrorJson {
+    return obj && obj.error === true;
+}
+
+export function error_json(error: Omit<ErrorJson, "error">): ErrorJson {
     console.error("An error occurred!", error);
-    return { error: true, message: error.message };
+    return { error: true, ...error };
+}
+
+export async function json_or_error(res: Response): Promise<any> {
+    if (res.ok) {
+        return res.json();
+    }
+
+    return error_json(await res.json());
 }
 
 export interface ApiProps extends UnauthenticatedApiProps {

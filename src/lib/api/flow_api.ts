@@ -1,9 +1,15 @@
-import { type ApiProps, authenticatedApiFetch } from "$lib/api/api";
+import {
+    type ApiProps,
+    authenticatedApiFetch,
+    error_json,
+    type ErrorJson,
+    json_or_error,
+} from "$lib/api/api";
 import type { NodeLogEntry } from "$lib/model/node_logs";
 import type { EnumeratedFlowExecution, FlowExecution, Workflow, WorkflowWithNodes } from "$lib/model/flows";
 
 export type CreateFlowDTO = { name: string };
-export async function createFlow(props: ApiProps, flow: CreateFlowDTO): Promise<Workflow> {
+export async function createFlow(props: ApiProps, flow: CreateFlowDTO): Promise<Workflow | ErrorJson> {
     return authenticatedApiFetch(props, "wiring/flow", {
         method: "POST",
         headers: {
@@ -11,22 +17,22 @@ export async function createFlow(props: ApiProps, flow: CreateFlowDTO): Promise<
         },
         body: JSON.stringify(flow),
     })
-        .then((res) => res.json());
+        .then(error_json);
 }
 
-export async function getFlows(props: ApiProps): Promise<Workflow[]> {
+export async function getFlows(props: ApiProps): Promise<Workflow[] | ErrorJson> {
     return authenticatedApiFetch(props, "wiring/flow/list")
-        .then((res) => res.json());
+        .then(json_or_error);
 }
 
-export async function enumerateFlowExecutions(props: ApiProps): Promise<EnumeratedFlowExecution[]> {
+export async function enumerateFlowExecutions(props: ApiProps): Promise<EnumeratedFlowExecution[] | ErrorJson> {
     return authenticatedApiFetch(props, "wiring/flow/list/executions")
-        .then((res) => res.json());
+        .then(json_or_error);
 }
 
-export async function getFlow(props: ApiProps, id: string): Promise<WorkflowWithNodes> {
+export async function getFlow(props: ApiProps, id: string): Promise<WorkflowWithNodes | ErrorJson> {
     return authenticatedApiFetch(props, `wiring/flow/${id}`)
-        .then((res) => res.json());
+        .then(json_or_error)
 }
 
 export async function renameFlow(props: ApiProps, id: string, name: string): Promise<Response> {
