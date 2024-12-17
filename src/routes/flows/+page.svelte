@@ -3,7 +3,7 @@
     import type { PageData } from "./$types";
     import IconPlus from "lucide-svelte/icons/plus"
     import { createFlow, deleteFlow, renameFlow } from "$lib/api/flow_api";
-    import type { ApiProps } from "$lib/api/api";
+    import { type ApiProps, isErrorJson } from "$lib/api/api";
     import { goto } from "$app/navigation";
     import SettingsField from "$lib/components/node/SettingsField.svelte";
     import ExecutionStatusIcon from "./ExecutionStatusIcon.svelte";
@@ -12,6 +12,7 @@
     import LoadingButton from "$lib/components/LoadingButton.svelte";
     import DeleteButton from "$lib/components/delete/DeleteButton.svelte";
     import ImportFlowButton from "$lib/components/flow/import/ImportFlowButton.svelte";
+    import HandleError from "$lib/components/HandleError.svelte";
 
     interface Props {
         data: PageData;
@@ -26,6 +27,11 @@
 
     async function oncreateflow() {
         const flow = await createFlow(apiProps, { name: "New Flow" });
+        if (isErrorJson(flow)) {
+            alert("Failed to create flow: " + flow.message);
+            return;
+        }
+
         goto(`/flow/${flow._id}`);
     }
 </script>
@@ -35,27 +41,31 @@
         <p>Loading...</p>
     {:then myFlows}
         <List>
-            {#each myFlows as flow}
-                <ListItem>
-                    {#if flow.lastExecution?.status}
-                        <ExecutionStatusIcon status={flow.lastExecution.status}/>
-                    {/if}
-                    <SettingsField
-                            key="name"
-                            onchange={(_, value) => renameFlow(apiProps, flow._id, value)}
-                            value={flow.name}
-                    />
-                    <a href={`/flow/${flow._id}`} class="btn preset-filled">
-                        <span>View</span>
-                        <span>&rarr;</span>
-                    </a>
-                    <DeleteButton onconfirmed={async () => { await deleteFlow(apiProps, flow._id); window.location.reload() }}>
-                        {#snippet body()}
-                            The flow will be deleted, along with all its nodes, data, logs, just, everything!
-                        {/snippet}
-                    </DeleteButton>
-                </ListItem>
-            {/each}
+            <HandleError element={myFlows}>
+                {#snippet success(element)}
+                    {#each element as flow}
+                        <ListItem>
+                            {#if flow.lastExecution?.status}
+                                <ExecutionStatusIcon status={flow.lastExecution.status}/>
+                            {/if}
+                            <SettingsField
+                                    key="name"
+                                    onchange={(_, value) => renameFlow(apiProps, flow._id, value)}
+                                    value={flow.name}
+                            />
+                            <a href={`/flow/${flow._id}`} class="btn preset-filled">
+                                <span>View</span>
+                                <span>&rarr;</span>
+                            </a>
+                            <DeleteButton onconfirmed={async () => { await deleteFlow(apiProps, flow._id); window.location.reload() }}>
+                                {#snippet body()}
+                                    The flow will be deleted, along with all its nodes, data, logs, just, everything!
+                                {/snippet}
+                            </DeleteButton>
+                        </ListItem>
+                    {/each}
+                {/snippet}
+            </HandleError>
             <div class="flex justify-center gap-2">
                 <LoadingButton class="px-4 py-2" onclick={oncreateflow}>
                     {#snippet idle()}
