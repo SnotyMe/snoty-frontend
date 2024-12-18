@@ -14,7 +14,7 @@ export async function apiFetch(props: UnauthenticatedApiProps, url: string, opti
         return await props.fetch(`${API_URL}/${url}`, options);
     } catch (e) {
         // thank you javascript... welp CONNREFUSED is not an HTTP response but a network error that is thrown by fetch
-        return new Response(JSON.stringify({ code: 599, message: "Couldn't reach API" }), {
+        return new Response(JSON.stringify({ code: 599, message: `Couldn't reach API: ${e}` }), {
             status: 599,
             headers: {
                 "Content-Type": "application/json",
