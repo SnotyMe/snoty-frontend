@@ -5,10 +5,8 @@ import { getFlow } from "$lib/api/flow_api";
 export const load: PageServerLoad = async ({ locals, params }) => {
     const token = ensureLoggedIn(locals);
 
-    const flow = await getFlow({ fetch, token }, params.id);
-
     return {
-        flow,
+        flow: await getFlow({ fetch, token }, params.id),
         colorScheme: locals.colorScheme,
     };
 }
