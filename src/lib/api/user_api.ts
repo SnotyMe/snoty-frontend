@@ -1,12 +1,6 @@
-import { type ApiProps, authenticatedApiFetch, error_json } from "$lib/api/api";
+import { type ApiProps, authenticatedApiFetch, type ErrorJson, json_or_error } from "$lib/api/api";
 
-export async function getRoles(props: ApiProps): Promise<string[]> {
+export async function getRoles(props: ApiProps): Promise<string[] | ErrorJson> {
     return authenticatedApiFetch(props, "auth/groups")
-        .then(res => {
-            if (res.ok) return res.json();
-            throw new Error("Failed to fetch roles: " + res.statusText);
-        })
-        .catch(res => {
-            throw new Error("Failed to fetch roles: " + error_json(res).message);
-        });
+        .then(json_or_error)
 }

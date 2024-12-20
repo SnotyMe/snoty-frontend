@@ -1,4 +1,10 @@
-import { apiFetch, type ApiProps, authenticatedApiFetch, type UnauthenticatedApiProps } from "$lib/api/api";
+import {
+    apiFetch,
+    type ApiProps,
+    authenticatedApiFetch, type ErrorJson,
+    json_or_error,
+    type UnauthenticatedApiProps
+} from "$lib/api/api";
 import {
     descriptorAsString,
     type NodeDescriptor,
@@ -58,8 +64,12 @@ export async function deleteNode(props: ApiProps, id: NodeId) {
 
 export async function getNodeMetadatas(props: UnauthenticatedApiProps) {
     return apiFetch(props, `wiring/node/metadata`)
-        .then((res) => res.json() as Promise<{ descriptor: NodeDescriptor, metadata: NodeMetadata }[]>)
+        .then((res) => json_or_error(res) as Promise<{ descriptor: NodeDescriptor, metadata: NodeMetadata }[] | ErrorJson>)
         .then((nodes) => {
+            if ("error" in nodes) {
+                return nodes;
+            }
+
             const map: NodeMetadataMap = new Map<string, NodeMetadata>();
             nodes.forEach(({ descriptor, metadata }) => {
                 map.set(descriptorAsString(descriptor), metadata);
@@ -70,8 +80,12 @@ export async function getNodeMetadatas(props: UnauthenticatedApiProps) {
 
 export async function getNodeTemplates(props: UnauthenticatedApiProps) {
     return apiFetch(props, `wiring/node/metadata/template`)
-        .then((res) => res.json() as Promise<{ descriptor: NodeDescriptor, templates: Record<string, string> }[]>)
+        .then((res) => json_or_error(res) as Promise<{ descriptor: NodeDescriptor, templates: Record<string, string> }[] | ErrorJson>)
         .then((nodes) => {
+            if ("error" in nodes) {
+                return nodes;
+            }
+
             const map: NodeTemplatesMap = new Map<string, TemplateMap>();
             nodes.forEach(({ descriptor, templates: templatesRecord }) => {
                 const templates = new Map<string, string>(Object.entries(templatesRecord));
