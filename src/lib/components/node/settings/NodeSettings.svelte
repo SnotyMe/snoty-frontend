@@ -1,10 +1,10 @@
 <script lang="ts">
     import type { NodeField, NodeSettings } from "$lib/model/nodes";
     import { COLLECTION, OBJECT, MAP, objectDetails } from "$lib/model/node_field_details";
-    import CollectionSettings from "$lib/components/node/settings/CollectionSettings.svelte";
     import NodeSettingsComponent from "./NodeSettings.svelte";
-    import MapSettings from "$lib/components/node/settings/MapSettings.svelte";
-    import SettingsField from "$lib/components/node/SettingsField.svelte";
+    import CollectionSettings from "./CollectionSettings.svelte";
+    import MapSettings from "./MapSettings.svelte";
+    import SettingsField from "./SettingsField.svelte";
 
     interface Props {
         settings: NodeSettings
