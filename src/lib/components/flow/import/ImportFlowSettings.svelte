@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { ExportedFlow, ImportFlowDTO, ImportNodeDTO } from "$lib/model/flow_import_export";
-    import NodeSettings from "$lib/components/node/NodeSettings.svelte";
+    import NodeSettings from "$lib/components/node/settings/NodeSettings.svelte";
     import { getNodeMetadata, getNodeTemplates, type NodeMetadataMap, type NodeTemplatesMap } from "$lib/model/nodes";
-    import SettingsField from "$lib/components/node/SettingsField.svelte";
+    import SettingsField from "$lib/components/node/settings/SettingsField.svelte";
     import { replaceAllCensoredWithDefault } from "$lib/components/flow/import/utils";
     import { config } from "$lib/components/template/config";
     import Liquid from "$lib/components/template/Liquid.svelte";
