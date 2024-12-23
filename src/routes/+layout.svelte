@@ -30,7 +30,7 @@
     };
 
     import { browser } from "$app/environment";
-    import type { ApiProps } from "$lib/api/api";
+    import { type ApiProps, isErrorJson } from "$lib/api/api";
     import { TemplateAPI } from "$lib/components/template/api";
 
     const apiProps: ApiProps = {
@@ -62,7 +62,7 @@
         <Navigation.Tile id="about" labelExpanded="About Snoty" label="About" href="/about" {...tileProps}>
             <IconInfo/>
         </Navigation.Tile>
-        {#if data.roles?.includes("admin")}
+        {#if !isErrorJson(data.roles) && data.roles?.includes("admin")}
             <Navigation.Tile id="admin" labelExpanded="Admin" label="Admin" href="/admin" {...tileProps}>
                 <IconMonitorCog/>
             </Navigation.Tile>
@@ -82,7 +82,7 @@
         {/if}
         {/snippet}
     </Navigation.Rail>
-    <div class="flex items-center justify-center h-full overflow-y-auto">
+    <div class="flex gap-2 items-center justify-center h-full overflow-y-auto">
         <slot/>
     </div>
 </div>

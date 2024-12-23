@@ -32,8 +32,7 @@
             ...flow,
             nodes: flow.nodes.map(node => ({
                 ...node,
-                settings: $state.snapshot(node.settingsStore.settings),
-                settingsStore: null,
+                settings: $state.snapshot(node.settings),
             }))
         };
 
