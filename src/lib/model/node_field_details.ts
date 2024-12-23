@@ -34,6 +34,7 @@ type TPlaintext = typeof PLAINTEXT
 export interface PlaintextDetails extends Details<TPlaintext> {
     type: TPlaintext
     lines: number
+    defaultValue: string
     language?: string
 }
 
@@ -68,4 +69,16 @@ export interface CollectionDetails extends Details<TCollection> {
 
 export function collectionDetails(field: NodeField | undefined) {
     return casted<TCollection, CollectionDetails>(field?.details, COLLECTION);
+}
+
+export const MAP = "Map"
+type TMap = typeof MAP
+export interface MapDetails extends Details<TMap> {
+    type: TMap
+    keyDetails: Details<any>
+    valueDetails: Details<any>
+}
+
+export function mapDetails(field: NodeField | undefined) {
+    return casted<TMap, MapDetails>(field?.details, MAP);
 }

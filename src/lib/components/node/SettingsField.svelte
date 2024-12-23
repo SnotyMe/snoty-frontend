@@ -6,15 +6,22 @@
     const CENSORED = "********";
 
     interface Props {
-        key: string
         value: any
         metadata?: NodeField | undefined
-        onchange?: (key: string, value: any) => void
         expanded?: boolean
         class?: string
     }
 
-    let { key, value: outsideValue, metadata = undefined, onchange, expanded = false, class: clazz = "" }: Props = $props();
+    let {
+        value: outsideValue = $bindable(),
+        metadata = undefined,
+        expanded = false,
+        class: clazz = "",
+    }: Props = $props();
+
+    function onchange(actualValue: any) {
+        outsideValue = actualValue
+    }
 
     function render() {
         return metadata?.censored
@@ -22,7 +29,7 @@
             : outsideValue;
     }
 
-    let actualValue = outsideValue;
+    let actualValue = $state(outsideValue);
     $effect(() => {
         actualValue = outsideValue;
         displayState = render();
@@ -45,13 +52,13 @@
             actualValue = (event.target as HTMLInputElement).value;
         }
         displayState = render();
-        onchange?.(key, actualValue);
+        onchange?.(actualValue);
     }
 
     function stringChanged(value: string) {
         actualValue = value;
         displayState = render();
-        onchange?.(key, actualValue);
+        onchange?.(actualValue);
     }
 
     const type = metadata?.type;
@@ -95,7 +102,9 @@
     {:else if type === "Enum"}
         <select class="select" onchange={changed}>
             {#each enumDetails(metadata).values as constant}
-                <option value={constant.value} selected={constant.value === actualValue}>{constant.displayName}</option>
+                {#key actualValue}
+                    <option value={constant.value} selected={constant.value === actualValue}>{constant.displayName}</option>
+                {/key}
             {/each}
         </select>
     {:else if isNumberType(type)}
