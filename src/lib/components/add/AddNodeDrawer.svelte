@@ -1,9 +1,15 @@
 <script lang="ts">
-    import { getNodeMetadata, type NodeDescriptor, type NodeMetadata, type StandaloneNode } from "$lib/model/nodes";
+    import {
+        getNodeMetadata,
+        type NodeDescriptor,
+        type NodeMetadata,
+        type NodeSettings,
+        type StandaloneNode
+    } from "$lib/model/nodes";
     import NodeDrawer from "$lib/components/node/control/NodeDrawer.svelte";
     import AddNodeList from "$lib/components/add/AddNodeList.svelte";
     import type { AddNodeProps, NodeCreatedHandler } from "$lib/components/add";
-    import { createSettings, nodeSettingsFromMetadata, type SettingsStore } from "$lib/utils/settings.svelte";
+    import { nodeSettingsFromMetadata } from "$lib/utils/settings_utils";
     import NodeDetails from "$lib/components/node/NodeDetails.svelte";
     import AddNodeButton from "$lib/components/add/AddNodeButton.svelte";
     import NodeHelp from "$lib/components/node/help/NodeHelp.svelte";
@@ -16,13 +22,13 @@
         isOpen = ogOpen;
     })
 
-    let currentAdd: { metadata: NodeMetadata, settings: SettingsStore } | null = $state(null);
+    let currentAdd: { metadata: NodeMetadata, settings: NodeSettings } | null = $state(null);
     let addDialog: HTMLDialogElement;
     function addNode(nodeDescriptor: NodeDescriptor) {
         const metadata = getNodeMetadata(metadatas, nodeDescriptor);
-        const settingsStore = createSettings(nodeSettingsFromMetadata(metadata));
+        const settings = nodeSettingsFromMetadata(metadata);
 
-        currentAdd = { metadata, settings: settingsStore };
+        currentAdd = { metadata, settings };
         addDialog?.showModal();
     }
 

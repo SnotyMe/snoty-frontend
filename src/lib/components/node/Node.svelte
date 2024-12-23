@@ -2,7 +2,6 @@
     import { Handle, type NodeProps, NodeResizeControl, Position, useStore } from "@xyflow/svelte";
     import { type NodeMetadata, type StandaloneNode } from "$lib/model/nodes";
     import NodeSettings from "$lib/components/node/NodeSettings.svelte";
-    import { createSettings } from "$lib/utils/settings.svelte";
     import IconGripVertical from "lucide-svelte/icons/grip-vertical";
     import NodeName from "$lib/components/node/NodeName.svelte";
     import NodeDetailsButton from "$lib/components/node/NodeDetailsButton.svelte";
@@ -16,6 +15,7 @@
     import type { ApiProps } from "$lib/api/api";
     import NodeLogLevel from "$lib/components/node/NodeLogLevel.svelte";
     import DeleteButton from "$lib/components/delete/DeleteButton.svelte";
+    import { removeBoilerplate } from "$lib/utils/settings_utils";
 
     interface Props extends NodeProps {
         data: {
@@ -35,7 +35,8 @@
         clientHeight = $bindable(),
     }: Props = $props()
     const { apiProps, node, metadata, templates } = data;
-    const settings = createSettings(node.settings, data.onsettingschange);
+    let settings = $state(node.settings);
+
     function filterKeysHidden(hidden: boolean) {
         return Object.keys(node.settings)
             .filter(key => metadata?.settings?.find(it => it.name == key)?.hidden === hidden);
@@ -43,8 +44,17 @@
     const hiddenSettings = filterKeysHidden(true);
     const unhiddenSettings = filterKeysHidden(false);
     if (browser) {
-        setNodeAPI(node._id, { node, metadata, settings: settings });
+        setNodeAPI(node._id, { node, metadata, settings });
     }
+
+    let previousSettings = $state.snapshot(settings);
+    $effect(() => {
+        const newSettings = $state.snapshot(settings);
+        if (previousSettings !== newSettings) {
+            data.onsettingschange?.(newSettings);
+            previousSettings = newSettings;
+        }
+    })
 
     const { edges } = useStore()
     let hasOutputNode = $derived($edges.some(edge => edge.source === node._id))
@@ -63,21 +73,21 @@
         {#if metadata}
             <div class="flex items-center">
                 <IconGripVertical class="drag-handle cursor-pointer"/>
-                <NodeName {settings} {metadata}/>
+                <NodeName {settings}/>
             </div>
-            <div class="flow-node-options table-wrap border-y-4 my-1">
-                <NodeSettings {settings} excludedKeys={hiddenSettings} {metadata}/>
+            <div class="flow-node-options table-wrap border-y-4 my-1 pr-0.5">
+                <NodeSettings {settings} fields={removeBoilerplate(metadata.settings, hiddenSettings)}/>
                 {#if hiddenSettings.length > 0}
                     <details>
                         <summary class="cursor-pointer">Show hidden settings</summary>
-                        <NodeSettings {settings} excludedKeys={unhiddenSettings} {metadata}/>
+                        <NodeSettings {settings} fields={removeBoilerplate(metadata.settings, unhiddenSettings)}/>
                     </details>
                 {/if}
             </div>
             {#if templates?.has("node_bottom")}
                 <details>
                     <summary class="cursor-pointer">Details</summary>
-                    <Liquid template={templates?.get("node_bottom")} inputs={{node, config, settings: settings.settings, metadata}}/>
+                    <Liquid template={templates?.get("node_bottom")} inputs={{node, config, settings, metadata}}/>
                 </details>
             {/if}
             <div class="mt-2 w-full flex justify-between gap-2">
@@ -96,7 +106,7 @@
             <div>
                 <div class="flex items-center">
                     <IconGripVertical class="drag-handle cursor-pointer"/>
-                    <p>{settings.settings.name}</p>
+                    <p>{settings.name}</p>
                 </div>
                 <IconCircleHelp size="5rem" class="my-6 mx-auto"/>
             </div>

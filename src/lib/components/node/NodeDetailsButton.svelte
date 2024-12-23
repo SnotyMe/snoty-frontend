@@ -1,13 +1,12 @@
 <script lang="ts">
     import IconExpand from "lucide-svelte/icons/expand";
     import NodeDetails from "$lib/components/node/NodeDetails.svelte";
-    import type { SettingsStore } from "$lib/utils/settings.svelte";
-    import type { NodeMetadata } from "$lib/model/nodes";
+    import type { NodeMetadata, NodeSettings } from "$lib/model/nodes";
 
     interface Props {
         nodeId: string
         metadata: NodeMetadata;
-        settings: SettingsStore
+        settings: NodeSettings
     }
 
     let { nodeId, metadata, settings }: Props = $props();

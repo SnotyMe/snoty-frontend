@@ -1,8 +1,7 @@
 <script lang="ts">
     import { Accordion } from "@skeletonlabs/skeleton-svelte";
-    import type { NodeMetadata } from "$lib/model/nodes";
+    import { type NodeMetadata, descriptorAsString } from "$lib/model/nodes";
     import NodeHelpFields from "$lib/components/node/help/NodeHelpFields.svelte";
-    import { descriptorAsString } from "$lib/model/nodes.js";
 
     interface Props {
         metadata: NodeMetadata

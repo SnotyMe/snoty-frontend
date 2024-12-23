@@ -1,10 +1,9 @@
-import type { NodeId, NodeMetadata, SettinglessNode } from "$lib/model/nodes";
-import type { SettingsStore } from "$lib/utils/settings.svelte";
+import type { NodeId, NodeMetadata, NodeSettings, SettinglessNode } from "$lib/model/nodes";
 import { TemplateAPI } from "$lib/components/template/api";
 
 const nodeAPI = "nodeAPI";
 
-export function setNodeAPI(nodeId: NodeId, api: { node: SettinglessNode, metadata: NodeMetadata, settings: SettingsStore }) {
+export function setNodeAPI(nodeId: NodeId, api: { node: SettinglessNode, metadata: NodeMetadata, settings: NodeSettings }) {
     if (window[nodeAPI] === undefined) {
         window[nodeAPI] = {};
     }
@@ -18,9 +17,9 @@ export function getNodeAPI(nodeId: NodeId) {
 export class NodeAPI {
     readonly node: SettinglessNode;
     readonly metadata: NodeMetadata;
-    readonly settings: SettingsStore;
+    readonly settings: NodeSettings;
 
-    constructor(node: SettinglessNode, metadata: NodeMetadata, settings: SettingsStore) {
+    constructor(node: SettinglessNode, metadata: NodeMetadata, settings: NodeSettings) {
         this.node = node;
         this.metadata = metadata;
         this.settings = settings;

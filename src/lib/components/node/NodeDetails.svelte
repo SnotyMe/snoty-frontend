@@ -1,15 +1,15 @@
 <script lang="ts">
     import NodeSettings from "$lib/components/node/NodeSettings.svelte";
-    import type { SettingsStore } from "$lib/utils/settings.svelte";
     import type { NodeMetadata } from "$lib/model/nodes";
     import NodeName from "$lib/components/node/NodeName.svelte";
     import NodePopup from "$lib/components/node/popup/NodePopup.svelte";
     import type { NodePopupProps } from "$lib/components/node/popup";
+    import { removeBoilerplate } from "$lib/utils/settings_utils";
 
     interface Props extends NodePopupProps {
         nodeId?: string
         metadata: NodeMetadata
-        settings: SettingsStore
+        settings: NodeSettings
     }
 
     let {
@@ -24,13 +24,13 @@
 <NodePopup bind:dialog {instashow}>
     {#if metadata}
         <div class="flex items-center gap-2">
-            <NodeName settings={settings} {metadata}/>
+            <NodeName {settings}/>
             {#if nodeId}
                 <p>{nodeId}</p>
             {/if}
         </div>
         <div class="flow-node-options table-wrap border-t-4 mt-1">
-            <NodeSettings settings={settings} {metadata} expanded={true}/>
+            <NodeSettings {settings} fields={removeBoilerplate(metadata.settings)} expanded={true}/>
         </div>
     {:else}
         <div class="text-center">Unknown node type</div>

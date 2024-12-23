@@ -1,20 +1,14 @@
 <script lang="ts">
     import SettingsField from "$lib/components/node/SettingsField.svelte";
-    import type { SettingsStore } from "$lib/utils/settings.svelte";
-    import type { NodeMetadata } from "$lib/model/nodes";
+    import type { NodeSettings } from "$lib/model/nodes";
 
     interface Props {
-        settings: SettingsStore
-        metadata: NodeMetadata
+        settings: NodeSettings
     }
 
-    const { settings, metadata }: Props = $props();
+    const { settings }: Props = $props();
 </script>
 
-{#key settings.settings["name"]}
-    <SettingsField
-        key="name"
-        onchange={(key, value) => settings.setProperty([key], value)}
-        value={settings.settings["name"] ?? metadata.displayName}
-    />
+{#key settings.name}
+    <SettingsField bind:value={settings.name}/>
 {/key}

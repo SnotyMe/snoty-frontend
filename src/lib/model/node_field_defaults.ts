@@ -18,7 +18,7 @@ export function getDefaultValue(field: NodeField): any {
             let result = tryParseBoolean(defaultValue);
             return result === undefined ? false : result;
         case "Plaintext":
-            return defaultValue ?? "";
+            return plaintextDetails(field)?.defaultValue ?? defaultValue ?? "";
         case "Map":
             return {};
         case "Object":
