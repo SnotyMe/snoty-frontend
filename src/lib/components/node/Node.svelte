@@ -1,15 +1,15 @@
 <script lang="ts">
     import { Handle, type NodeProps, NodeResizeControl, Position, useStore } from "@xyflow/svelte";
     import { type NodeMetadata, type StandaloneNode } from "$lib/model/nodes";
-    import NodeSettings from "$lib/components/node/NodeSettings.svelte";
-    import IconGripVertical from "lucide-svelte/icons/grip-vertical";
-    import NodeName from "$lib/components/node/NodeName.svelte";
+    import NodeSettings from "$lib/components/node/settings/NodeSettings.svelte";
+    import NodeName from "$lib/components/node/settings/NodeName.svelte";
     import NodeDetailsButton from "$lib/components/node/NodeDetailsButton.svelte";
     import Liquid from "$lib/components/template/Liquid.svelte";
     import { config } from "$lib/components/template/config";
     import NodeHelpButton from "$lib/components/node/help/NodeHelpButton.svelte";
     import IconCircleHelp from "lucide-svelte/icons/circle-help";
     import IconScaling from "lucide-svelte/icons/move-diagonal-2";
+    import IconGripVertical from "lucide-svelte/icons/grip-vertical";
     import { browser } from "$app/environment";
     import { setNodeAPI } from "$lib/components/template/node";
     import type { ApiProps } from "$lib/api/api";

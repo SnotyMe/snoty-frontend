@@ -7,7 +7,7 @@
     import IconOpenLogs from "lucide-svelte/icons/scroll-text";
     import IconCloseLogs from "lucide-svelte/icons/scroll";
     import IconRocket from "lucide-svelte/icons/rocket";
-    import SettingsField from "$lib/components/node/SettingsField.svelte";
+    import SettingsField from "$lib/components/node/settings/SettingsField.svelte";
     import { renameFlow, triggerFlow } from "$lib/api/flow_api";
     import ExportFlow from "$lib/components/flow/export/ExportFlow.svelte";
 
@@ -27,6 +27,15 @@
         }
         openStates[state] = !openStates[state];
     }
+
+    let flowName = $state(props.flow.name);
+    let lastFlowName = $state.snapshot(flowName);
+    $effect(() => {
+        if (lastFlowName !== flowName) {
+            renameFlow(props.apiProps, props.flow._id, flowName);
+            lastFlowName = flowName;
+        }
+    })
 </script>
 
 <style>
@@ -47,9 +56,7 @@
         </ControlButton>
     </div>
     <SettingsField
-            key="name"
-            onchange={(_, value) => renameFlow(props.apiProps, props.flow._id, value)}
-            value={props.flow.name}
+            bind:value={flowName}
             class="ml-2 border-none flex justify-center items-center"
     />
 </Panel>

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import NodeSettings from "$lib/components/node/NodeSettings.svelte";
     import type { NodeMetadata } from "$lib/model/nodes";
-    import NodeName from "$lib/components/node/NodeName.svelte";
+    import NodeSettings from "$lib/components/node/settings/NodeSettings.svelte";
+    import NodeName from "$lib/components/node/settings/NodeName.svelte";
     import NodePopup from "$lib/components/node/popup/NodePopup.svelte";
     import type { NodePopupProps } from "$lib/components/node/popup";
     import { removeBoilerplate } from "$lib/utils/settings_utils";

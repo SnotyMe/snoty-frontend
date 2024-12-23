@@ -5,7 +5,6 @@
     import { createFlow, deleteFlow, renameFlow } from "$lib/api/flow_api";
     import { type ApiProps, isErrorJson } from "$lib/api/api";
     import { goto } from "$app/navigation";
-    import SettingsField from "$lib/components/node/SettingsField.svelte";
     import ExecutionStatusIcon from "./ExecutionStatusIcon.svelte";
     import List from "$lib/components/list/List.svelte";
     import ListItem from "$lib/components/list/ListItem.svelte";
@@ -13,6 +12,7 @@
     import DeleteButton from "$lib/components/delete/DeleteButton.svelte";
     import ImportFlowButton from "$lib/components/flow/import/ImportFlowButton.svelte";
     import HandleError from "$lib/components/HandleError.svelte";
+    import NodeName from "$lib/components/node/settings/NodeName.svelte";
 
     interface Props {
         data: PageData;
@@ -48,10 +48,9 @@
                             {#if flow.lastExecution?.status}
                                 <ExecutionStatusIcon status={flow.lastExecution.status}/>
                             {/if}
-                            <SettingsField
-                                    key="name"
-                                    onchange={(_, value) => renameFlow(apiProps, flow._id, value)}
-                                    value={flow.name}
+                            <NodeName
+                                    onchange={value => renameFlow(apiProps, flow._id, value)}
+                                    settings={flow}
                             />
                             <a href={`/flow/${flow._id}`} class="btn preset-filled">
                                 <span>View</span>
