@@ -2,7 +2,7 @@
     import { SvelteFlowProvider } from "@xyflow/svelte";
     import Page from "$lib/components/Page.svelte";
     import type { PageData } from "./$types";
-    import type { ApiProps } from "$lib/api/api";
+    import { type ApiProps, isErrorJson } from "$lib/api/api";
     import FlowLoading from "$lib/components/flow/FlowLoading.svelte";
     import Flow from "$lib/components/flow/Flow.svelte";
     import type { WorkflowWithNodes } from "$lib/model/flows";
@@ -19,9 +19,11 @@
         token: data.access_token!!,
         fetch: fetch
     };
+
+    let flow: WorkflowWithNodes | undefined = isErrorJson(data.flow) ? undefined : data.flow;
 </script>
 
-<Page title="Flow">
+<Page pageName={flow?.name ?? "Flow"}>
     <SvelteFlowProvider>
         {#await Promise.all([data.flow, data.metadatas, data.templates])}
             <FlowLoading/>
