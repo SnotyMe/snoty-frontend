@@ -28,6 +28,7 @@
     };
 
     function rename(oldName: string, newName: string) {
+        if (oldName === newName) return;
         settings[newName] = settings[oldName];
         delete settings[oldName];
     }
@@ -36,17 +37,19 @@
 <table class="table border-collapse">
     <tbody>
     {#each Object.entries(settings) as [key, _]}
-        <tr class="w-full">
+        <tr>
             <th>
-                <input type="text" class="input-field" value={key} onchange={(e) => rename(key, e.currentTarget.value)}/>
+                {#key key}
+                    <div class="input-field" contenteditable="true" onblur={e => rename(key, e.target.innerText)}>{key}</div>
+                {/key}
             </th>
-            <th>
+            <th class="w-full">
                 <PolySettings
                     bind:value={settings[key]}
                     field={valueField}
                 />
             </th>
-            <th>
+            <th class="w-[min-content] pr-0 mr-0 flex items-center">
                 <button onclick={() => { delete settings[key] }}>
                     <Minus/>
                 </button>
