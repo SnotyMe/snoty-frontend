@@ -111,8 +111,8 @@
         <input class="input-field" type="number" value={actualValue} onfocusin={clicked} onfocusout={changed} onchange={changed}/>
     {:else}
         {@const plain = plaintextDetails(metadata)}
-        {#if expanded || (plain?.lines ?? 1) >= 1 || plain?.language}
-            {#if (expanded || plain?.language) && metadata?.censored !== true}
+        {#if expanded || (plain?.lines ?? 1) > 1 || plain?.language}
+            {#if metadata?.censored !== true}
                 <CodemirrorSettingsField
                     value={displayState}
                     onchange={stringChanged}
