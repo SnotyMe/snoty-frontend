@@ -27,6 +27,11 @@
 
 /* repeated selectors to increase priority */
 
+.svelte-flow__viewport.svelte-flow__viewport {
+    /* fixes off-center viewport with autoLayout after the matter */
+    left: -25px!important;
+}
+
 .svelte-flow__controls-button.svelte-flow__controls-button {
     @apply preset-filled-surface-100-900 rounded-none;
 }
@@ -68,10 +73,20 @@ div.svelte-flow__panel {
 .svelte-flow__node {
     user-select: unset !important;
     -moz-user-select: unset !important;
-    -moz-user-select: unset !important;
 }
 
 .svelte-flow__resize-control.handle {
     background: none !important;
     border: none !important;
+}
+
+.svelte-flow .svelte-flow__edge.animated path {
+    stroke-dasharray: 15 10;
+    animation: dashdraw-custom 0.75s linear infinite;
+}
+
+@keyframes dashdraw-custom {
+    0% {
+        stroke-dashoffset: 25;
+    }
 }

@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { NodeField } from "$lib/model/nodes";
     import { enumDetails, isNumberType, plaintextDetails } from "$lib/model/node_field_details";
-    import LazyCodemirrorSettingsField from "$lib/components/node/editor/codemirror/LazyCodemirrorSettingsField.svelte";
+    import CodemirrorSettingsField from "$lib/components/node/editor/codemirror/CodemirrorSettingsField.svelte";
 
     const CENSORED = "********";
 
@@ -113,7 +113,7 @@
         {@const plain = plaintextDetails(metadata)}
         {#if expanded || (plain?.lines ?? 1) >= 1 || plain?.language}
             {#if (expanded || plain?.language) && metadata?.censored !== true}
-                <LazyCodemirrorSettingsField
+                <CodemirrorSettingsField
                     value={displayState}
                     onchange={stringChanged}
                     language={plain?.language}
