@@ -24,7 +24,7 @@
             {@const hasChildren = isList || isObject || isMap}
             <tr>
                 <th colspan={hasChildren ? 2 : 1}>
-                    <p title={field.description}>{field.displayName}</p>
+                    <p class="whitespace-nowrap w-[min-content]" title={field.description}>{field.displayName}</p>
 
                     {#if isObject}
                         <NodeSettingsComponent
@@ -40,7 +40,7 @@
                 </th>
 
                 {#if !hasChildren}
-                    <th>
+                    <th class="w-full">
                         <SettingsField bind:value={settings[field.name]} metadata={field}/>
                     </th>
                 {/if}
