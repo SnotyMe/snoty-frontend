@@ -12,13 +12,12 @@
         type NodeTemplatesMap,
         type StandaloneNode
     } from "$lib/model/nodes";
-    import { onMount } from "svelte";
-    import FlowNode from "$lib/components/node/Node.svelte";
     import { connectNodes, deleteNode, disconnectNodes, updateSettings } from "$lib/api/node_api";
     import type { ApiProps } from "$lib/api/api";
     import type { NodeCreatedHandler } from "$lib/components/add";
     import type { WorkflowWithNodes } from "$lib/model/flows";
     import FlowMenus from "$lib/components/flow/FlowMenus.svelte";
+    import { useSvelteFlow } from "@xyflow/svelte";
 
     type Props = {
         flow: WorkflowWithNodes
@@ -27,6 +26,9 @@
         apiProps: ApiProps
     }
     const { flow, metadatas, templates, apiProps }: Props = $props()
+
+    const heights: Record<string, number> = $state({});
+    const widths: Record<string, number> = $state({});
 
     function createNodeFromNode(node: StandaloneNode) {
         return {
@@ -42,6 +44,8 @@
                     deleteNode(apiProps, node._id)
                         .then(() => nodesStore.update(nodes => nodes.filter(n => n.id !== node._id)));
                 },
+                heights,
+                widths,
             },
             dragHandle: '.drag-handle',
             type: FLOW_NODE
@@ -54,35 +58,43 @@
             id: `${node._id}:${next}`,
             source: node._id,
             target: next,
+            animated: true,
             data: {
                 ondisconnect: () => disconnectNodes(apiProps, node._id, next)
             }
         } as Edge))
     );
 
-    const nodesStore = writable<Node[]>([]);
-    const edgesStore = writable<Edge[]>([]);
+    const nodesStore = writable<Node[]>(initialNodes);
+    const edgesStore = writable<Edge[]>(initialEdges);
+    const { fitView } = useSvelteFlow();
 
     // never-ending promise while the layout is being calculated
     let promise: Promise<void> = $state(new Promise(() => {}));
-    let isLoading = $state(true);
 
-    const heights: Record<string, number> = {};
-    const widths: Record<string, number> = {};
+    $effect(() => {
+        if (Object.keys(widths).length === initialNodes.length && Object.keys(heights).length === initialNodes.length) {
+            updateLayout();
+        }
+    })
 
-    onMount(() => {
+    function updateLayout() {
         promise = getLayoutedElements(
             initialNodes,
             initialEdges,
             widths,
             heights,
             { 'elk.direction': "RIGHT" }
-        ).then(({ nodes: layoutedNodes, edges: layoutedEdges }) => {
-            $nodesStore = layoutedNodes;
-            $edgesStore = layoutedEdges;
-            isLoading = false;
+        ).then(({ nodes: layoutedNodes }) => {
+            layoutedNodes.forEach(node => {
+                const { width, height, position } = node;
+                nodesStore.update(nodes => nodes.map(n => n.id === node.id ? { ...n, width, height, position } : n));
+            });
+            fitView({
+                padding: 50,
+            });
         })
-    })
+    }
 
     const addNode: NodeCreatedHandler = async (node: StandaloneNode) => {
         const newNode = createNodeFromNode(node);
@@ -91,24 +103,11 @@
     }
 </script>
 
-{#if isLoading}
-    <!-- hidden dummy element with all initial settings to measure the node size for autolayouting -->
-    <div class="absolute opacity-0">
-        {#each flow.nodes as node}
-            <FlowNode bind:clientWidth={widths[node._id]}
-                      bind:clientHeight={heights[node._id]}
-                      data={{node, metadata: getNodeMetadata(metadatas, node.descriptor), templates: getNodeTemplates(templates, node.descriptor)}}
-            />
-        {/each}
-    </div>
-{/if}
-
 <SvelteFlow proOptions={{hideAttribution: true}}
             {nodeTypes}
             {edgeTypes}
             nodes={nodesStore}
             edges={edgesStore}
-            fitView={true}
             defaultEdgeOptions={{
                     type: DISPOSE_EDGE,
                     markerEnd: {
@@ -122,6 +121,12 @@
 >
     <Background/>
     {#await promise}
+        <style>
+            .svelte-flow__pane {
+                opacity: 0;
+                pointer-events: none;
+            }
+        </style>
         <div class="w-full h-full flex justify-center items-center">
             <p>Loading...</p>
         </div>

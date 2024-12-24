@@ -25,17 +25,17 @@
             templates: Map<string, string> | undefined
             onsettingschange?: (settings: Record<string, any>) => void
             ondelete?: () => void
+            heights: Record<string, number>
+            widths: Record<string, number>
         }
-        clientWidth?: number
-        clientHeight?: number
     }
     let {
         data,
-        clientWidth = $bindable(),
-        clientHeight = $bindable(),
     }: Props = $props()
     const { apiProps, node, metadata, templates } = data;
     let settings = $state(node.settings);
+
+    const { heights, widths } = data;
 
     function filterKeysHidden(hidden: boolean) {
         return Object.keys(node.settings)
@@ -60,7 +60,7 @@
     let hasOutputNode = $derived($edges.some(edge => edge.source === node._id))
 </script>
 
-<div bind:clientWidth={clientWidth} bind:clientHeight={clientHeight} class="h-full">
+<div bind:clientWidth={widths[node._id]} bind:clientHeight={heights[node._id]} class="h-full">
     {#if metadata?.input !== null}
         <Handle type="target"
                 position={Position.Left}

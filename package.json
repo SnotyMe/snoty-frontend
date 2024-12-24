@@ -35,7 +35,7 @@
 		"@codemirror/lang-liquid": "^6.2.2",
 		"@codemirror/view": "^6.35.3",
 		"@uiw/codemirror-theme-dracula": "^4.23.6",
-		"@xyflow/svelte": "^0.1.25",
+		"@xyflow/svelte": "^0.1.26",
 		"dotenv": "^16.4.7",
 		"elkjs": "^0.9.3",
 		"jwt-decode": "^4.0.0",
