@@ -86,11 +86,15 @@
             heights,
             { 'elk.direction': "RIGHT" }
         ).then(({ nodes: layoutedNodes }) => {
-            layoutedNodes.forEach(node => {
-                const { width, height, position } = node;
-                nodesStore.update(nodes => nodes.map(n => n.id === node.id ? { ...n, width, height, position } : n));
+            nodesStore.update(_ => [...layoutedNodes]);
+            // scuffed way to wait for the nodes to be updated before fitting the view
+            // this is necessary because an immediate call to `fitView` would slightly offset the view
+            let unsubscriber: () => void;
+            unsubscriber = nodesStore.subscribe((_) => {
+                if (!unsubscriber) return
+                fitView();
+                unsubscriber()
             });
-            fitView({ padding: 0.2 });
         })
     }
 

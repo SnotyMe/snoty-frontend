@@ -27,11 +27,6 @@
 
 /* repeated selectors to increase priority */
 
-.svelte-flow__viewport.svelte-flow__viewport {
-    /* fixes off-center viewport with autoLayout after the matter */
-    left: -3%!important;
-}
-
 .svelte-flow__controls-button.svelte-flow__controls-button {
     @apply preset-filled-surface-100-900 rounded-none;
 }
