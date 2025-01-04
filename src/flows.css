@@ -29,7 +29,7 @@
 
 .svelte-flow__viewport.svelte-flow__viewport {
     /* fixes off-center viewport with autoLayout after the matter */
-    left: -65px!important;
+    left: -3%!important;
 }
 
 .svelte-flow__controls-button.svelte-flow__controls-button {
