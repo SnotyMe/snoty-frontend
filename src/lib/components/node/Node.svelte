@@ -66,7 +66,7 @@
                 position={Position.Left}
                 class={metadata?.position === "START" ? "!bg-green-500" : ""}/>
     {/if}
-    <div class="h-full cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 block overflow-auto border">
+    <div class="h-full flex flex-col cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 border overflow-hidden">
         <NodeResizeControl minWidth={150} minHeight={50}>
             <IconScaling size="1em" class="absolute -translate-x-2 -translate-y-2"/>
         </NodeResizeControl>
@@ -75,7 +75,7 @@
                 <IconGripVertical class="drag-handle cursor-pointer"/>
                 <NodeName {settings}/>
             </div>
-            <div class="flow-node-options table-wrap border-y-4 my-1 pr-0.5">
+            <div class="flow-node-options flex-grow table-wrap border-y-4 my-1 pr-0.5 overflow-y-auto">
                 <NodeSettings {settings} fields={removeBoilerplate(metadata.settings, hiddenSettings)}/>
                 {#if hiddenSettings.length > 0}
                     <details>
