@@ -90,9 +90,7 @@
                 const { width, height, position } = node;
                 nodesStore.update(nodes => nodes.map(n => n.id === node.id ? { ...n, width, height, position } : n));
             });
-            fitView({
-                padding: 50,
-            });
+            fitView({ padding: 0.2 });
         })
     }
 
