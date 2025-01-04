@@ -10,9 +10,19 @@
     })
 </script>
 
+<style>
+    /* insanely scuffed fix to patch CodeMirror setting fields wrapping the last character..? */
+    :global(.codemirror-wrapper.w-100n1) {
+        overflow-y: hidden;
+        & > div {
+            width: 100.05% !important;
+        }
+    }
+</style>
+
 <CodeMirror
         on:change={(_) => onchange(value) }
-        class="resize-y w-full max-w-full"
+        class="resize-y max-w-full w-100n1"
         lineWrapping={true}
         bind:value={value}
         lang={getLanguage(language)}
