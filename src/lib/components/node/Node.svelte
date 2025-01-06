@@ -50,7 +50,7 @@
     let previousSettings = $state.snapshot(settings);
     $effect(() => {
         const newSettings = $state.snapshot(settings);
-        if (previousSettings !== newSettings) {
+        if (JSON.stringify(previousSettings) != JSON.stringify(newSettings)) {
             data.onsettingschange?.(newSettings);
             previousSettings = newSettings;
         }
