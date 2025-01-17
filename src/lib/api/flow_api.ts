@@ -1,7 +1,6 @@
 import {
     type ApiProps,
     authenticatedApiFetch,
-    error_json,
     type ErrorJson,
     json_or_error,
 } from "$lib/api/api";
@@ -17,7 +16,7 @@ export async function createFlow(props: ApiProps, flow: CreateFlowDTO): Promise<
         },
         body: JSON.stringify(flow),
     })
-        .then(error_json);
+        .then(json_or_error);
 }
 
 export async function getFlows(props: ApiProps): Promise<Workflow[] | ErrorJson> {

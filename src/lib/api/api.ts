@@ -44,17 +44,17 @@ export function isErrorJson(obj: any): obj is ErrorJson {
     return obj && obj.error === true;
 }
 
-export function error_json(error: Omit<ErrorJson, "error">): ErrorJson {
-    console.error("An error occurred!", error);
-    return { error: true, ...error };
-}
-
 export async function json_or_error(res: Response): Promise<any> {
     if (res.ok) {
         return res.json();
     }
 
     return error_json(await res.json());
+}
+
+function error_json(error: Omit<ErrorJson, "error">): ErrorJson {
+    console.error("An error occurred!", error);
+    return { error: true, ...error };
 }
 
 export interface ApiProps extends UnauthenticatedApiProps {
