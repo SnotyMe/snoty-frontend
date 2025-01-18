@@ -52,7 +52,7 @@ export async function json_or_error(res: Response): Promise<any> {
     return error_json(await res.json());
 }
 
-function error_json(error: Omit<ErrorJson, "error">): ErrorJson {
+export function error_json(error: Omit<ErrorJson, "error">): ErrorJson {
     console.error("An error occurred!", error);
     return { error: true, ...error };
 }

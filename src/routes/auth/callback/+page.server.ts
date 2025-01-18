@@ -1,7 +1,7 @@
 import type { PageServerLoad } from "./$types";
 import { buildBackendUrl, redirectUrl } from "$lib/auth/urls";
-import { error_json } from "$lib/api/api";
 import { setAuthCookies } from "./auth-cookies";
+import { error_json } from "$lib/api/api";
 
 export const load: PageServerLoad = async ({ url, cookies }) => {
     const params = url.searchParams;
