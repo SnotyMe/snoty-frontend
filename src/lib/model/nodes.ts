@@ -6,6 +6,7 @@ export type NodeSettings = Record<string, any>
 export interface SettinglessNode extends Record<string, any> {
     _id: NodeId
     descriptor: NodeDescriptor
+    logLevel: string
 }
 
 export interface StandaloneNode extends SettinglessNode {

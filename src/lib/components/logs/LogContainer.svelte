@@ -14,6 +14,9 @@
     import IconFirst from 'lucide-svelte/icons/chevrons-left';
     import IconLast from 'lucide-svelte/icons/chevron-right';
     import type { PageChangeDetails } from "@zag-js/pagination"
+    import LogLevelSelector from "$lib/components/logs/LogLevelSelector.svelte";
+    import { LogLevel, type NodeLogEntry } from "$lib/model/node_logs";
+    import { getLevelIndex } from "$lib/components/logs/log_utils";
 
     interface Props {
         isOpen: boolean
@@ -42,18 +45,38 @@
                 .then(newExecutions => allExecutions = allExecutions.concat(newExecutions));
         }
     }
+
+    const filters: {
+        logLevel: LogLevel | null
+    } = $state({
+        logLevel: null
+    })
+    function logFilter(entry: NodeLogEntry) {
+        return filters.logLevel === null || getLevelIndex(entry.level) >= getLevelIndex(filters.logLevel);
+    }
 </script>
 
-<NodeDrawer horizontalAlign="right" width="70%" height="70%" {isOpen} innerClass="overflow-hidden flex flex-col justify-between">
+<NodeDrawer horizontalAlign="right" width="70%" height="70%" {isOpen} innerClass="flex flex-col">
     {#await initialPromise}
-        Loading logs...
+        <div>Loading logs...</div>
     {:then _}
+        <div class="flex p-1 justify-between">
+            <b>Flow Logs</b>
+            <div>
+                <LogLevelSelector onchange={level => filters.logLevel = level} level={null}/>
+            </div>
+        </div>
         <div class="overflow-auto flex-shrink">
             {#each slicedSource(allExecutions) as execution}
-                <ExecutionStatusIcon status={execution.status}/>
-                {execution.triggeredBy.type} @ {formatDate(execution.startDate)}
-                <div class="bg-surface-200-800 p-1 border-2 border-surface-900-100 rounded mb-2">
-                    <LogTable logs={execution.logs}/>
+                {@const logs = execution.logs.filter(logFilter)}
+                <div>
+                    <ExecutionStatusIcon status={execution.status}/>
+                    {execution.triggeredBy.type} @ {formatDate(execution.startDate)}
+                    {#if logs.length > 0}
+                        <div class="bg-surface-200-800 p-1 border-2 border-surface-900-100 rounded mb-2">
+                            <LogTable {logs}/>
+                        </div>
+                    {/if}
                 </div>
             {/each}
         </div>

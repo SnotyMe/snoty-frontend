@@ -12,7 +12,7 @@
 
 <style>
     span {
-        font-size: 1.5rem;
+        font-size: 1rem;
         width: 1rem;
         text-align: center;
     }
