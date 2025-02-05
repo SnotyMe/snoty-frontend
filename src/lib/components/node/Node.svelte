@@ -114,7 +114,7 @@
     </div>
     {#if metadata?.output !== null}
         <Handle type="source"
-                class={metadata?.position === "MIDDLE" && !hasOutputNode ? "!bg-red-500" : ""}
+                class={metadata?.position !== "END" && !hasOutputNode ? "!bg-red-500" : ""}
                 position={Position.Right}/>
     {/if}
 </div>
