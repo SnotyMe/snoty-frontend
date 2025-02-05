@@ -29,8 +29,8 @@
                     {#if isObject}
                         <NodeSettingsComponent
                                 {expanded}
-                                {settings}
-                                fields={objectDetails(field.details)?.schema}
+                                bind:settings={settings[field.name]}
+                                fields={objectDetails(field)?.schema}
                         />
                     {:else if isList}
                         <CollectionSettings bind:values={settings[field.name]} {field}/>
