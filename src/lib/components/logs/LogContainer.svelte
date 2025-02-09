@@ -71,7 +71,7 @@
                 {@const logs = execution.logs.filter(logFilter)}
                 <div>
                     <ExecutionStatusIcon status={execution.status}/>
-                    {execution.triggeredBy.type} @ {formatDate(execution.startDate)}
+                    {execution.triggeredBy.type ?? execution.triggeredBy} @ {formatDate(execution.startDate)}
                     {#if logs.length > 0}
                         <div class="bg-surface-200-800 p-1 border-2 border-surface-900-100 rounded mb-2">
                             <LogTable {logs}/>
