@@ -56,29 +56,31 @@
     }
 </script>
 
-<NodeDrawer horizontalAlign="right" width="70%" height="70%" {isOpen} innerClass="flex flex-col">
+<NodeDrawer horizontalAlign="right" width="70%" height="70%" {isOpen} innerClass="flex flex-col justify-between">
     {#await initialPromise}
         <div>Loading logs...</div>
     {:then _}
-        <div class="flex p-1 justify-between">
-            <b>Flow Logs</b>
-            <div>
-                <LogLevelSelector onchange={level => filters.logLevel = level} level={null}/>
-            </div>
-        </div>
-        <div class="overflow-auto flex-shrink">
-            {#each slicedSource(allExecutions) as execution}
-                {@const logs = execution.logs.filter(logFilter)}
+        <div>
+            <div class="flex p-1 justify-between">
+                <b>Flow Logs</b>
                 <div>
-                    <ExecutionStatusIcon status={execution.status}/>
-                    {execution.triggeredBy.type ?? execution.triggeredBy} @ {formatDate(execution.startDate)}
-                    {#if logs.length > 0}
-                        <div class="bg-surface-200-800 p-1 border-2 border-surface-900-100 rounded mb-2">
-                            <LogTable {logs}/>
-                        </div>
-                    {/if}
+                    <LogLevelSelector onchange={level => filters.logLevel = level} level={null}/>
                 </div>
-            {/each}
+            </div>
+            <div class="overflow-auto flex-shrink">
+                {#each slicedSource(allExecutions) as execution}
+                    {@const logs = execution.logs.filter(logFilter)}
+                    <div>
+                        <ExecutionStatusIcon status={execution.status}/>
+                        {execution.triggeredBy.type ?? execution.triggeredBy} @ {formatDate(execution.startDate)}
+                        {#if logs.length > 0}
+                            <div class="bg-surface-200-800 p-1 border-2 border-surface-900-100 rounded mb-2">
+                                <LogTable {logs}/>
+                            </div>
+                        {/if}
+                    </div>
+                {/each}
+            </div>
         </div>
 
         <Pagination classes="flex-shrink-0 mt-1 justify-center" data={allExecutions} bind:page bind:pageSize onPageChange={pageChanged}>
