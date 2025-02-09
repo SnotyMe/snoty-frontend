@@ -1,7 +1,7 @@
 <script lang="ts">
     import { type ErrorJson, isErrorJson } from "$lib/api/api";
     import type { Snippet } from "svelte";
-    import { TriangleAlert } from "lucide-svelte";
+    import Alert from "$lib/components/ui/alert/Alert.svelte";
 
     interface Props<T> {
         element?: T | ErrorJson
@@ -14,21 +14,22 @@
 </script>
 
 {#if firstErrorElement}
-    <div class="card preset-outlined-error-500 grid grid-cols-1 items-center gap-4 p-4 lg:grid-cols-[auto_1fr_auto]">
-        <TriangleAlert/>
-        <div>
-            <p class="font-bold">Something has gone wrong.</p>
-            <p class="type-scale-1 opacity-60">
-                {#if firstErrorElement.code}
-                    Code {firstErrorElement.code}:
-                {/if}
-                {firstErrorElement.message}
-            </p>
-        </div>
-        <div class="flex gap-1">
-            <button onclick={() => window.location.reload()} class="btn preset-tonal hover:preset-filled">Reload Page</button>
-        </div>
-    </div>
+    <Alert level="error">
+        {#snippet content()}
+            <div>
+                <p class="font-bold">Something has gone wrong.</p>
+                <p class="type-scale-1 opacity-60">
+                    {#if firstErrorElement.code}
+                        Code {firstErrorElement.code}:
+                    {/if}
+                    {firstErrorElement.message}
+                </p>
+            </div>
+            <div class="flex gap-1">
+                <button onclick={() => window.location.reload()} class="btn preset-tonal hover:preset-filled">Reload Page</button>
+            </div>
+        {/snippet}
+    </Alert>
 {:else}
     {@render success(element, elements)}
 {/if}

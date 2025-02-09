@@ -2,11 +2,12 @@
     import type { Snippet } from "svelte";
     import IconCircleAlert from "lucide-svelte/icons/circle-alert"
     import IconLoader from "lucide-svelte/icons/loader"
+    import { twMerge } from "tailwind-merge";
 
     interface Props {
         onclick: () => Promise<any>
         onloaddone?: () => void
-        class?: string
+        clazz?: string
         loading?: Snippet
         idle: Snippet
         done?: Snippet
@@ -17,7 +18,7 @@
     const {
         onclick: handler,
         onloaddone,
-        class: clazz = "btn preset-filled",
+        clazz = "",
         idle: idleSnippet,
         loading: loadingSnippet,
         done: doneSnippet,
@@ -42,7 +43,7 @@
     }
 </script>
 
-<button class={clazz} class:disabled={doing} {onclick} {...props}>
+<button class={twMerge("btn preset-filled", clazz)} class:disabled={doing} {onclick} {...props}>
     {#if done && doneSnippet}
         {@render doneSnippet()}
     {:else if doing}

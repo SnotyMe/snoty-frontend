@@ -485,6 +485,10 @@ export default {
           pattern: /bg-.*-500/,
           variants: ["after"]
       },
+      {
+          // Alert.svelte
+          pattern: /(preset-outlined|text)-.*-500/
+      },
       "anchor"
   ]
 }
