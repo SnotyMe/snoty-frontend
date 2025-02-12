@@ -1,6 +1,6 @@
 <script lang="ts">
     import "../app.css";
-    import { Navigation, Avatar } from "@skeletonlabs/skeleton-svelte";
+    import { Avatar, Navigation, Popover } from "@skeletonlabs/skeleton-svelte";
     import IconSettings from "lucide-svelte/icons/settings";
     import IconHome from "lucide-svelte/icons/house";
     import IconWorkflow from "lucide-svelte/icons/workflow";
@@ -8,6 +8,9 @@
     import IconMenu from "lucide-svelte/icons/menu";
     import IconMonitorCog from "lucide-svelte/icons/monitor-cog";
     import UserMenu from "./UserMenu.svelte";
+    import { browser } from "$app/environment";
+    import { type ApiProps, isErrorJson } from "$lib/api/api";
+    import { TemplateAPI } from "$lib/components/template/api";
 
     let expanded = $state(false);
 
@@ -28,10 +31,6 @@
     const tileProps = {
         active: "",
     };
-
-    import { browser } from "$app/environment";
-    import { type ApiProps, isErrorJson } from "$lib/api/api";
-    import { TemplateAPI } from "$lib/components/template/api";
 
     const apiProps: ApiProps = {
         token: data.access_token!!,
@@ -73,12 +72,27 @@
             <IconSettings/>
         </Navigation.Tile>
         {#if user != null}
-            <Navigation.Tile id="avatar" labelExpanded={data.user?.name} title="user" onclick={() => profileMenuShown = !profileMenuShown} {...tileProps}>
-                <Avatar src={undefined} classes="flex justify-center items-center">{initials}</Avatar>
-            </Navigation.Tile>
-            {#if profileMenuShown}
-                <UserMenu/>
-            {/if}
+            <Popover
+                bind:open={profileMenuShown}
+                positioning={{placement: "right", offset: {mainAxis: 25}}}
+                classes="w-full"
+                triggerClasses="pointer-events-none w-full"
+            >
+                {#snippet trigger()}
+                    <Navigation.Tile id="avatar"
+                                     labelExpanded={data.user?.name}
+                                     title="user"
+                                     classes="pointer-events-auto w-full flex justify-center items-center"
+                                     expandedClasses="pointer-events-auto"
+                                     onclick={() => profileMenuShown = !profileMenuShown}
+                                     {...tileProps}>
+                        <Avatar src={undefined} classes="flex justify-center items-center">{initials}</Avatar>
+                    </Navigation.Tile>
+                {/snippet}
+                {#snippet content()}
+                    <UserMenu/>
+                {/snippet}
+            </Popover>
         {/if}
         {/snippet}
     </Navigation.Rail>
