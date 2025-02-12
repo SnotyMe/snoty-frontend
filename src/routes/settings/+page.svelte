@@ -3,6 +3,10 @@
     import ThemeSwitch from "$lib/components/theme/ThemeSwitch.svelte";
     import type { PageServerData } from "./$types";
     import { MAX_COOKIE_AGE } from "$lib/utils/cookie_utils";
+    import IconCopy from "lucide-svelte/icons/copy";
+    import { copyToClipboard } from "$lib/utils/utils";
+    import type { ToastContext } from "@skeletonlabs/skeleton-svelte";
+    import { getContext } from "svelte";
 
     const {
         data
@@ -21,8 +25,34 @@
         const colorScheme = isItDarkNow ? "dark" : "light";
         document.cookie = `colorScheme=${colorScheme}; path=/; max-age=${MAX_COOKIE_AGE}`;
     }
+
+    export const toast: ToastContext = getContext('toast');
+
+    function copyUserId() {
+        copyToClipboard(data.user.id);
+        toast.create({
+            title: "Copied User ID",
+            description: "Your User ID was successfully copied to the clipboard!",
+            type: "success"
+        });
+    }
 </script>
 
+<style>
+    #settings-wrapper > div {
+        @apply space-y-2;
+    }
+</style>
+
 <Page pageName="Settings">
-    <ThemeSwitch currentTheme={data.theme} {setTheme} currentColorScheme={data.colorScheme} {toggleColorScheme}/>
+    <div id="settings-wrapper" class="flex flex-col justify-center text-center gap-4">
+        <div>
+            <h2 class="h2">Theme</h2>
+            <ThemeSwitch currentTheme={data.theme} {setTheme} currentColorScheme={data.colorScheme} {toggleColorScheme}/>
+        </div>
+        <div>
+            <h2 class="h2">Developer Options</h2>
+            <button class="btn preset-filled" onclick={copyUserId}><IconCopy/> Copy User ID</button>
+        </div>
+    </div>
 </Page>
