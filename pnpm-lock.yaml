@@ -39,8 +39,8 @@ importers:
         specifier: ^10.19.0
         version: 10.20.1
       lucide-svelte:
-        specifier: ^0.469.0
-        version: 0.469.0(svelte@5.20.0)
+        specifier: ^0.475.0
+        version: 0.475.0(svelte@5.20.0)
       svelte-codemirror-editor:
         specifier: ^1.4.1
         version: 1.4.1(codemirror@6.0.1)(svelte@5.20.0)
@@ -1337,8 +1337,8 @@ packages:
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
-  lucide-svelte@0.469.0:
-    resolution: {integrity: sha512-PMIJ8jrFqVUsXJz4d1yfAQplaGhNOahwwkzbunha8DhpiD73xqX24n8dE1dPpUk3vcrdWVsHc1y/liHHotOnGQ==}
+  lucide-svelte@0.475.0:
+    resolution: {integrity: sha512-N5+hFTPHaZe9HhqJDxxxODfYuOmI6v+JIowzERcea/uxytN/JZlehVTcINBNp8wMo7l6ov1Jf5srrDbkI/WsJg==}
     peerDependencies:
       svelte: ^3 || ^4 || ^5.0.0-next.42
 
@@ -3128,7 +3128,7 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lucide-svelte@0.469.0(svelte@5.20.0):
+  lucide-svelte@0.475.0(svelte@5.20.0):
     dependencies:
       svelte: 5.20.0
 
