@@ -25,7 +25,7 @@
     <title>{fullPageName}</title>
     <meta property="og:title" content={fullPageName}/>
     <meta property="og:image" content="/favicon.png"/>
-    <meta property="og:description" name="description" content={description ?? "A low-code automation platform, specifically made for the educational sector."}/>
+    <meta property="og:description" content={description ?? "A low-code automation platform, specifically made for the educational sector."}/>
 </svelte:head>
 
 <!-- svelte 5 wants {@render children()} but it is buggy, duplicating content but only if <sveltekit:head> is present -->
