@@ -15,25 +15,22 @@
     const { currentTheme, setTheme, toggleColorScheme, currentColorScheme }: Props = $props();
 </script>
 
-<div class="flex flex-col justify-center text-center">
-    <h2 class="h2">Theme</h2>
-    <div class="flex flex-row">
-        <Switch name="mode" controlActive="bg-surface-200" checked={currentColorScheme === "light"} onCheckedChange={toggleColorScheme}>
-            {#snippet inactiveChild()}<IconMoon size="14"/>{/snippet}
-            {#snippet activeChild()}<IconSun size="14"/>{/snippet}
-        </Switch>
-        <div class="input-group grid-cols-[auto_1fr] hover:preset-tonal">
-            <div class="input-group-cell">
-                <IconPalette size={18} />
-            </div>
-            <select onchange={e => setTheme(e.target.value)}>
-                <!-- Loop and generate theme list automatically -->
-                {#each themes as {name, displayName}}
-                    <option value={name} selected={currentTheme === name}>
-                        {displayName}
-                    </option>
-                {/each}
-            </select>
+<div class="flex flex-row justify-center gap-2">
+    <Switch name="mode" controlActive="bg-surface-200" checked={currentColorScheme === "light"} onCheckedChange={toggleColorScheme}>
+        {#snippet inactiveChild()}<IconMoon size="14"/>{/snippet}
+        {#snippet activeChild()}<IconSun size="14"/>{/snippet}
+    </Switch>
+    <div class="input-group grid-cols-[auto_1fr] hover:preset-tonal">
+        <div class="input-group-cell">
+            <IconPalette size={18} />
         </div>
+        <select onchange={e => setTheme(e.target.value)}>
+            <!-- Loop and generate theme list automatically -->
+            {#each themes as {name, displayName}}
+                <option value={name} selected={currentTheme === name}>
+                    {displayName}
+                </option>
+            {/each}
+        </select>
     </div>
 </div>

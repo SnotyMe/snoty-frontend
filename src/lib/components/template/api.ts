@@ -1,5 +1,6 @@
 import { type ApiProps, authenticatedApiFetch } from "$lib/api/api";
 import { getNodeAPI as nodeAPIGetter } from "$lib/components/template/node";
+import { copyToClipboard } from "$lib/utils/utils";
 
 export class TemplateAPI {
     private readonly apiProps: ApiProps;
@@ -10,9 +11,7 @@ export class TemplateAPI {
 
     getNodeAPI = nodeAPIGetter
 
-    copyToClipboard(text: string) {
-        void navigator.clipboard.writeText(text);
-    }
+    copyToClipboard = copyToClipboard
 
     getInputValue(id: string): string {
         return (document.getElementById(id) as HTMLInputElement).value;

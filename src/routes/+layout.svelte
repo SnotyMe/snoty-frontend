@@ -1,7 +1,6 @@
 <script lang="ts">
     import "../app.css";
-    import { Avatar, Navigation, Popover } from "@skeletonlabs/skeleton-svelte";
-    import IconSettings from "lucide-svelte/icons/settings";
+    import { Avatar, Navigation, ToastProvider } from "@skeletonlabs/skeleton-svelte";
     import IconHome from "lucide-svelte/icons/house";
     import IconWorkflow from "lucide-svelte/icons/workflow";
     import IconInfo from "lucide-svelte/icons/info";
@@ -11,11 +10,15 @@
     import { browser } from "$app/environment";
     import { type ApiProps, isErrorJson } from "$lib/api/api";
     import { TemplateAPI } from "$lib/components/template/api";
+    import { page } from "$app/state";
 
     let expanded = $state(false);
 
+    let activeUrl = $derived(page.url.pathname)
+
     const {
-        data
+        data,
+        children,
     } = $props();
 
     const user = data.user;
@@ -29,7 +32,8 @@
     let profileMenuShown = $state(false);
 
     const tileProps = {
-        active: "",
+        "active": "bg-surface-300-700",
+        "hover": "hover:preset-filled-surface-200-800",
     };
 
     const apiProps: ApiProps = {
@@ -45,58 +49,46 @@
 <div class="card border-surface-100-900 grid h-full w-full grid-cols-[auto_1fr] border-[1px]">
     <Navigation.Rail value="nothing" classes="navbar overflow-y-auto" {expanded}>
         {#snippet header()}
-        <Navigation.Tile id="menu" labelExpanded="Menu" title="menu" onclick={() => expanded = !expanded} {...tileProps}>
+        <Navigation.Tile labelExpanded="Menu" title="menu" selected={expanded} onclick={() => expanded = !expanded} {...tileProps}>
             <IconMenu/>
         </Navigation.Tile>
         {/snippet}
         {#snippet tiles()}
-        <Navigation.Tile id="home" labelExpanded="Home" label="Home" href="/" {...tileProps}>
+        <Navigation.Tile id="home" labelExpanded="Home" label="Home" href="/" selected={activeUrl === "/"} {...tileProps}>
             <IconHome/>
         </Navigation.Tile>
         {#if data.user != null}
-            <Navigation.Tile id="flows" labelExpanded="My Flows" label="Flows" href="/flows" {...tileProps}>
+            <!-- matches /flows and /flow/:id -->
+            <Navigation.Tile id="flows" labelExpanded="My Flows" label="Flows" href="/flows" selected={activeUrl.startsWith("/flow")} {...tileProps}>
                 <IconWorkflow/>
             </Navigation.Tile>
         {/if}
-        <Navigation.Tile id="about" labelExpanded="About Snoty" label="About" href="/about" {...tileProps}>
+        <Navigation.Tile id="about" labelExpanded="About Snoty" label="About" href="/about" selected={activeUrl === "/about"} {...tileProps}>
             <IconInfo/>
         </Navigation.Tile>
         {#if !isErrorJson(data.roles) && data.roles?.includes("admin")}
-            <Navigation.Tile id="admin" labelExpanded="Admin" label="Admin" href="/admin" {...tileProps}>
+            <Navigation.Tile id="admin" labelExpanded="Admin" label="Admin" href="/admin" selected={activeUrl === "/admin"} {...tileProps}>
                 <IconMonitorCog/>
             </Navigation.Tile>
         {/if}
         {/snippet}
         {#snippet footer()}
-        <Navigation.Tile id="settings" labelExpanded="Settings" href="/settings" title="settings" {...tileProps}>
-            <IconSettings/>
-        </Navigation.Tile>
+        <UserMenu {profileMenuShown} {tileProps}/>
         {#if user != null}
-            <Popover
-                bind:open={profileMenuShown}
-                positioning={{placement: "right", offset: {mainAxis: 25}}}
-                classes="w-full"
-                triggerClasses="pointer-events-none w-full"
-            >
-                {#snippet trigger()}
-                    <Navigation.Tile id="avatar"
-                                     labelExpanded={data.user?.name}
-                                     title="user"
-                                     classes="pointer-events-auto w-full flex justify-center items-center"
-                                     expandedClasses="pointer-events-auto"
-                                     onclick={() => profileMenuShown = !profileMenuShown}
-                                     {...tileProps}>
-                        <Avatar src={undefined} classes="flex justify-center items-center">{initials}</Avatar>
-                    </Navigation.Tile>
-                {/snippet}
-                {#snippet content()}
-                    <UserMenu/>
-                {/snippet}
-            </Popover>
+            <Navigation.Tile id="avatar"
+                             labelExpanded={data.user?.name}
+                             onclick={() => profileMenuShown = !profileMenuShown}
+                             selected={profileMenuShown}
+                             {...tileProps}
+                             active={tileProps["hover"]}>
+                <Avatar src={undefined} classes="flex justify-center items-center">{initials}</Avatar>
+            </Navigation.Tile>
         {/if}
         {/snippet}
     </Navigation.Rail>
-    <div class="flex gap-2 items-center justify-center h-full overflow-y-auto">
-        <slot/>
-    </div>
+    <ToastProvider>
+        <div class="flex gap-2 items-center justify-center h-full overflow-y-auto">
+            {@render children()}
+        </div>
+    </ToastProvider>
 </div>
