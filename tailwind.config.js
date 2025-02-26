@@ -472,13 +472,6 @@ export default {
   },
   plugins: [
       forms,
-      skeleton({
-        themes: [
-            themes.cerberus,
-            crimson,
-            dracula,
-        ]
-      })
   ],
   safelist: [
       {
