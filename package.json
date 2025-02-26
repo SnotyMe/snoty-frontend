@@ -9,6 +9,7 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
+	"prepare": "svelte-kit sync",
 	"devDependencies": {
 		"@skeletonlabs/skeleton": "3.0.0-next.10",
 		"@skeletonlabs/skeleton-svelte": "1.0.0-next.19",
