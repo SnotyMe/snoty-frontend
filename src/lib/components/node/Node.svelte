@@ -58,7 +58,7 @@
     })
 
     const { edges } = useStore()
-    let hasOutputNode = $derived($edges.some(edge => edge.source === node._id))
+    let hasOutputNode = $derived(edges.some(edge => edge.source === node._id))
 </script>
 
 <div bind:clientWidth={widths[node._id]} bind:clientHeight={heights[node._id]} class="h-full">
