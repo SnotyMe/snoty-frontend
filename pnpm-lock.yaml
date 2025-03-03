@@ -24,8 +24,8 @@ importers:
         specifier: ^4.23.7
         version: 4.23.7(@codemirror/language@6.10.7)(@codemirror/state@6.5.0)(@codemirror/view@6.36.1)
       '@xyflow/svelte':
-        specifier: ^0.1.26
-        version: 0.1.26(svelte@5.20.0)
+        specifier: 1.0.0-next.4
+        version: 1.0.0-next.4(svelte@5.20.0)
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -706,10 +706,10 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0'
 
-  '@svelte-put/shortcut@3.1.1':
-    resolution: {integrity: sha512-2L5EYTZXiaKvbEelVkg5znxqvfZGZai3m97+cAiUBhLZwXnGtviTDpHxOoZBsqz41szlfRMcamW/8o0+fbW3ZQ==}
+  '@svelte-put/shortcut@4.1.0':
+    resolution: {integrity: sha512-wImNEIkbxAIWFqlfuhcbC+jRPDeRa/uJGIXHMEVVD+jqL9xCwWNnkGQJ6Qb2XVszuRLHlb8SGZDL3Io/h3vs8w==}
     peerDependencies:
-      svelte: ^3.55.0 || ^4.0.0 || ^5.0.0
+      svelte: ^5.1.0
 
   '@sveltejs/adapter-auto@4.0.0':
     resolution: {integrity: sha512-kmuYSQdD2AwThymQF0haQhM8rE5rhutQXG4LNbnbShwhMO4qQGnKaaTy+88DuNSuoQDi58+thpq8XpHc1+oEKQ==}
@@ -799,13 +799,13 @@ packages:
       '@codemirror/state': '>=6.0.0'
       '@codemirror/view': '>=6.0.0'
 
-  '@xyflow/svelte@0.1.26':
-    resolution: {integrity: sha512-eNcS7uqJIYfkPuVLk9Ok3n6QkXxi2pwoDSoRv8JwceG/6wfCSfEcNhkPi4KjinFfdFZv28XxX8rlEBlG5N2kfw==}
+  '@xyflow/svelte@1.0.0-next.4':
+    resolution: {integrity: sha512-7Yimb+hyJZm9JQtoM5rO4azu0GRvZ30M2GDQiS5LPE1vO3SHHUvzXjRpEamOeIe85MFFj201JMh1iIYnidtj3A==}
     peerDependencies:
-      svelte: ^3.0.0 || ^4.0.0 || ^5.0.0
+      svelte: ^5.16.0
 
-  '@xyflow/system@0.0.47':
-    resolution: {integrity: sha512-aUXJPIvsCFxGX70ccRG8LPsR+A8ExYXfh/noYNpqn8udKerrLdSHxMG2VsvUrQ1PGex10fOpbJwFU4A+I/Xv8w==}
+  '@xyflow/system@0.0.50':
+    resolution: {integrity: sha512-HVUZd4LlY88XAaldFh2nwVxDOcdIBxGpQ5txzwfJPf+CAjj2BfYug1fHs2p4yS7YO8H6A3EFJQovBE8YuHkAdg==}
 
   '@zag-js/accordion@0.78.3':
     resolution: {integrity: sha512-Ri8j2vlIOxMY5owuFusgOeaDP8ZJV+SexTrDEAvMYs5J/enKL3eMsd+npuSAHseRBgOxepb9c+bovD0L6nYwBw==}
@@ -1026,9 +1026,6 @@ packages:
   chokidar@4.0.3:
     resolution: {integrity: sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==}
     engines: {node: '>= 14.16.0'}
-
-  classcat@5.0.5:
-    resolution: {integrity: sha512-JhZUT7JFcQy/EzW605k/ktHtncoo9vnyW/2GspNYwFlN1C/WmjuV/xtS04e9SOkL2sTdw0VAZ2UGCcQ9lR6p6w==}
 
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
@@ -2345,7 +2342,7 @@ snapshots:
     transitivePeerDependencies:
       - postcss
 
-  '@svelte-put/shortcut@3.1.1(svelte@5.20.0)':
+  '@svelte-put/shortcut@4.1.0(svelte@5.20.0)':
     dependencies:
       svelte: 5.20.0
 
@@ -2463,14 +2460,13 @@ snapshots:
       '@codemirror/state': 6.5.0
       '@codemirror/view': 6.36.1
 
-  '@xyflow/svelte@0.1.26(svelte@5.20.0)':
+  '@xyflow/svelte@1.0.0-next.4(svelte@5.20.0)':
     dependencies:
-      '@svelte-put/shortcut': 3.1.1(svelte@5.20.0)
-      '@xyflow/system': 0.0.47
-      classcat: 5.0.5
+      '@svelte-put/shortcut': 4.1.0(svelte@5.20.0)
+      '@xyflow/system': 0.0.50
       svelte: 5.20.0
 
-  '@xyflow/system@0.0.47':
+  '@xyflow/system@0.0.50':
     dependencies:
       '@types/d3-drag': 3.0.7
       '@types/d3-selection': 3.0.11
@@ -2828,8 +2824,6 @@ snapshots:
   chokidar@4.0.3:
     dependencies:
       readdirp: 4.0.2
-
-  classcat@5.0.5: {}
 
   clsx@2.1.1: {}
 
