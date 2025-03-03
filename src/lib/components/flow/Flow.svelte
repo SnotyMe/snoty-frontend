@@ -1,7 +1,15 @@
 <script lang="ts">
     import '@xyflow/svelte/dist/style.css';
-    import { Background, Controls, type Edge, MarkerType, MiniMap, type Node, SvelteFlow } from "@xyflow/svelte";
-    import { writable } from "svelte/store";
+    import {
+        Background,
+        Controls,
+        type Edge,
+        MarkerType,
+        MiniMap,
+        type Node,
+        SvelteFlow,
+        useSvelteFlow,
+    } from "@xyflow/svelte";
     import { DISPOSE_EDGE, edgeTypes, FLOW_NODE, nodeTypes } from "$lib/model/svelte_flow";
     import { getLayoutedElements } from "$lib/components/flow/flow_utils";
     import {
@@ -17,7 +25,7 @@
     import type { NodeCreatedHandler } from "$lib/components/add";
     import type { WorkflowWithNodes } from "$lib/model/flows";
     import FlowMenus from "$lib/components/flow/FlowMenus.svelte";
-    import { useSvelteFlow } from "@xyflow/svelte";
+    import { untrack } from 'svelte';
 
     type Props = {
         flow: WorkflowWithNodes
@@ -42,7 +50,9 @@
                 onsettingschange: (newSettings: NodeSettings) => updateSettings(apiProps, node._id, newSettings),
                 ondelete: () => {
                     deleteNode(apiProps, node._id)
-                        .then(() => nodesStore.update(nodes => nodes.filter(n => n.id !== node._id)));
+                        .then(() => {
+                            nodesStore = nodesStore.filter(n => n.id !== node._id);
+                        });
                 },
                 heights,
                 widths,
@@ -66,9 +76,8 @@
         } as Edge))
     );
 
-    const nodesStore = writable<Node[]>(initialNodes);
-    const edgesStore = writable<Edge[]>(initialEdges);
-    const { fitView } = useSvelteFlow();
+    let nodesStore = $state.raw<Node[]>(initialNodes);
+    let edgesStore = $state.raw<Edge[]>(initialEdges);
 
     // never-ending promise while the layout is being calculated
     let promise: Promise<void> = $state(new Promise(() => {}));
@@ -87,31 +96,30 @@
             heights,
             { 'elk.direction': "RIGHT" }
         ).then(({ nodes: layoutedNodes }) => {
-            // most readable TS/JS code
-            nodesStore.update(_ => layoutedNodes.map(d => ({ ...d, data: { ...d.data, initializing: false }})));
-            // scuffed way to wait for the nodes to be updated before fitting the view
-            // this is necessary because an immediate call to `fitView` would slightly offset the view
-            let unsubscriber: () => void;
-            unsubscriber = nodesStore.subscribe((_) => {
-                if (!unsubscriber) return
-                fitView();
-                unsubscriber()
-            });
+            nodesStore = layoutedNodes.map(d => ({ ...d, data: { ...d.data, initializing: false }}));
         })
     }
+
+    $effect(() => {
+        void [nodesStore, edgesStore]
+        useSvelteFlow().fitView()
+        untrack(() => [nodesStore, edgesStore])
+    })
 
     const addNode: NodeCreatedHandler = async (node: StandaloneNode) => {
         const newNode = createNodeFromNode(node);
         newNode.width = Object.values(widths).reduce((acc, val) => acc + val, 0) / Object.keys(widths).length;
-        nodesStore.update(nodes => [...nodes, newNode]);
+        // do not use `.push` because Svelte 5 is totally bugged
+        nodesStore = [...nodesStore, newNode];
     }
 </script>
 
-<SvelteFlow proOptions={{hideAttribution: true}}
+<!-- https://github.com/xyflow/xyflow/pull/5065 -->
+<SvelteFlow proOptions={{hideAttribution: false}}
             {nodeTypes}
             {edgeTypes}
-            nodes={nodesStore}
-            edges={edgesStore}
+            bind:nodes={nodesStore}
+            bind:edges={edgesStore}
             defaultEdgeOptions={{
                     type: DISPOSE_EDGE,
                     markerEnd: {
