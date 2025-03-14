@@ -37,7 +37,7 @@
 		"@uiw/codemirror-theme-dracula": "^4.23.7",
 		"@xyflow/svelte": "^0.1.26",
 		"dotenv": "^16.4.7",
-		"elkjs": "^0.9.3",
+		"elkjs": "^0.10.0",
 		"jwt-decode": "^4.0.0",
 		"liquidjs": "^10.19.0",
 		"lucide-svelte": "^0.475.0",
