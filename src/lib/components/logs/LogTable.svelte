@@ -11,7 +11,7 @@
 
 <table class="border-spacing-0 w-full">
     <tbody>
-    {#each logs.toReversed() as log}
+    {#each logs as log}
         <LogLine {log}/>
     {/each}
     </tbody>

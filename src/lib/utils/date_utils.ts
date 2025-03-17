@@ -4,7 +4,12 @@ const dateTimeFormat = new Intl.DateTimeFormat(Intl.DateTimeFormat().resolvedOpt
 });
 
 export function formatDate(date: Date): string {
-    return dateTimeFormat.format(date);
+    try {
+        return dateTimeFormat.format(date);
+    } catch (e) {
+        console.error("Error formatting date", date, e);
+        throw e;
+    }
 }
 
 /**
