@@ -27,7 +27,7 @@ export enum FlowExecutionStatus {
     FAILED = "FAILED",
 }
 
-type TriggerReason = {
+export type TriggerReason = {
     type: "Unknown"
 } | {
     type: "Manual"
