@@ -1,13 +1,7 @@
 <script lang="ts">
-    import { type FlowExecution, FlowExecutionStatus } from "$lib/model/flows";
+    import { type FlowExecution, FlowExecutionStatus, type TriggerReason } from "$lib/model/flows";
     import { API_URL } from "$lib/api/api";
-
-    interface FlowStarted {
-        jobId: string,
-        flowId: string,
-        // TODO: create FlowTriggerReason type
-        triggeredBy: any,
-    }
+    import type { NodeLogEntry } from "$lib/model/node_logs";
 
     let {
         flowId,
@@ -20,28 +14,59 @@
     const evtSource = new EventSource(`${API_URL}/wiring/flow/${flowId}/executions/sse`, {
         withCredentials: true,
     });
+
+    interface Event {
+        jobId: string
+        flowId: string
+    }
+
     evtSource.addEventListener("FlowStarted", (event) => {
         console.debug("Flow started", event)
-        const data: FlowStarted =  JSON.parse(event.data)
 
-        allExecutions = [{
+        const data: Event & {
+            triggeredBy: TriggerReason
+            timestamp: string
+        } = JSON.parse(event.data)
+
+        allExecutions.unshift({
             ...data,
             logs: [],
-            // TODO
-            startDate: new Date(),
+            startDate: new Date(data.timestamp),
             status: FlowExecutionStatus.RUNNING,
-        }, ...allExecutions]
+        })
     })
-    evtSource.addEventListener("FlowStarted", (event) => {
-        console.debug("Flow started", event)
-        const data: FlowStarted =  JSON.parse(event.data)
 
-        allExecutions = [{
-            ...data,
-            logs: [],
-            // TODO
-            startDate: new Date(),
-            status: FlowExecutionStatus.RUNNING,
-        }, ...allExecutions]
+    evtSource.addEventListener("FlowLog", event => {
+        console.debug("Flow log", event)
+
+        const {
+            jobId,
+            entry,
+        }: Event & {
+            entry: NodeLogEntry & {
+                timestamp: string | Date | number,
+            }
+        } = JSON.parse(event.data);
+
+        if (typeof entry.timestamp === "string") entry.timestamp = new Date(entry.timestamp)
+
+        allExecutions.find(ex => ex.jobId === jobId)
+            ?.logs.unshift(entry)
+    })
+
+    evtSource.addEventListener("FlowEnded", event => {
+        console.debug("Flow ended", event)
+
+        const {
+            jobId,
+            status
+        }: Event & {
+            status: FlowExecutionStatus,
+        } = JSON.parse(event.data);
+
+        const found = allExecutions.find(ex => ex.jobId === jobId)
+        if (!found) return;
+
+        found.status = status;
     })
 </script>
