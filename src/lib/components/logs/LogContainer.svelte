@@ -1,7 +1,7 @@
 <script lang="ts">
     import { getFlowExecutions } from "$lib/api/flow_api";
     import type { NodeId } from "$lib/model/nodes";
-    import type { ApiProps } from "$lib/api/api";
+    import { type ApiProps, authenticatedApiFetch } from "$lib/api/api";
     import LogTable from "$lib/components/logs/LogTable.svelte";
     import NodeDrawer from "$lib/components/node/control/NodeDrawer.svelte";
     import ExecutionStatusIcon from "../../../routes/flows/ExecutionStatusIcon.svelte";
@@ -17,6 +17,7 @@
     import LogLevelSelector from "$lib/components/logs/LogLevelSelector.svelte";
     import { LogLevel, type NodeLogEntry } from "$lib/model/node_logs";
     import { getLevelIndex } from "$lib/components/logs/log_utils";
+    import ExecutionListener from "$lib/components/logs/ExecutionListener.svelte";
 
     interface Props {
         isOpen: boolean
@@ -56,6 +57,8 @@
     }
 </script>
 
+<ExecutionListener {flowId} bind:allExecutions/>
+
 <NodeDrawer horizontalAlign="right" width="70%" height="70%" {isOpen} innerClass="flex flex-col justify-between">
     {#await initialPromise}
         <div>Loading logs...</div>
@@ -67,6 +70,9 @@
                     <LogLevelSelector onchange={level => filters.logLevel = level} level={null}/>
                 </div>
             </div>
+            <button onclick={() => authenticatedApiFetch(apiProps, `wiring/flow/${flowId}/send`)}>
+                Send
+            </button>
             <div class="overflow-auto flex-shrink">
                 {#each slicedSource(allExecutions) as execution}
                     {@const logs = execution.logs.filter(logFilter)}
