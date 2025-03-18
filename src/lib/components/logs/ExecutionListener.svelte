@@ -1,18 +1,21 @@
 <script lang="ts">
     import { type FlowExecution, FlowExecutionStatus, type TriggerReason } from "$lib/model/flows";
-    import { API_URL } from "$lib/api/api";
+    import { API_URL, type ApiProps, injectAuth } from "$lib/api/api";
     import type { NodeLogEntry } from "$lib/model/node_logs";
+    import { EventSource } from "eventsource";
 
-    let {
+    const {
+        apiProps,
         flowId,
         allExecutions = $bindable()
     }: {
+        apiProps: ApiProps
         flowId: string,
         allExecutions: FlowExecution[]
     } = $props();
 
     const evtSource = new EventSource(`${API_URL}/wiring/flow/${flowId}/executions/sse`, {
-        withCredentials: true,
+        fetch: (input, init) => fetch(input, injectAuth(apiProps, init))
     });
 
     interface Event {
