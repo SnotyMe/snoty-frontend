@@ -53,7 +53,16 @@ export async function json_or_error(res: Response): Promise<any> {
         return res.json();
     }
 
-    return error_json(await res.json());
+    const response = await res.text();
+    try {
+        const json = JSON.parse(response);
+        return error_json(json);
+    } catch (e) {
+        return error_json({
+            code: res.status,
+            message: response,
+        });
+    }
 }
 
 export function error_json(error: Omit<ErrorJson, "error">): ErrorJson {
