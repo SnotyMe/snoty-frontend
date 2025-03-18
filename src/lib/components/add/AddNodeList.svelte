@@ -25,11 +25,11 @@
     <input class="input" type="text" placeholder="Search" oninput={updateFilter}/>
 </label>
 
-<Accordion value={currentValue} collapsible classes="text-sm">
+<Accordion value={currentValue} collapsible classes="text-sm overflow-y-auto h-full">
     {#each filteredMetadatas.values() as metadata}
         <Accordion.Item value={metadata.displayName}>
             {#snippet control()}
-                <p class="h5">{metadata.displayName}</p>
+                <p class="h5 leading-none">{metadata.displayName}</p>
             {/snippet}
             {#snippet panel()}
                 <div class="flex w-full justify-between">

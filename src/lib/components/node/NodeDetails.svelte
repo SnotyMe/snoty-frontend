@@ -26,10 +26,10 @@
         <div class="flex items-center gap-2">
             <NodeName {settings}/>
             {#if nodeId}
-                <p>{nodeId}</p>
+                <p class="text-nowrap">{nodeId}</p>
             {/if}
         </div>
-        <div class="flow-node-options table-wrap border-t-4 mt-1">
+        <div class="flow-node-options table-wrap border-t-4 border-surface-200-800 mt-1">
             <NodeSettingsComponent {settings} fields={removeBoilerplate(metadata.settings)}/>
         </div>
     {:else}

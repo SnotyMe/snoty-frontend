@@ -70,14 +70,14 @@
                     <LogLevelSelector onchange={level => filters.logLevel = level} level={null}/>
                 </div>
             </div>
-            <div class="overflow-auto flex-shrink">
+            <div class="overflow-auto shrink">
                 {#each slicedSource(allExecutions) as execution}
                     {@const logs = execution.logs.filter(logFilter)}
                     <div>
                         <ExecutionStatusIcon status={execution.status}/>
                         {execution.triggeredBy.type ?? execution.triggeredBy} @ {formatDate(execution.startDate)}
                         {#if logs.length > 0}
-                            <div class="bg-surface-200-800 p-1 border-2 border-surface-900-100 rounded mb-2">
+                            <div class="bg-surface-200-800 p-1 border-2 border-surface-900-100 rounded-sm mb-2">
                                 <LogTable {logs}/>
                             </div>
                         {/if}
@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <Pagination classes="flex-shrink-0 mt-1 justify-center" data={allExecutions} bind:page bind:pageSize onPageChange={pageChanged}>
+        <Pagination classes="shrink-0 mt-1 justify-center" data={allExecutions} bind:page bind:pageSize onPageChange={pageChanged}>
             {#snippet labelEllipsis()}<IconEllipsis class="size-4" />{/snippet}
             {#snippet labelNext()}<IconArrowRight class="size-4" />{/snippet}
             {#snippet labelPrevious()}<IconArrowLeft class="size-4" />{/snippet}

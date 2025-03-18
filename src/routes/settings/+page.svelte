@@ -41,6 +41,8 @@
 </script>
 
 <style>
+    @reference "../../app.css";
+
     #settings-wrapper > div {
         @apply space-y-2;
     }

@@ -1,14 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-:root {
-    --node-setting-padding: 0.5rem;
-}
-
-@layer components {
-    .input-field {
-        @apply input px-[--node-setting-padding] py-0.5 border-transparent whitespace-nowrap;
-        box-shadow: none;
-    }
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
 }

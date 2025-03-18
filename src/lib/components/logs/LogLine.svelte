@@ -73,7 +73,7 @@
     <td class="text-nowrap pr-3">
         {formatDate(log.timestamp)}
     </td>
-    <td class="w-0 flex-grow message" class:expanded={expanded}>
+    <td class="w-0 grow message" class:expanded={expanded}>
         {log.message}
     </td>
 </tr>

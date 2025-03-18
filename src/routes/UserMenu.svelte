@@ -12,7 +12,7 @@
 
     const { tileProps, profileMenuShown } = $props();
 
-    const classes = "!aspect-auto flex justify-center"
+    const classes = "aspect-auto! flex justify-center"
 
     let activeUrl = $derived(page.url.pathname)
 </script>
