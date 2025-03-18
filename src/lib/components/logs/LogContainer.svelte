@@ -57,7 +57,7 @@
     }
 </script>
 
-<ExecutionListener {flowId} bind:allExecutions/>
+<ExecutionListener {apiProps} {flowId} bind:allExecutions/>
 
 <NodeDrawer horizontalAlign="right" width="70%" height="70%" {isOpen} innerClass="flex flex-col justify-between">
     {#await initialPromise}

@@ -38,6 +38,7 @@
 		"@xyflow/svelte": "^0.1.26",
 		"dotenv": "^16.4.7",
 		"elkjs": "^0.9.3",
+		"eventsource": "^3.0.5",
 		"jwt-decode": "^4.0.0",
 		"liquidjs": "^10.19.0",
 		"lucide-svelte": "^0.475.0",
