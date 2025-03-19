@@ -30,7 +30,7 @@
     const heights: Record<string, number> = $state({});
     const widths: Record<string, number> = $state({});
 
-    function createNodeFromNode(node: StandaloneNode) {
+    function createNodeFromNode(node: StandaloneNode, extraData: any = {}) {
         return {
             id: node._id,
             position: { x: 0, y: 0 },
@@ -46,13 +46,14 @@
                 },
                 heights,
                 widths,
+                ...extraData,
             },
             dragHandle: '.drag-handle',
             type: FLOW_NODE
         } as Node;
     }
 
-    const initialNodes = flow.nodes.map(createNodeFromNode);
+    const initialNodes = flow.nodes.map(n => createNodeFromNode(n, { initializing: true }));
     const initialEdges = flow.nodes.flatMap(node =>
         (node.next ?? []).map(next => ({
             id: `${node._id}:${next}`,
@@ -86,7 +87,8 @@
             heights,
             { 'elk.direction': "RIGHT" }
         ).then(({ nodes: layoutedNodes }) => {
-            nodesStore.update(_ => [...layoutedNodes]);
+            // most readable TS/JS code
+            nodesStore.update(_ => layoutedNodes.map(d => ({ ...d, data: { ...d.data, initializing: false }})));
             // scuffed way to wait for the nodes to be updated before fitting the view
             // this is necessary because an immediate call to `fitView` would slightly offset the view
             let unsubscriber: () => void;
