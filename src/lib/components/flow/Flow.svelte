@@ -88,6 +88,7 @@
         }
     })
 
+    let fitCounter = -1;
     function updateLayout() {
         promise = getLayoutedElements(
             initialNodes,
@@ -97,13 +98,17 @@
             { 'elk.direction': "RIGHT" }
         ).then(({ nodes: layoutedNodes }) => {
             nodesStore = layoutedNodes.map(d => ({ ...d, data: { ...d.data, initializing: false }}));
+            fitCounter = 0;
         })
     }
 
     $effect(() => {
         void [nodesStore, edgesStore]
-        useSvelteFlow().fitView()
-        untrack(() => [nodesStore, edgesStore])
+        if (0 <= fitCounter && fitCounter < 2) {
+            fitCounter++;
+            useSvelteFlow().fitView()
+            untrack(() => [nodesStore, edgesStore, fitCounter])
+        }
     })
 
     const addNode: NodeCreatedHandler = async (node: StandaloneNode) => {
@@ -114,8 +119,7 @@
     }
 </script>
 
-<!-- https://github.com/xyflow/xyflow/pull/5065 -->
-<SvelteFlow proOptions={{hideAttribution: false}}
+<SvelteFlow proOptions={{hideAttribution: true}}
             {nodeTypes}
             {edgeTypes}
             bind:nodes={nodesStore}

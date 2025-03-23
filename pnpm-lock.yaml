@@ -27,8 +27,8 @@ importers:
         specifier: ^4.23.10
         version: 4.23.10(@codemirror/language@6.10.7)(@codemirror/state@6.5.0)(@codemirror/view@6.36.1)
       '@xyflow/svelte':
-        specifier: 1.0.0-next.4
-        version: 1.0.0-next.4(svelte@5.25.3)
+        specifier: 1.0.0-next.5
+        version: 1.0.0-next.5(svelte@5.25.3)
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -973,8 +973,8 @@ packages:
       '@codemirror/state': '>=6.0.0'
       '@codemirror/view': '>=6.0.0'
 
-  '@xyflow/svelte@1.0.0-next.4':
-    resolution: {integrity: sha512-7Yimb+hyJZm9JQtoM5rO4azu0GRvZ30M2GDQiS5LPE1vO3SHHUvzXjRpEamOeIe85MFFj201JMh1iIYnidtj3A==}
+  '@xyflow/svelte@1.0.0-next.5':
+    resolution: {integrity: sha512-XNb63MG6LiM+mp9n3TfrJgTgpOtExOyW5taiZPU5vuBbhL0LdNSyqTKq74wA1GMrujR1/+62fLg0hLHSQtIYsQ==}
     peerDependencies:
       svelte: ^5.16.0
 
@@ -2743,7 +2743,7 @@ snapshots:
       '@codemirror/state': 6.5.0
       '@codemirror/view': 6.36.1
 
-  '@xyflow/svelte@1.0.0-next.4(svelte@5.25.3)':
+  '@xyflow/svelte@1.0.0-next.5(svelte@5.25.3)':
     dependencies:
       '@svelte-put/shortcut': 4.1.0(svelte@5.25.3)
       '@xyflow/system': 0.0.50
