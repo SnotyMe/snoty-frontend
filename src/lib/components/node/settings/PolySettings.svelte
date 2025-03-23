@@ -11,14 +11,13 @@
         field: NodeField,
     }
     let { value = $bindable(), field }: Props = $props();
-    const details = field.details;
 </script>
 
-{#if details.type === COLLECTION}
-    <CollectionSettings bind:values={value} field={details}/>
-{:else if details.type === MAP}
-    <MapSettings bind:settings={value} field={details}/>
-{:else if details.type === OBJECT}
+{#if field.type === COLLECTION}
+    <CollectionSettings bind:values={value} {field}/>
+{:else if field.type === MAP}
+    <MapSettings bind:settings={value} {field}/>
+{:else if field.type === OBJECT}
     <NodeSettings
         bind:settings={value}
         fields={objectDetails(field)?.schema ?? []}

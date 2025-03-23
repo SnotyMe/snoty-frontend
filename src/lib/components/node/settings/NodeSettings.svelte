@@ -1,18 +1,15 @@
 <script lang="ts">
     import type { NodeField, NodeSettings } from "$lib/model/nodes";
-    import { COLLECTION, OBJECT, MAP, objectDetails } from "$lib/model/node_field_details";
-    import NodeSettingsComponent from "./NodeSettings.svelte";
-    import CollectionSettings from "./CollectionSettings.svelte";
-    import MapSettings from "./MapSettings.svelte";
+    import { COLLECTION, MAP, OBJECT } from "$lib/model/node_field_details";
     import SettingsField from "./SettingsField.svelte";
+    import PolySettings from "$lib/components/node/settings/PolySettings.svelte";
 
     interface Props {
         settings: NodeSettings
-        expanded?: boolean
 
         fields: NodeField[]
     }
-    let { settings = $bindable(), expanded = false, fields }: Props = $props();
+    let { settings = $bindable(), fields }: Props = $props();
 </script>
 
 <table class="table border-collapse">
@@ -26,16 +23,8 @@
                 <th colspan={hasChildren ? 2 : 1}>
                     <p class="whitespace-nowrap w-[min-content]" title={field.description}>{field.displayName}</p>
 
-                    {#if isObject}
-                        <NodeSettingsComponent
-                                {expanded}
-                                bind:settings={settings[field.name]}
-                                fields={objectDetails(field)?.schema}
-                        />
-                    {:else if isList}
-                        <CollectionSettings bind:values={settings[field.name]} {field}/>
-                    {:else if isMap}
-                        <MapSettings bind:settings={settings[field.name]} {field}/>
+                    {#if hasChildren}
+                        <PolySettings bind:value={settings[field.name]} {field}/>
                     {/if}
                 </th>
 
