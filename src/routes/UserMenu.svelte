@@ -24,7 +24,7 @@
     <IconSettings/>
 </Navigation.Tile>
 {#if profileMenuShown}
-    <hr class="border-surface-300-700 w-full h-1 border-r-5 mt-2">
+    <hr class="border-surface-300-700 w-full h-1 mt-2">
     <Navigation.Tile {classes} id="logout" labelExpanded="Logout" onclick={logout} title="logout" {...tileProps} active="">
         <IconLogOut/>
     </Navigation.Tile>
