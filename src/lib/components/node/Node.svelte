@@ -77,11 +77,11 @@
                 <NodeName {settings}/>
             </div>
             <div class="flow-node-options flex-grow table-wrap border-y-4 my-1 pr-0.5 overflow-y-auto">
-                <NodeSettings {settings} fields={removeBoilerplate(metadata.settings, hiddenSettings)}/>
+                <NodeSettings bind:settings={settings} fields={removeBoilerplate(metadata.settings, hiddenSettings)}/>
                 {#if hiddenSettings.length > 0}
                     <details>
                         <summary class="cursor-pointer">Show hidden settings</summary>
-                        <NodeSettings {settings} fields={removeBoilerplate(metadata.settings, unhiddenSettings)}/>
+                        <NodeSettings bind:settings={settings} fields={removeBoilerplate(metadata.settings, unhiddenSettings)}/>
                     </details>
                 {/if}
             </div>
