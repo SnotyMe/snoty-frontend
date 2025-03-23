@@ -24,7 +24,7 @@
 
     if (browser) {
         initContext()
-        setColorScheme(document.body.className as App.ColorScheme);
+        setColorScheme(document.documentElement.className as App.ColorScheme);
     }
 
     const user = data.user;
@@ -40,8 +40,6 @@
     const tileProps = {
         "active": "bg-surface-300-700",
         "hover": "hover:preset-filled-surface-200-800",
-        // TODO: remove once https://github.com/skeletonlabs/skeleton/issues/3269 is merged
-        "labelBase": "text-xs",
     };
 
     const apiProps: ApiProps = {

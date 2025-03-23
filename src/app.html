@@ -3,8 +3,8 @@
 	<head>
         <script>
             const preferred = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"
-            if (document.html.className.includes("[colorScheme]"))
-                document.html.className = preferred
+            if (document.documentElement.className.includes("[colorScheme]"))
+                document.documentElement.className = preferred
         </script>
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
