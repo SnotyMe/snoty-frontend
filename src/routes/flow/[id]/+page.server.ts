@@ -7,6 +7,5 @@ export const load: PageServerLoad = async ({ fetch, locals, params }) => {
 
     return {
         flow: await getFlow({ fetch, token }, params.id),
-        colorScheme: locals.colorScheme,
     };
 }

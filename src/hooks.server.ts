@@ -21,7 +21,8 @@ const theme: Handle = async ({ event, resolve }) => {
 
     return resolve(event, {
         transformPageChunk(input: { html: string; done: boolean }) {
-            input.html = input.html.replace("[colorScheme]", colorScheme ?? "dark");
+            if (colorScheme)
+                input.html = input.html.replace("[colorScheme]", colorScheme);
             input.html = input.html.replace("[theme]", theme);
             return input.html;
         }

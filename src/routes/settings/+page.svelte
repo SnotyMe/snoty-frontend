@@ -7,6 +7,7 @@
     import { copyToClipboard } from "$lib/utils/utils";
     import type { ToastContext } from "@skeletonlabs/skeleton-svelte";
     import { getContext } from "svelte";
+    import { getTheming, setColorScheme } from "$lib/context/layout_context.svelte";
 
     const {
         data
@@ -23,6 +24,7 @@
         const isItDarkNow = document.body.classList.toggle("dark");
         document.body.classList.toggle("light");
         const colorScheme = isItDarkNow ? "dark" : "light";
+        setColorScheme(colorScheme)
         document.cookie = `colorScheme=${colorScheme}; path=/; max-age=${MAX_COOKIE_AGE}`;
     }
 
@@ -48,7 +50,7 @@
     <div id="settings-wrapper" class="flex flex-col justify-center text-center gap-4">
         <div>
             <h2 class="h2">Theme</h2>
-            <ThemeSwitch currentTheme={data.theme} {setTheme} currentColorScheme={data.colorScheme} {toggleColorScheme}/>
+            <ThemeSwitch currentTheme={data.theme} {setTheme} currentColorScheme={getTheming()?.colorScheme} {toggleColorScheme}/>
         </div>
         <div>
             <h2 class="h2">Developer Options</h2>

@@ -11,6 +11,7 @@
     import { type ApiProps, isErrorJson } from "$lib/api/api";
     import { TemplateAPI } from "$lib/components/template/api";
     import { page } from "$app/state";
+    import { initContext, setColorScheme } from "$lib/context/layout_context.svelte";
 
     let expanded = $state(false);
 
@@ -20,6 +21,11 @@
         data,
         children,
     } = $props();
+
+    if (browser) {
+        initContext()
+        setColorScheme(document.body.className as App.ColorScheme);
+    }
 
     const user = data.user;
     function _fromFullName() {
