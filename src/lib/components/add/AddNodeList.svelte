@@ -36,7 +36,7 @@
                     <div class="flex flex-col gap-4">
                         <NodeFieldChips name="Settings" fields={metadata.settings}/>
                         <NodeFieldChips name="Inputs" fields={metadata.input}/>
-                        <NodeFieldChips name="Outputs" fields={metadata.output}/>
+                        <NodeFieldChips name="Output" fields={metadata.output}/>
                     </div>
                     <div class="flex items-center gap-2">
                         <button type="button" onclick={() => onshowhelp(metadata)}>

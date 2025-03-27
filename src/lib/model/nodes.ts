@@ -25,7 +25,7 @@ export interface NodeDescriptor {
 export interface NodeField {
     name: string
     type: string
-    defaultValue?: string
+    defaultValue?: any
     displayName: string
     description: string
     hidden: boolean

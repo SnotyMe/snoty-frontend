@@ -63,7 +63,7 @@
         bind:this={dialog}
         onclick={close}
         onkeypress={closeKeypress}
-        class="w-8/12 max-w-4xl h-8/12 m-auto shadow-lg cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 overflow-hidden border"
+        class="w-8/12 max-w-4xl h-8/12 m-auto shadow-lg cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 overflow-x-hidden border"
 >
     <slot/>
 </dialog>
