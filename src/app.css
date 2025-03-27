@@ -4,9 +4,11 @@
 @source '../node_modules/@skeletonlabs/skeleton-svelte/dist';
 
 @import '@skeletonlabs/skeleton';
+
 @import '@skeletonlabs/skeleton/optional/presets';
 @import '@skeletonlabs/skeleton/themes/cerberus';
 @import '@skeletonlabs/skeleton/themes/crimson';
+@import "./dracula.css";
 
 @import './flows.css';
 @import './api.css' layer(base);
