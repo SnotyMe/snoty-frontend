@@ -2,7 +2,6 @@
     import ArrowRight from "lucide-svelte/icons/chevron-right";
     import ArrowDown from "lucide-svelte/icons/chevron-down";
     import type { NodeLogEntry } from "$lib/model/node_logs";
-    import { getLevelColor } from "$lib/components/logs/log_utils";
     import { formatDate } from "$lib/utils/date_utils";
 
     interface Props {
@@ -39,6 +38,7 @@
 
         &::after {
             content: "";
+            background-color: var(--log-level);
             display: block;
             position: absolute;
             top: 0.1em;
@@ -66,7 +66,7 @@
 </style>
 
 <tr class="logline flex w-full overflow-auto" onmousedown={() => toggleExpanded("container")}>
-    <td class="level after:bg-{getLevelColor(log.level)}"></td>
+    <td class="level" style="--log-level: var(--color-log-{log.level.toLowerCase()})"></td>
     <td class="pl-1 cursor-pointer" onmouseup={() => toggleExpanded("handle")}>
         {#if expanded}<ArrowDown/>{:else}<ArrowRight/>{/if}
     </td>

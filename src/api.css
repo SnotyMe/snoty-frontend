@@ -9,3 +9,10 @@
     border-color: var(--color-gray-200, currentColor);
   }
 }
+
+@theme static {
+  --color-log-debug: var(--color-gray-500);
+  --color-log-info: var(--color-green-500);
+  --color-log-warn: var(--color-orange-500);
+  --color-log-error: var(--color-red-500);
+}

@@ -10,14 +10,20 @@
         class?: string
     }
     const { icon = undefined, content, level, class: clazz = "" }: Props = $props();
-    
 </script>
 
-<div class={twMerge(`card preset-outlined-${level}-500 grid grid-cols-1 items-center gap-4 p-4 lg:grid-cols-[auto_1fr_auto]`, clazz)}>
+<style>
+    div {
+        border-width: 1px;
+        border-color: var(--log-level);
+    }
+</style>
+
+<div style="--log-level: var(--color-log-{level})" class={twMerge(`card grid grid-cols-1 items-center gap-4 p-4 lg:grid-cols-[auto_1fr_auto]`, clazz)}>
     {#if icon}
         {@render icon()}
     {:else}
-        <TriangleAlert class="text-{level}-500"/>
+        <TriangleAlert/>
     {/if}
     {@render content()}
 </div>
