@@ -4,25 +4,25 @@
 }
 
 .svelte-flow {
-    --xy-background-color: rgb(var(--color-surface-50));
-    --xy-controls-button-background: rgb(var(--color-surface-100));
-    --xy-controls-button-background-color-hover: rgb(var(--color-surface-200));
-    --xy-minimap-background-color: rgb(var(--color-surface-50));
-    --xy-minimap-mask-background-color: rgb(var(--color-surface-500) / 0.5);
-    --xy-minimap-node-background-color: rgb(var(--color-surface-100));
-    --xy-handle-background-color: rgb(var(--color-surface-100));
-    --xy-controls-box-shadow: 0 0 2px 1px rgb(var(--color-surface-900) / 0.28);
+    --xy-background-color: --color-surface-50;
+    --xy-controls-button-background: var(--color-surface-100);
+    --xy-controls-button-background-color-hover: var(--color-surface-200);
+    --xy-minimap-background-color: var(--color-surface-50);
+    --xy-minimap-mask-background-color: color-mix(in oklab, var(--color-surface-500) 50%, transparent);
+    --xy-minimap-node-background-color: var(--color-surface-100);
+    --xy-handle-background-color: var(--color-surface-100);
+    --xy-controls-box-shadow: 0 0 2px 1px color-mix(in oklab, var(--color-surface-900) 28%, transparent);
 }
 
 .dark .svelte-flow {
-    --xy-background-color: rgb(var(--color-surface-950));
-    --xy-controls-button-background: rgb(var(--color-surface-900));
-    --xy-controls-button-background-color-hover: rgb(var(--color-surface-800));
-    --xy-minimap-background-color: rgb(var(--color-surface-950));
-    --xy-minimap-mask-background-color: rgb(var(--color-surface-900) / 0.5);
-    --xy-minimap-node-background-color: rgb(var(--color-surface-800));
-    --xy-handle-background-color: rgb(var(--color-surface-800));
-    --xy-controls-box-shadow: 0 0 15px 5px rgb(var(--color-surface-950) / 0.88);
+    --xy-background-color: var(--color-surface-950);
+    --xy-controls-button-background: var(--color-surface-900);
+    --xy-controls-button-background-color-hover: var(--color-surface-800);
+    --xy-minimap-background-color: var(--color-surface-950);
+    --xy-minimap-mask-background-color: color-mix(in oklab, var(--color-surface-900) 50%, transparent);
+    --xy-minimap-node-background-color: var(--color-surface-800);
+    --xy-handle-background-color: var(--color-surface-800);
+    --xy-controls-box-shadow: 0 0 15px 5px color-mix(in oklab, var(--color-surface-950) 88%, transparent);
 }
 
 /* repeated selectors to increase priority */

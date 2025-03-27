@@ -1,0 +1,4 @@
+@utility input-field {
+  @apply input px-(--node-setting-padding) py-0.5 border-transparent whitespace-nowrap;
+  box-shadow: none;
+}

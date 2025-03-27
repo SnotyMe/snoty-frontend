@@ -15,7 +15,7 @@
 </script>
 
 <Page pageName="Admin">
-    <div class="flex flex-col text-center">
+    <div class="flex flex-col text-center space-y-4">
         <h1 class="h1">Admin</h1>
         <h2 class="h2">Tasks</h2>
         {#await tasks}

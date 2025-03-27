@@ -24,7 +24,7 @@
 
     if (browser) {
         initContext()
-        setColorScheme(document.body.className as App.ColorScheme);
+        setColorScheme(document.documentElement.className as App.ColorScheme);
     }
 
     const user = data.user;

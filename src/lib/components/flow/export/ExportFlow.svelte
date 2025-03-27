@@ -39,7 +39,9 @@
 
 <style>
     .option {
-        @apply flex gap-2 items-center;
+        display: flex;
+        justify-content: space-between;
+        gap: 2em;
     }
 </style>
 
@@ -58,7 +60,7 @@
             </Alert>
         </div>
     </div>
-    <LoadingButton clazz="!mt-4" onclick={download}>
+    <LoadingButton clazz="mt-4!" onclick={download}>
         {#snippet idle()}
             Download
         {/snippet}

@@ -6,6 +6,8 @@
 </script>
 
 <style>
+    @reference "../../app.css"
+
     li > *:not(:first-child) {
         margin-left: 0.5em;
     }

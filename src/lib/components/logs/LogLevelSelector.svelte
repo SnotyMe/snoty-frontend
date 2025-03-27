@@ -29,7 +29,7 @@
     })
 </script>
 
-<select class="select py-0 transition-none" style="color: rgb(var(--color-{getLevel(selected).color}-500))" onchange={setSelected}>
+<select class="select py-0 transition-none" style="color: var(--color-{getLevel(selected).color}/500)" onchange={setSelected}>
     {#each LOG_LEVELS as { level }}
         <option value={level} selected={selected === level}>{level}</option>
     {/each}

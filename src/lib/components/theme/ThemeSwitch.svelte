@@ -21,10 +21,10 @@
         {#snippet activeChild()}<IconSun size="14"/>{/snippet}
     </Switch>
     <div class="input-group grid-cols-[auto_1fr] hover:preset-tonal">
-        <div class="input-group-cell">
+        <div class="ig-cell">
             <IconPalette size={18} />
         </div>
-        <select onchange={e => setTheme(e.target.value)}>
+        <select class="ig-select" onchange={e => setTheme(e.target.value)}>
             <!-- Loop and generate theme list automatically -->
             {#each themes as {name, displayName}}
                 <option value={name} selected={currentTheme === name}>
