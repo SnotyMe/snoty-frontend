@@ -25,7 +25,7 @@
     <input class="input" type="text" placeholder="Search" oninput={updateFilter}/>
 </label>
 
-<Accordion value={currentValue} onValueChange={e => currentValue = e.value} collapsible classes="text-sm overflow-y-auto h-full">
+<Accordion value={currentValue} onValueChange={e => currentValue = e.value} collapsible classes="text-sm">
     {#each filteredMetadatas.values() as metadata}
         <Accordion.Item value={metadata.displayName}>
             {#snippet control()}
