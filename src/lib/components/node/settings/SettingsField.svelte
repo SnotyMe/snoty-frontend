@@ -65,10 +65,6 @@
 </script>
 
 <style>
-    input {
-        background: none;
-    }
-
     div, input[type=text], textarea {
         width: 100%;
         --tw-ring-opacity: 0;
