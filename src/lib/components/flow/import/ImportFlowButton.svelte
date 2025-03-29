@@ -42,7 +42,8 @@
 </script>
 
 <Modal
-        bind:open={shown}
+        open={shown}
+        onOpenChange={(e) => shown = e.open}
         triggerBase="px-4 py-2"
         contentBase="resize-y bg-surface-50-950 border-l-2 border-surface-100-900 py-2 space-y-4 shadow-xl min-w-[480px] w-[40vw] h-screen"
         positionerJustify="justify-end"
