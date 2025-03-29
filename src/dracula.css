@@ -8,8 +8,8 @@
     --base-font-weight: normal;
     --base-font-style: normal;
     --base-letter-spacing: 0em;
-    --heading-font-color: inherit;
-    --heading-font-color-dark: inherit;
+    --heading-font-color: var(--base-font-color);
+    --heading-font-color-dark: var(--base-font-color-dark);
     --heading-font-family: inherit;
     --heading-font-weight: bold;
     --heading-font-style: normal;
