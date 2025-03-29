@@ -12,7 +12,7 @@
     const { metadatas, onshowhelp, onnodeadd }: Props = $props();
     let filteredMetadatas = $state(metadatas);
 
-    const currentValue: string[] = $state([]);
+    let currentValue: string[] = $state([]);
 
     function updateFilter(event: Event) {
         const value = (event.target as HTMLInputElement).value.toLowerCase();
@@ -25,7 +25,7 @@
     <input class="input" type="text" placeholder="Search" oninput={updateFilter}/>
 </label>
 
-<Accordion value={currentValue} collapsible classes="text-sm overflow-y-auto h-full">
+<Accordion value={currentValue} onValueChange={e => currentValue = e.value} collapsible classes="text-sm overflow-y-auto h-full">
     {#each filteredMetadatas.values() as metadata}
         <Accordion.Item value={metadata.displayName}>
             {#snippet control()}
