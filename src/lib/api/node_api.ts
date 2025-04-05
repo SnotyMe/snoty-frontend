@@ -52,7 +52,6 @@ export async function updateLogLevel(props: ApiProps, id: NodeId, logLevel: stri
         method: "PATCH",
         body: JSON.stringify({ logLevel }),
     })
-        .then((res) => res.json());
 }
 
 export async function deleteNode(props: ApiProps, id: NodeId) {
