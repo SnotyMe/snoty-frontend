@@ -12,7 +12,6 @@
 
 @import './flows.css';
 @import './api.css' layer(base);
-@import './api.utilities.css';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -35,4 +34,9 @@ body {
 }
 .codemirror-wrapper .cm-editor {
     height: 100%;
+}
+
+@utility input-field {
+    @apply input px-(--node-setting-padding) py-0.5 border-transparent whitespace-nowrap;
+    box-shadow: none;
 }
