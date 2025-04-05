@@ -6,7 +6,7 @@
     interface Props {
         icon?: Snippet
         content: Snippet
-        level: "info" | "warning" | "error"
+        level: "info" | "warn" | "error"
         class?: string
     }
     const { icon = undefined, content, level, class: clazz = "" }: Props = $props();

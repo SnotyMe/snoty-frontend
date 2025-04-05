@@ -38,10 +38,8 @@
 </script>
 
 <style>
-    .option {
-        display: flex;
-        justify-content: space-between;
-        gap: 2em;
+    .option > input {
+        margin-right: 0.75em;
     }
 </style>
 
@@ -53,7 +51,7 @@
         </label>
         <div class="ml-8">
             <p>Will include credentials. Use when you want to create a backup for yourself.</p>
-            <Alert level="warning" class="p-2">
+            <Alert level="warn" class="p-2">
                 {#snippet content()}
                     <span class="inline">Do not share this file publicly!</span>
                 {/snippet}
