@@ -47,7 +47,7 @@
 <Panel position="top-left" class="flex flex-row items-center">
     <div class="svelte-flow__controls">
         <ControlButton
-                on:click={() => toggleOpen(ADD)}
+                onclick={() => toggleOpen(ADD)}
                 class="svelte-flow__controls-addnode"
                 title="add node"
                 aria-label="add node"
@@ -65,7 +65,7 @@
 
 <Panel position="top-right" class="svelte-flow__controls">
     <ControlButton
-            on:click={() => toggleOpen(LOGS)}
+            onclick={() => toggleOpen(LOGS)}
             class="svelte-flow__controls-showlogs no-fill"
             title="show logs"
             aria-label="show logs"
@@ -77,7 +77,7 @@
         {/if}
     </ControlButton>
     <ControlButton
-            on:click={() => triggerFlow(props.apiProps, props.flow._id)}
+            onclick={() => triggerFlow(props.apiProps, props.flow._id)}
             class="svelte-flow__controls-trigger no-fill"
             title="trigger run"
             aria-label="trigger run"
