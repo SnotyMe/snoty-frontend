@@ -25,7 +25,6 @@
     import type { NodeCreatedHandler } from "$lib/components/add";
     import type { WorkflowWithNodes } from "$lib/model/flows";
     import FlowMenus from "$lib/components/flow/FlowMenus.svelte";
-    import { untrack } from 'svelte';
 
     type Props = {
         flow: WorkflowWithNodes
@@ -88,7 +87,7 @@
         }
     })
 
-    let fitCounter = -1;
+    const svelteFlow = $derived(useSvelteFlow())
     function updateLayout() {
         promise = getLayoutedElements(
             initialNodes,
@@ -98,18 +97,9 @@
             { 'elk.direction': "RIGHT" }
         ).then(({ nodes: layoutedNodes }) => {
             nodesStore = layoutedNodes.map(d => ({ ...d, data: { ...d.data, initializing: false }}));
-            fitCounter = 0;
+            svelteFlow.fitView()
         })
     }
-
-    $effect(() => {
-        void [nodesStore, edgesStore]
-        if (0 <= fitCounter && fitCounter < 2) {
-            fitCounter++;
-            useSvelteFlow().fitView()
-            untrack(() => [nodesStore, edgesStore, fitCounter])
-        }
-    })
 
     const addNode: NodeCreatedHandler = async (node: StandaloneNode) => {
         const newNode = createNodeFromNode(node);
