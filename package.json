@@ -36,7 +36,7 @@
 		"@codemirror/view": "^6.36.1",
 		"@uiw/codemirror-theme-dracula": "^4.23.7",
         "@uiw/codemirror-theme-github": "^4.23.10",
-		"@xyflow/svelte": "1.0.0-next.5",
+		"@xyflow/svelte": "1.0.0-next.6",
 		"dotenv": "^16.4.7",
 		"elkjs": "^0.9.3",
 		"eventsource": "^3.0.5",
