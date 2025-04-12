@@ -1,15 +1,5 @@
 @import 'tailwindcss';
 
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
-
 @theme static {
   --color-log-debug: var(--color-gray-500);
   --color-log-info: var(--color-green-500);
