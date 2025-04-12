@@ -40,7 +40,7 @@
 		"@uiw/codemirror-theme-github": "^4.23",
 		"@xyflow/svelte": "^0.1.26",
 		"dotenv": "^16",
-		"elkjs": "^0.9.3",
+		"elkjs": "^0.10.0",
 		"eventsource": "^3.0.5",
 		"jwt-decode": "^4.0",
 		"liquidjs": "^10.19",
