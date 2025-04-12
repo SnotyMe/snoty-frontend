@@ -30,7 +30,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@babel/runtime": "^7.26.9",
+		"@babel/runtime": "^7.26.0",
 		"@codemirror/lang-json": "^6.0.1",
 		"@codemirror/lang-liquid": "^6.2.2",
 		"@codemirror/view": "^6.36.1",
@@ -38,12 +38,12 @@
 		"@tailwindcss/vite": "^4.0.15",
 		"@uiw/codemirror-theme-dracula": "^4.23.7",
 		"@uiw/codemirror-theme-github": "^4.23.10",
-		"@xyflow/svelte": "^0.1.31",
+		"@xyflow/svelte": "^0.1.26",
 		"dotenv": "^16.4.7",
 		"elkjs": "^0.9.3",
 		"eventsource": "^3.0.5",
 		"jwt-decode": "^4.0.0",
-		"liquidjs": "^10.21.0",
+		"liquidjs": "^10.19.0",
 		"lucide-svelte": "^0.475.0",
 		"svelte-codemirror-editor": "^1.4.1",
 		"tailwind-merge": "^2.6.0"
