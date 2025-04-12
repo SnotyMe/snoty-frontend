@@ -5,6 +5,30 @@
     {
       "updateTypes": ["patch"],
       "enabled": false
+    },
+    {
+      "extends": [
+        "monorepo:tailwindcss"
+      ],
+      "groupName": "tailwindcss monorepo",
+      "matchUpdateTypes": [
+        "digest",
+        "patch",
+        "minor",
+        "major"
+      ]
+    },
+    {
+      "extends": [
+        "monorepo:zag-js"
+      ],
+      "groupName": "zag-js monorepo",
+      "matchUpdateTypes": [
+        "digest",
+        "patch",
+        "minor",
+        "major"
+      ]
     }
   ]
 }
