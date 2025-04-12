@@ -49,7 +49,7 @@
                     field={valueField}
                 />
             </th>
-            <th class="w-[min-content] pr-0 mr-0 flex items-center">
+            <th class="align-middle">
                 <button onclick={() => { delete settings[key] }}>
                     <Minus/>
                 </button>
