@@ -6,7 +6,7 @@
         width,
         height,
         class: clazz,
-        innerClass: innerClazz = null,
+        innerClass: innerClazz,
         verticalAlign = "top",
         horizontalAlign
     }: PopupProps = $props();
