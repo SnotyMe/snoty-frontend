@@ -55,7 +55,7 @@
     </div>
 </EdgeLabelRenderer>
 
-<style lang="postcss">
+<style>
     .edgeButtonContainer {
         position: absolute;
         font-size: 12pt;

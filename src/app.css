@@ -1,9 +1,19 @@
-@import "flows.css";
-@import "api.css";
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@source '../node_modules/@skeletonlabs/skeleton-svelte/dist';
+
+@import '@skeletonlabs/skeleton';
+
+@import '@skeletonlabs/skeleton/optional/presets';
+@import '@skeletonlabs/skeleton/themes/cerberus';
+@import '@skeletonlabs/skeleton/themes/crimson';
+@import "./dracula.css";
+
+@import './flows.css';
+@import './api.css' layer(base);
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 body {
     height: 100vh;
@@ -14,4 +24,12 @@ body {
 }
 .codemirror-wrapper .cm-editor {
     height: 100%;
+}
+
+@utility input-field {
+    @apply input px-2! py-0.5! border-transparent whitespace-nowrap;
+
+    &:not(:focus) {
+        box-shadow: none !important;
+    }
 }

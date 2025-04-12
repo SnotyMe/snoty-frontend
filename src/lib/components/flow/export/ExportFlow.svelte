@@ -38,8 +38,8 @@
 </script>
 
 <style>
-    .option {
-        @apply flex gap-2 items-center;
+    .option > input {
+        margin-right: 0.75em;
     }
 </style>
 
@@ -51,14 +51,14 @@
         </label>
         <div class="ml-8">
             <p>Will include credentials. Use when you want to create a backup for yourself.</p>
-            <Alert level="warning" class="p-2">
+            <Alert level="warn" class="p-2">
                 {#snippet content()}
                     <span class="inline">Do not share this file publicly!</span>
                 {/snippet}
             </Alert>
         </div>
     </div>
-    <LoadingButton clazz="!mt-4" onclick={download}>
+    <LoadingButton clazz="mt-4!" onclick={download}>
         {#snippet idle()}
             Download
         {/snippet}

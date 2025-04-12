@@ -12,7 +12,7 @@
     const { metadatas, onshowhelp, onnodeadd }: Props = $props();
     let filteredMetadatas = $state(metadatas);
 
-    const currentValue: string[] = $state([]);
+    let currentValue: string[] = $state([]);
 
     function updateFilter(event: Event) {
         const value = (event.target as HTMLInputElement).value.toLowerCase();
@@ -25,18 +25,18 @@
     <input class="input" type="text" placeholder="Search" oninput={updateFilter}/>
 </label>
 
-<Accordion value={currentValue} collapsible classes="text-sm">
+<Accordion value={currentValue} onValueChange={e => currentValue = e.value} collapsible classes="text-sm">
     {#each filteredMetadatas.values() as metadata}
         <Accordion.Item value={metadata.displayName}>
             {#snippet control()}
-                <p class="h5">{metadata.displayName}</p>
+                <p class="h5 leading-none">{metadata.displayName}</p>
             {/snippet}
             {#snippet panel()}
                 <div class="flex w-full justify-between">
                     <div class="flex flex-col gap-4">
                         <NodeFieldChips name="Settings" fields={metadata.settings}/>
                         <NodeFieldChips name="Inputs" fields={metadata.input}/>
-                        <NodeFieldChips name="Outputs" fields={metadata.output}/>
+                        <NodeFieldChips name="Output" fields={metadata.output}/>
                     </div>
                     <div class="flex items-center gap-2">
                         <button type="button" onclick={() => onshowhelp(metadata)}>

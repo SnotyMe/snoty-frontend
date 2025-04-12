@@ -1,6 +1,6 @@
 <script lang="ts">
     import "../app.css";
-    import { Avatar, Navigation, ToastProvider } from "@skeletonlabs/skeleton-svelte";
+    import { Avatar, Navigation, Toaster, createToaster } from "@skeletonlabs/skeleton-svelte";
     import IconHome from "lucide-svelte/icons/house";
     import IconWorkflow from "lucide-svelte/icons/workflow";
     import IconInfo from "lucide-svelte/icons/info";
@@ -11,7 +11,7 @@
     import { type ApiProps, isErrorJson } from "$lib/api/api";
     import { TemplateAPI } from "$lib/components/template/api";
     import { page } from "$app/state";
-    import { initContext, setColorScheme } from "$lib/context/layout_context.svelte";
+    import { initContext, setColorScheme, setToaster } from "$lib/context/layout_context.svelte";
 
     let expanded = $state(false);
 
@@ -24,7 +24,7 @@
 
     if (browser) {
         initContext()
-        setColorScheme(document.body.className as App.ColorScheme);
+        setColorScheme(document.documentElement.className as App.ColorScheme);
     }
 
     const user = data.user;
@@ -50,6 +50,11 @@
     // load template API to global context
     if (browser)
         window.templateAPI = new TemplateAPI(apiProps);
+
+    const toaster = createToaster({
+        placement: "bottom-end"
+    });
+    setToaster(toaster);
 </script>
 
 <div class="card border-surface-100-900 grid h-full w-full grid-cols-[auto_1fr] border-[1px]">
@@ -92,9 +97,8 @@
         {/if}
         {/snippet}
     </Navigation.Rail>
-    <ToastProvider>
-        <div class="flex gap-2 items-center justify-center h-full overflow-y-auto">
-            {@render children()}
-        </div>
-    </ToastProvider>
+    <Toaster {toaster}/>
+    <div class="flex gap-2 items-center justify-center h-full overflow-y-auto">
+        {@render children()}
+    </div>
 </div>

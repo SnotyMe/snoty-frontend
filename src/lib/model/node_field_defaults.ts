@@ -38,8 +38,6 @@ export function getDefaultValueFormattedIfPresent(field: NodeField): any | null 
             return enumDetails(field)!.values[0].displayName;
         case "Boolean":
             return tryParseBoolean(field.defaultValue) ?? false;
-        case "Object":
-            return objectDetails(field)!.schema.map(f => [f.name, getDefaultValueFormattedIfPresent(f)]);
         default:
             return null;
     }

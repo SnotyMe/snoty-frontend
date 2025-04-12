@@ -5,9 +5,7 @@
     import { MAX_COOKIE_AGE } from "$lib/utils/cookie_utils";
     import IconCopy from "lucide-svelte/icons/copy";
     import { copyToClipboard } from "$lib/utils/utils";
-    import type { ToastContext } from "@skeletonlabs/skeleton-svelte";
-    import { getContext } from "svelte";
-    import { getTheming, setColorScheme } from "$lib/context/layout_context.svelte";
+    import { getTheming, getToaster, setColorScheme } from "$lib/context/layout_context.svelte";
 
     const {
         data
@@ -28,7 +26,7 @@
         document.cookie = `colorScheme=${colorScheme}; path=/; max-age=${MAX_COOKIE_AGE}`;
     }
 
-    export const toast: ToastContext = getContext('toast');
+    const toast = getToaster();
 
     function copyUserId() {
         copyToClipboard(data.user.id);
@@ -41,6 +39,8 @@
 </script>
 
 <style>
+    @reference "../../app.css";
+
     #settings-wrapper > div {
         @apply space-y-2;
     }

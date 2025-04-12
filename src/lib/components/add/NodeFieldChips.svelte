@@ -10,6 +10,8 @@
 </script>
 
 <style>
+    @reference "../../../app.css"
+
     .chip {
         @apply px-2;
     }

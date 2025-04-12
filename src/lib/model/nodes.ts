@@ -1,4 +1,5 @@
 import type { Details } from "$lib/model/node_field_details";
+import type { LogLevel } from "$lib/model/node_logs";
 
 export type NodeId = string
 export type NodeSettings = Record<string, any>
@@ -6,7 +7,7 @@ export type NodeSettings = Record<string, any>
 export interface SettinglessNode extends Record<string, any> {
     _id: NodeId
     descriptor: NodeDescriptor
-    logLevel: string
+    logLevel: LogLevel | null
 }
 
 export interface StandaloneNode extends SettinglessNode {
@@ -25,7 +26,7 @@ export interface NodeDescriptor {
 export interface NodeField {
     name: string
     type: string
-    defaultValue?: string
+    defaultValue?: any
     displayName: string
     description: string
     hidden: boolean

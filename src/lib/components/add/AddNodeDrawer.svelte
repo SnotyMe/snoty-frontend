@@ -52,7 +52,7 @@
 </style>
 
 <NodeDrawer horizontalAlign="left" width="60%" height="80%" {isOpen}>
-    <div class="grid">
+    <div class="grid max-h-full">
         {#if currentHelpMetadata === null}
             <ScaleTransition>
                 <AddNodeList {metadatas} onnodeadd={addNode} onshowhelp={showHelp}/>

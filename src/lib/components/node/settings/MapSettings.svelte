@@ -27,10 +27,16 @@
         details: valueDetails,
     };
 
+    let keyStates: Record<string, string> = $state({})
+
     function rename(oldName: string, newName: string) {
         if (oldName === newName) return;
+
         settings[newName] = settings[oldName];
         delete settings[oldName];
+
+        keyStates[newName] = keyStates[oldName];
+        delete keyStates[oldName];
     }
 </script>
 
@@ -40,7 +46,12 @@
         <tr>
             <th>
                 {#key key}
-                    <div class="input-field" contenteditable="true" onblur={e => rename(key, e.target.innerText)}>{key}</div>
+                    <input class="input-field"
+                           value={key}
+                           oninput={e => keyStates[key] = e.target.value}
+                           onblur={e => rename(key, e.target.value)}/>
+                    <!-- `-mx-1` accounts for the width of the ' characters -->
+                    <div class="input-field -mx-1 invisible">'{keyStates[key] ?? key}'</div>
                 {/key}
             </th>
             <th class="w-full">
@@ -49,7 +60,7 @@
                     field={valueField}
                 />
             </th>
-            <th class="w-[min-content] pr-0 mr-0 flex items-center">
+            <th class="align-middle">
                 <button onclick={() => { delete settings[key] }}>
                     <Minus/>
                 </button>

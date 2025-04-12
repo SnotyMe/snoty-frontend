@@ -1,14 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-:root {
-    --node-setting-padding: 0.5rem;
-}
-
-@layer components {
-    .input-field {
-        @apply input px-[--node-setting-padding] py-0.5 border-transparent whitespace-nowrap;
-        box-shadow: none;
-    }
+@theme static {
+  --color-log-debug: var(--color-gray-500);
+  --color-log-info: var(--color-green-500);
+  --color-log-warn: var(--color-orange-500);
+  --color-log-error: var(--color-red-500);
 }

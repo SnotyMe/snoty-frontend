@@ -8,7 +8,7 @@
     }
     const { metadata }: Props = $props();
 
-    const value = $state([]);
+    let value: string[] = $state([]);
 </script>
 
 <div class="mt-0 m-1">
@@ -16,7 +16,7 @@
         <h1 class="leading-none h1" style="vertical-align: top">{metadata.displayName}</h1>
         <p>{descriptorAsString(metadata.descriptor)}</p>
     </div>
-    <Accordion {value} multiple>
+    <Accordion {value} onValueChange={e => (value = e.value)} multiple>
         <NodeHelpFields name="Settings" fields={metadata.settings}/>
         {#if metadata.input}
             <hr class="hr">

@@ -42,7 +42,8 @@
 </script>
 
 <Modal
-        bind:open={shown}
+        open={shown}
+        onOpenChange={(e) => shown = e.open}
         triggerBase="px-4 py-2"
         contentBase="resize-y bg-surface-50-950 border-l-2 border-surface-100-900 py-2 space-y-4 shadow-xl min-w-[480px] w-[40vw] h-screen"
         positionerJustify="justify-end"
@@ -64,7 +65,7 @@
             <div class="w-full flex justify-between px-2">
                 <div class="flex flex-row items-center gap-2">
                     <button class="btn preset-filled" onclick={() => shown = false}>Close</button>
-                    <Switch base="inline-flex items-center gap-1" labelClasses="!ring-0 !ring-transparent" name="show-intermediate-nodes" bind:checked={showIntermediate}>
+                    <Switch base="inline-flex items-center gap-1" labelClasses="ring-0! ring-transparent!" name="show-intermediate-nodes" bind:checked={showIntermediate}>
                         Show intermediate nodes
                     </Switch>
                 </div>
