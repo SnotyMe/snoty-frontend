@@ -8,7 +8,7 @@
     } from "$lib/model/nodes";
     import NodeDrawer from "$lib/components/node/control/NodeDrawer.svelte";
     import AddNodeList from "$lib/components/add/AddNodeList.svelte";
-    import type { AddNodeProps, NodeCreatedHandler } from "$lib/components/add";
+    import type { FlowMenusProps, NodeCreatedHandler } from "$lib/components/add";
     import { nodeSettingsFromMetadata } from "$lib/utils/settings_utils";
     import NodeDetails from "$lib/components/node/NodeDetails.svelte";
     import AddNodeButton from "$lib/components/add/AddNodeButton.svelte";
@@ -16,7 +16,7 @@
     import ScaleTransition from "$lib/components/transition/ScaleTransition.svelte";
     import IconArrowLeft from "lucide-svelte/icons/arrow-left"
 
-    let { isOpen: ogOpen = $bindable(), flow, apiProps, metadatas, onnodecreated: onnodecreatedupstream }: AddNodeProps = $props()
+    let { isOpen: ogOpen = $bindable(), flow, apiProps, metadatas, onnodecreated: onnodecreatedupstream }: FlowMenusProps = $props()
     let isOpen = $state(ogOpen);
     $effect(() => {
         isOpen = ogOpen;
