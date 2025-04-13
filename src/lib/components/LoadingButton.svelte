@@ -31,6 +31,7 @@
 
     async function onclick() {
         doing = true;
+        done = false;
         try {
             await handler();
             done = true;
@@ -43,7 +44,7 @@
     }
 </script>
 
-<button class={twMerge("btn preset-filled", clazz)} class:disabled={doing} {onclick} {...props}>
+<button class={twMerge("btn preset-filled", clazz)} disabled={doing} {...props} {onclick}>
     {#if done && doneSnippet}
         {@render doneSnippet()}
     {:else if doing}

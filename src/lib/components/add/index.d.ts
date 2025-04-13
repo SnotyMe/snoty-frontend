@@ -4,7 +4,7 @@ import type { Workflow } from "$lib/model/flows";
 
 export type NodeCreatedHandler = (node: StandaloneNode) => void
 
-interface AddNodeProps {
+interface FlowMenusProps {
     flow: Workflow
     apiProps: ApiProps
     metadatas: NodeMetadataMap
