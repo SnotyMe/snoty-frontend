@@ -2,6 +2,7 @@
     import { Accordion } from "@skeletonlabs/skeleton-svelte";
     import { type NodeMetadata, descriptorAsString } from "$lib/model/nodes";
     import NodeHelpFields from "$lib/components/node/help/NodeHelpFields.svelte";
+    import { removeBoilerplate } from "$lib/utils/settings_utils";
 
     interface Props {
         metadata: NodeMetadata
@@ -17,7 +18,7 @@
         <p>{descriptorAsString(metadata.descriptor)}</p>
     </div>
     <Accordion {value} onValueChange={e => (value = e.value)} multiple>
-        <NodeHelpFields name="Settings" fields={metadata.settings}/>
+        <NodeHelpFields name="Settings" fields={removeBoilerplate(metadata.settings)}/>
         {#if metadata.input}
             <hr class="hr">
             <NodeHelpFields name="Input" fields={metadata.input}/>
