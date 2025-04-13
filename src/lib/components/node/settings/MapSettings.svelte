@@ -51,7 +51,7 @@
                            oninput={e => keyStates[key] = e.target.value}
                            onblur={e => rename(key, e.target.value)}/>
                     <!-- `-mx-1` accounts for the width of the ' characters -->
-                    <div class="input-field -mx-1 invisible">'{keyStates[key] ?? key}'</div>
+                    <div class="input-field -mx-1 invisible h-0">'{keyStates[key] ?? key}'</div>
                 {/key}
             </th>
             <th class="w-full">
