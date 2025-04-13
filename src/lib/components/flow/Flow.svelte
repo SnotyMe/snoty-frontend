@@ -68,7 +68,6 @@
             id: `${node._id}:${next}`,
             source: node._id,
             target: next,
-            animated: true,
             data: {
                 ondisconnect: () => disconnectNodes(apiProps, node._id, next)
             }
@@ -101,12 +100,6 @@
         })
     }
 
-    $effect(() => {
-        void [nodesStore, edgesStore]
-        useSvelteFlow().fitView()
-        untrack(() => [nodesStore, edgesStore])
-    })
-
     const addNode: NodeCreatedHandler = async (node: StandaloneNode) => {
         const newNode = createNodeFromNode(node);
         newNode.width = Object.values(widths).reduce((acc, val) => acc + val, 0) / Object.keys(widths).length;
@@ -115,8 +108,7 @@
     }
 </script>
 
-<!-- https://github.com/xyflow/xyflow/pull/5065 -->
-<SvelteFlow proOptions={{hideAttribution: false}}
+<SvelteFlow proOptions={{hideAttribution: true}}
             {nodeTypes}
             {edgeTypes}
             bind:nodes={nodesStore}
@@ -127,7 +119,8 @@
                         type: MarkerType.Arrow,
                         width: 25,
                         height: 25
-                    }
+                    },
+                    animated: true,
                 }}
             class="svelte-flow"
             onconnect={(event) => connectNodes(apiProps, event.source, event.target)}
