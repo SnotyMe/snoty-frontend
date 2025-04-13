@@ -25,7 +25,6 @@
     import type { NodeCreatedHandler } from "$lib/components/add";
     import type { WorkflowWithNodes } from "$lib/model/flows";
     import FlowMenus from "$lib/components/flow/FlowMenus.svelte";
-    import { untrack } from 'svelte';
 
     type Props = {
         flow: WorkflowWithNodes
@@ -88,6 +87,7 @@
         }
     })
 
+    const svelteFlow = $derived(useSvelteFlow())
     function updateLayout() {
         promise = getLayoutedElements(
             initialNodes,
@@ -97,6 +97,7 @@
             { 'elk.direction': "RIGHT" }
         ).then(({ nodes: layoutedNodes }) => {
             nodesStore = layoutedNodes.map(d => ({ ...d, data: { ...d.data, initializing: false }}));
+            svelteFlow.fitView()
         })
     }
 
