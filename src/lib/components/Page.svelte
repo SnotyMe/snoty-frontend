@@ -15,6 +15,8 @@
         description,
     }: Props = $props();
     const fullPageName = $derived(pageName ? pageName + " | Snoty" : "Snoty");
+
+    const actualDescription = description ?? "Snoty is a low-code automation platform, specifically made for the educational sector.";
 </script>
 
 <svelte:head>
@@ -25,7 +27,8 @@
     <title>{fullPageName}</title>
     <meta property="og:title" content={fullPageName}/>
     <meta property="og:image" content="/favicon.png"/>
-    <meta property="description" content={description ?? "Snoty is a low-code automation platform, specifically made for the educational sector."}/>
+    <meta property="og:description" content={actualDescription}/>
+    <meta property="description" content={actualDescription}/>
 </svelte:head>
 
 <!-- svelte 5 wants {@render children()} but it is buggy, duplicating content but only if <sveltekit:head> is present -->
