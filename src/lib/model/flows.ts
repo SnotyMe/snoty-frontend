@@ -4,10 +4,27 @@ import type { NodeLogEntry } from "$lib/model/node_logs";
 export interface Workflow {
     _id: string
     name: string
+    settings: WorkflowSettings
 }
 
 export interface WorkflowWithNodes extends Workflow {
     nodes: FlowNode[]
+}
+
+export interface WorkflowSettings {
+    schedule: FlowSchedule
+}
+
+export type FlowSchedule = RecurringFlowSchedule | CronFlowSchedule | { type: "never" }
+
+export interface RecurringFlowSchedule {
+    type: "recurring"
+    interval: string
+}
+
+export interface CronFlowSchedule {
+    type: "cron"
+    expression: string
 }
 
 export interface FlowExecution {

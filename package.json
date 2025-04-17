@@ -19,8 +19,8 @@
 		"@sveltejs/kit": "^2.13",
 		"@sveltejs/vite-plugin-svelte": "^5.0",
 		"@tailwindcss/forms": "^0.5",
-		"autoprefixer": "^10.4",
 		"@zag-js/toast": "^1.8",
+		"autoprefixer": "^10.4",
 		"svelte": "~5.25",
 		"svelte-check": "^4.1",
 		"tailwindcss": "^4.1",
@@ -39,6 +39,8 @@
 		"@uiw/codemirror-theme-dracula": "^4.23",
 		"@uiw/codemirror-theme-github": "^4.23",
 		"@xyflow/svelte": "^0.1.26",
+		"cron-parser": "^5.1.1",
+		"cronstrue": "^2.59.0",
 		"dotenv": "^16",
 		"elkjs": "^0.10.0",
 		"eventsource": "^3.0.5",
@@ -46,6 +48,7 @@
 		"liquidjs": "^10.19",
 		"lucide-svelte": "^0.475",
 		"svelte-codemirror-editor": "^1.4.1",
-		"tailwind-merge": "^2.6"
+		"tailwind-merge": "^2.6",
+		"temporal-polyfill": "^0.3.0"
 	}
 }
