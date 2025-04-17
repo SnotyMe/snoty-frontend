@@ -5,7 +5,13 @@ import {
     json_or_error,
 } from "$lib/api/api";
 import type { NodeLogEntry } from "$lib/model/node_logs";
-import type { EnumeratedFlowExecution, FlowExecution, Workflow, WorkflowWithNodes } from "$lib/model/flows";
+import type {
+    EnumeratedFlowExecution,
+    FlowExecution,
+    Workflow,
+    WorkflowSettings,
+    WorkflowWithNodes,
+} from "$lib/model/flows";
 
 export type CreateFlowDTO = { name: string };
 export async function createFlow(props: ApiProps, flow: CreateFlowDTO): Promise<Workflow | ErrorJson> {
@@ -38,6 +44,13 @@ export async function renameFlow(props: ApiProps, id: string, name: string): Pro
     return authenticatedApiFetch(props, `wiring/flow/${id}/rename`, {
         method: "PUT",
         body: name,
+    });
+}
+
+export async function updateFlowSettings(props: ApiProps, id: string, settings: WorkflowSettings): Promise<Response> {
+    return authenticatedApiFetch(props, `wiring/flow/${id}/settings`, {
+        method: "PUT",
+        body: JSON.stringify(settings),
     });
 }
 
