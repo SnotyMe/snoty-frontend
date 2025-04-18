@@ -44,7 +44,7 @@
 		"eventsource": "^3.0.5",
 		"jwt-decode": "^4.0",
 		"liquidjs": "^10.19",
-		"lucide-svelte": "^0.475",
+		"lucide-svelte": "^0.501.0",
 		"svelte-codemirror-editor": "^1.4.1",
 		"tailwind-merge": "^2.6"
 	}
