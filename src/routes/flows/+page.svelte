@@ -13,6 +13,8 @@
     import ImportFlowButton from "$lib/components/flow/import/ImportFlowButton.svelte";
     import HandleError from "$lib/components/HandleError.svelte";
     import NodeName from "$lib/components/node/settings/NodeName.svelte";
+    import { establishGlobalStatusListener } from "$lib/api/flow_execution_listener";
+    import { onDestroy } from "svelte";
 
     interface Props {
         data: PageData;
@@ -34,6 +36,9 @@
 
         goto(`/flow/${flow._id}`);
     }
+
+    const statusListener = establishGlobalStatusListener(apiProps)
+    onDestroy(() => statusListener.close())
 </script>
 
 <Page pageName="Flows">
@@ -46,7 +51,7 @@
                     {#each element as flow}
                         <ListItem>
                             {#if flow.lastExecution?.status}
-                                <ExecutionStatusIcon status={flow.lastExecution.status}/>
+                                <ExecutionStatusIcon {statusListener} flowId={flow._id} status={flow.lastExecution.status}/>
                             {/if}
                             <NodeName
                                     onchange={value => renameFlow(apiProps, flow._id, value)}
