@@ -67,7 +67,7 @@
                 position={Position.Left}
                 class={metadata?.position === "START" ? "bg-green-500!" : ""}/>
     {/if}
-    <div class:max-w-xl={data.initializing === true} class="h-full flex flex-col cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 border overflow-hidden">
+    <div class:max-w-3xl={data.initializing === true} class="h-full flex flex-col cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 border overflow-hidden">
         <NodeResizeControl minWidth={150} minHeight={50}>
             <IconScaling size="1em" class="absolute -translate-x-2 -translate-y-2"/>
         </NodeResizeControl>
