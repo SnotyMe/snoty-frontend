@@ -28,6 +28,7 @@
     executionListener.addEventListener("FlowEnded", (event) => {
         const { status }: FlowEndedEvent = JSON.parse(event.data)
         statusPromiseResolve(status)
+        reinitPromise()
     })
 
     const toaster = getToaster()
@@ -40,23 +41,11 @@
         })
 
         const status = await statusPromise;
-        reinitPromise();
 
-        switch (status) {
-            case FlowExecutionStatus.SUCCESS:
-                toaster.success({
-                    title: "Flow succeeded!",
-                })
-                break;
-            case FlowExecutionStatus.FAILED:
-                toaster.error({
-                    title: "Flow failed!",
-                    description: "Take a look at the journal to figure out why."
-                })
-                throw Error("Flow failed")
-            default:
-                console.error("FlowExecutionStatus was neither SUCCESS nor FAILED")
+        if (status === FlowExecutionStatus.FAILED) {
+            throw Error("Flow failed")
         }
+        // otherwise, it'll go through and the LoadingButton will show the success icon
     }
 </script>
 
