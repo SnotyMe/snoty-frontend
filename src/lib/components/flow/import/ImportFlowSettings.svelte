@@ -20,6 +20,7 @@
     let { metadatas, templates, template, flow = $bindable(), showIntermediate }: Props = $props();
     flow = {
         name: template.templateName,
+        settings: template.settings,
         nodes: template.nodes.map(node => ({
             ...node,
             settings: replaceAllCensoredWithDefault(node.settings),
