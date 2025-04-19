@@ -1,13 +1,34 @@
 <script lang="ts">
     import { FlowExecutionStatus } from "$lib/model/flows";
+    import type { FlowEndedEvent, FlowExecutionEvent } from "$lib/api/flow_execution_listener";
 
     interface Props {
         status: FlowExecutionStatus
+        flowId?: string
+        statusListener?: EventSource
     }
 
-    const {
-        status,
+    let {
+        status: statusInput,
+        flowId,
+        statusListener,
     }: Props = $props();
+
+    let status = $state(statusInput);
+
+    statusListener?.addEventListener("FlowStarted", (event) => {
+        const data: FlowExecutionEvent = JSON.parse(event.data);
+        if (data.flowId !== flowId) return;
+        console.debug("Received FlowStarted event", data);
+        status = FlowExecutionStatus.RUNNING;
+    })
+
+    statusListener?.addEventListener("FlowEnded", (event) => {
+        const data: FlowEndedEvent = JSON.parse(event.data);
+        if (data.flowId !== flowId) return;
+        console.debug("Received FlowEnded event", data);
+        status = data.status;
+    })
 </script>
 
 <style>
