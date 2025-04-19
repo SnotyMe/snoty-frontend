@@ -4,6 +4,7 @@
     import type { NodeLogEntry } from "$lib/model/node_logs";
     import { establishListener, type FlowEndedEvent, type FlowExecutionEvent } from "$lib/api/flow_execution_listener";
     import { getToaster } from "$lib/context/layout_context.svelte";
+    import { onDestroy } from "svelte";
 
     const {
         apiProps,
@@ -16,6 +17,7 @@
     } = $props();
 
     const evtSource = establishListener(apiProps, flowId, ["FlowStarted", "FlowLog", "FlowEnded"])
+    onDestroy(() => evtSource.close())
 
     evtSource.addEventListener("FlowStarted", (event) => {
         console.debug("Flow started", event)

@@ -8,6 +8,7 @@
     import { establishListener } from "$lib/api/flow_execution_listener";
     import type { FlowEndedEvent } from "$lib/api/flow_execution_listener.js";
     import { getToaster } from "$lib/context/layout_context.svelte";
+    import { onDestroy } from "svelte";
 
     interface Props {
         apiProps: ApiProps
@@ -25,6 +26,7 @@
     reinitPromise()
 
     const executionListener = establishListener(apiProps, flow._id, ["FlowEnded"])
+    onDestroy(() => executionListener.close())
     executionListener.addEventListener("FlowEnded", (event) => {
         const { status }: FlowEndedEvent = JSON.parse(event.data)
         statusPromiseResolve(status)
