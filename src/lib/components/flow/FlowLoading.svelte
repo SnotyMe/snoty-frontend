@@ -1,9 +1,8 @@
 <script lang="ts">
-    import { writable } from "svelte/store";
     import { Background, SvelteFlow } from "@xyflow/svelte";
 
-    const nodes = writable([]);
-    const edges = writable([]);
+    const nodes = $state.raw([]);
+    const edges = $state.raw([]);
 </script>
 
 <SvelteFlow proOptions={{hideAttribution: true}}
