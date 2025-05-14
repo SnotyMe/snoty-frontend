@@ -77,12 +77,12 @@
     let nodesStore = $state.raw<Node[]>(initialNodes);
     let edgesStore = $state.raw<Edge[]>(initialEdges);
 
-    // never-ending promise while the layout is being calculated
-    let promise: Promise<void> = $state(new Promise(() => {}));
+    const { promise, resolve } = Promise.withResolvers()
 
     $effect(() => {
         if (Object.keys(widths).length === initialNodes.length && Object.keys(heights).length === initialNodes.length) {
-            promise = updateLayout();
+            updateLayout()
+                .then(() => resolve(null));
         }
     })
 
@@ -97,7 +97,7 @@
         )).nodes
 
         nodesStore = layoutedNodes.map(d => ({ ...d, data: { ...d.data, initializing: false } }));
-        await svelteFlow.fitView()
+        svelteFlow.fitView()
     }
 
     const addNode: NodeCreatedHandler = async (node: StandaloneNode) => {
