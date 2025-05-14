@@ -82,22 +82,22 @@
 
     $effect(() => {
         if (Object.keys(widths).length === initialNodes.length && Object.keys(heights).length === initialNodes.length) {
-            updateLayout();
+            promise = updateLayout();
         }
     })
 
-    const svelteFlow = $derived(useSvelteFlow())
-    function updateLayout() {
-        promise = getLayoutedElements(
+    const svelteFlow = useSvelteFlow()
+    async function updateLayout() {
+        const layoutedNodes = (await getLayoutedElements(
             initialNodes,
             initialEdges,
             widths,
             heights,
             { 'elk.direction': "RIGHT" }
-        ).then(({ nodes: layoutedNodes }) => {
-            nodesStore = layoutedNodes.map(d => ({ ...d, data: { ...d.data, initializing: false }}));
-            svelteFlow.fitView()
-        })
+        )).nodes
+
+        nodesStore = layoutedNodes.map(d => ({ ...d, data: { ...d.data, initializing: false } }));
+        await svelteFlow.fitView()
     }
 
     const addNode: NodeCreatedHandler = async (node: StandaloneNode) => {
