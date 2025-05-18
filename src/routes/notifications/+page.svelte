@@ -13,7 +13,7 @@
     };
 </script>
 
-<Page pageName="notifications">
+<Page pageName="Notifications">
     {#await data.notifications}
         <p>Loading...</p>
     {:then notifications}
