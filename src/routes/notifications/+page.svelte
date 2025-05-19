@@ -19,10 +19,10 @@
     {:then notifications}
         <HandleError element={notifications}>
             {#snippet success(element)}
-                <div class="flex flex-col gap-4 items-center">
+                <div class="flex flex-col gap-4 items-center w-full">
                     <h1 class="h1">Notifications</h1>
                     {#if element.length > 0}
-                        <List class="max-w-8/12">
+                        <List class="w-4xl max-w-11/12">
                             {#each element as notification}
                                 <Notification {apiProps} {notification}/>
                             {/each}
