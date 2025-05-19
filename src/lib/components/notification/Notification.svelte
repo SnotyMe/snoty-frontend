@@ -38,5 +38,5 @@
                 </button>
             {/if}
     </div>
-    <p>{notification.description}</p>
+    <p class="whitespace-pre-wrap">{notification.description}</p>
 </ListItem>
