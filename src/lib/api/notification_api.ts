@@ -35,3 +35,9 @@ export function resolveNotification(props: ApiProps, attributes: NotificationAtt
         body: JSON.stringify(attributes)
     });
 }
+
+export function deleteNotification(props: ApiProps, id: string): Promise<Response> {
+    return authenticatedApiFetch(props, `notification/${id}`, {
+        method: "DELETE",
+    })
+}
