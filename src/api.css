@@ -5,4 +5,14 @@
   --color-log-info: var(--color-green-500);
   --color-log-warn: var(--color-orange-500);
   --color-log-error: var(--color-red-500);
+
+  --animate-highlight: highlight 1.25s ease-in-out;
+  @keyframes highlight {
+    0%, 100% {
+      box-shadow: 0 0 0 light-dark(var(--color-surface-900), var(--color-surface-100));
+    }
+    50% {
+      box-shadow: 0 0 3em light-dark(var(--color-surface-900), var(--color-surface-100));
+    }
+  }
 }
