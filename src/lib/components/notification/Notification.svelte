@@ -7,6 +7,7 @@
     import type { Notification } from "$lib/model/notification";
     import { deleteNotification, resolveNotification } from "$lib/api/notification_api";
     import type { ApiProps } from "$lib/api/api";
+    import { notificationCount } from "$lib/components/notification/notification_store";
     import { getToaster } from "$lib/context/layout_context.svelte";
 
     interface Props {
@@ -19,6 +20,7 @@
     async function resolve() {
         notification.resolvedAt = new Date();
         await resolveNotification(apiProps, notification.attributes)
+        $notificationCount--;
     }
 
     const toaster = getToaster()
