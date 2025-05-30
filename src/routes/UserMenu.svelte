@@ -8,6 +8,7 @@
     import { isErrorJson } from "$lib/api/api.js";
     import NotificationBadge from "$lib/components/notification/NotificationBadge.svelte";
     import { twMerge } from "tailwind-merge";
+    import { notificationCount } from "$lib/components/notification/notification_store.js";
 
     function logout() {
         fetch('/auth/logout', {
@@ -21,15 +22,13 @@
 
     let activeUrl = $derived(page.url.pathname)
 
-    let notificationCount = $state(0);
-
     if (user && apiProps) {
         getNotificationCount(apiProps)
             .then(e => {
                 if (isErrorJson(e)) {
                     console.error("Failed to get notification count: " + e.message);
                 } else {
-                    notificationCount = e;
+                    $notificationCount = e;
                 }
             })
     }
@@ -50,8 +49,8 @@
 {#if profileMenuShown}
     <hr class="border-surface-300-700 w-full h-1 mt-2">
     <Navigation.Tile id="notifications" labelExpanded="Notifications" href="/notifications" selected={activeUrl === "/notifications"} title="notifications" {...tileProps} classes={twMerge(classes, "relative justify-center")}>
-        {#if notificationCount > 0 && profileMenuShown}
-            <NotificationBadge {notificationCount}/>
+        {#if $notificationCount > 0 && profileMenuShown}
+            <NotificationBadge/>
         {/if}
         <div>
             <IconBell/>
@@ -70,8 +69,8 @@
                      {...tileProps}
                      classes="relative justify-center"
                      active={tileProps["hover"]}>
-        {#if notificationCount > 0 && !profileMenuShown}
-            <NotificationBadge {notificationCount}/>
+        {#if $notificationCount > 0 && !profileMenuShown}
+            <NotificationBadge/>
         {/if}
         <Avatar src={undefined} classes="flex justify-center items-center">{initials}</Avatar>
     </Navigation.Tile>
