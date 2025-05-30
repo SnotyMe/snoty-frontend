@@ -10,7 +10,7 @@
 
     interface AttributeLinks {
         [key: string]: {
-            getUrl: (value: string) => string;
+            getUrl: (value: string, attributes: NotificationAttributes) => string;
             getLabel: (value: string) => string;
         };
     }
@@ -18,8 +18,12 @@
     const attributeLinks: AttributeLinks = {
         "flow.id": {
             getUrl: (id: string) => `/flow/${id}`,
-            getLabel: (_: string) => `Flow`,
+            getLabel: (_: string) => "Flow",
         },
+        "node.id": {
+            getUrl: (id: string, attributes: NotificationAttributes) => `/flow/${attributes["flow.id"]}?highlightedNode=${id}`,
+            getLabel: (_: string) => "Node",
+        }
     };
 
     let open = $state(false);
@@ -29,18 +33,17 @@
     {open}
     onOpenChange={e => (open = e.open)}
     positioning={{placement: "bottom"}}
-    contentBase="card bg-surface-200-800 p-2 space-y-4 max-w-[320px]"
+    contentBase="card bg-surface-200-800 max-w-[320px] flex flex-col gap-2 p-2 ring-2 shadow-secondary-950-50"
     classes="flex items-center"
-    arrow
-    arrowBackground="!bg-surface-200 dark:!bg-surface-800"
 >
     {#snippet trigger()}<IconLink/>{/snippet}
     {#snippet content()}
         {#each Object.entries(attributes) as [key, value]}
             {@const link = attributeLinks[key]}
             {#if link}
-                <a href={link.getUrl(value)} class="anchor">
-                    {link.getLabel(value)}
+                <a href={link.getUrl(value, attributes)} class="btn preset-filled">
+                    <span>{link.getLabel(value)}</span>
+                    <span>&rarr;</span>
                 </a>
             {/if}
         {/each}
