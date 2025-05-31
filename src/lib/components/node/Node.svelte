@@ -16,6 +16,7 @@
     import NodeLogLevel from "$lib/components/node/NodeLogLevel.svelte";
     import DeleteButton from "$lib/components/delete/DeleteButton.svelte";
     import { removeBoilerplate } from "$lib/utils/settings_utils";
+    import { page } from "$app/state";
 
     interface Props extends NodeProps {
         data: {
@@ -59,9 +60,11 @@
 
     const { edges } = useStore()
     let hasOutputNode = $derived($edges.some(edge => edge.source === node._id))
+
+    const isHighlighted = page.url.searchParams.get("highlightedNode") === node._id;
 </script>
 
-<div bind:clientWidth={widths[node._id]} bind:clientHeight={heights[node._id]} class="h-full">
+<div bind:clientWidth={widths[node._id]} bind:clientHeight={heights[node._id]} class="h-full" class:animate-highlight={isHighlighted}>
     {#if metadata?.input !== null}
         <Handle type="target"
                 position={Position.Left}
