@@ -19,8 +19,8 @@
     }
 
     function toggleColorScheme() {
-        const isItDarkNow = document.body.classList.toggle("dark");
-        document.body.classList.toggle("light");
+        const isItDarkNow = document.documentElement.classList.toggle("dark");
+        document.documentElement.classList.toggle("light");
         const colorScheme = isItDarkNow ? "dark" : "light";
         setColorScheme(colorScheme)
         document.cookie = `colorScheme=${colorScheme}; path=/; max-age=${MAX_COOKIE_AGE}`;
