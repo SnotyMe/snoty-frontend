@@ -45,7 +45,7 @@
     {#await data.flows}
         <p>Loading...</p>
     {:then myFlows}
-        <List>
+        <List class="max-h-4/5 overflow-y-auto">
             <HandleError element={myFlows}>
                 {#snippet success(element)}
                     {#each element as flow}
@@ -70,15 +70,15 @@
                     {/each}
                 {/snippet}
             </HandleError>
-            <div class="flex justify-center gap-2">
-                <LoadingButton class="px-4 py-2" onclick={oncreateflow}>
-                    {#snippet idle()}
-                        <IconPlus/>
-                    {/snippet}
-                </LoadingButton>
-                <ImportFlowButton {apiProps} metadatas={data.metadatas} templates={data.templates}/>
-            </div>
         </List>
+        <div class="flex justify-center gap-2">
+            <LoadingButton class="px-4 py-2" onclick={oncreateflow}>
+                {#snippet idle()}
+                    <IconPlus/>
+                {/snippet}
+            </LoadingButton>
+            <ImportFlowButton {apiProps} metadatas={data.metadatas} templates={data.templates}/>
+        </div>
     {:catch error}
         <p>{error.message}</p>
     {/await}
