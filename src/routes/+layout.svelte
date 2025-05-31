@@ -78,7 +78,7 @@
         {/snippet}
     </Navigation.Rail>
     <Toaster {toaster} width="min-w-md"/>
-    <div class="flex gap-2 items-center justify-center h-full overflow-y-auto">
+    <div class="flex flex-col gap-2 items-center justify-center h-full overflow-y-auto">
         {@render children()}
     </div>
 </div>
