@@ -57,8 +57,8 @@ importers:
         specifier: ^10.19
         version: 10.21.0
       lucide-svelte:
-        specifier: ^0.475
-        version: 0.475.0(svelte@5.25.6)
+        specifier: ^0.515.0
+        version: 0.515.0(svelte@5.25.6)
       svelte-codemirror-editor:
         specifier: ^1.4.1
         version: 1.4.1(codemirror@6.0.1)(svelte@5.25.6)
@@ -1596,8 +1596,8 @@ packages:
   locate-character@3.0.0:
     resolution: {integrity: sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==}
 
-  lucide-svelte@0.475.0:
-    resolution: {integrity: sha512-N5+hFTPHaZe9HhqJDxxxODfYuOmI6v+JIowzERcea/uxytN/JZlehVTcINBNp8wMo7l6ov1Jf5srrDbkI/WsJg==}
+  lucide-svelte@0.515.0:
+    resolution: {integrity: sha512-uJfdXnbl2EJ6dhopBAJoRkshuulb1G6bVq1AXgu9j7cH/8CvWj3hXmRYGzehWYX+bwbUQURORIVYcIfpdaHcSA==}
     peerDependencies:
       svelte: ^3 || ^4 || ^5.0.0-next.42
 
@@ -3317,7 +3317,7 @@ snapshots:
 
   locate-character@3.0.0: {}
 
-  lucide-svelte@0.475.0(svelte@5.25.6):
+  lucide-svelte@0.515.0(svelte@5.25.6):
     dependencies:
       svelte: 5.25.6
 
