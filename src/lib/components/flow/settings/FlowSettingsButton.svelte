@@ -23,7 +23,7 @@
 </NodePopup>
 
 <ControlButton
-        on:click={() => dialog?.showModal()}
+        onclick={() => dialog?.showModal()}
         class="svelte-flow__controls-settings no-fill border-none!"
         title="settings"
         aria-label="settings"
