@@ -33,8 +33,8 @@ importers:
         specifier: ^4.23
         version: 4.23.10(@codemirror/language@6.10.7)(@codemirror/state@6.5.0)(@codemirror/view@6.36.5)
       '@xyflow/svelte':
-        specifier: 1.0.0
-        version: 1.0.0(svelte@5.25.6)
+        specifier: ^1.1.1
+        version: 1.1.1(svelte@5.25.6)
       cron-parser:
         specifier: ^5.1.1
         version: 5.3.0
@@ -1019,13 +1019,13 @@ packages:
       '@codemirror/state': '>=6.0.0'
       '@codemirror/view': '>=6.0.0'
 
-  '@xyflow/svelte@1.0.0':
-    resolution: {integrity: sha512-TTEdH7kc3vh6mcJjaWX6A+o6exxU03OlqQB4SDIsrHDhmC0V65/Hghy66Z0VGQ8x5V+QIVFjcWnyIfJNvkVlTQ==}
+  '@xyflow/svelte@1.1.1':
+    resolution: {integrity: sha512-zbJMpJpFJEtBDE2y0gvZQKZyi04q3hQi4h1sPSHA1NxsWm3MMgHX8Xtrnam2mp/q34Yrj4irF3z8kaxKQX3sCg==}
     peerDependencies:
       svelte: ^5.25.0
 
-  '@xyflow/system@0.0.59':
-    resolution: {integrity: sha512-+xgqYhoBv5F10TQx0SiKZR/DcWtuxFYR+e/LluHb7DMtX4SsMDutZWEJ4da4fDco25jZxw5G9fOlmk7MWvYd5Q==}
+  '@xyflow/system@0.0.63':
+    resolution: {integrity: sha512-lCZRh5o7RCPE7iNe3yKzV8UuS4hijVIWJ9nbQh9eowsRJOwgy5KlUnZ3Q43SOlRsZnOht8px5phpsjBHPRn+oQ==}
 
   '@zag-js/accordion@1.8.2':
     resolution: {integrity: sha512-JszESCOvftl3dG6lEPjZp2p3+0VN0fwMnW+1jhWwMEe5MZ0y0IrcXww2dxet1ln+w5ViRdOTeDR07idbDKYAYg==}
@@ -2554,19 +2554,21 @@ snapshots:
       '@codemirror/state': 6.5.0
       '@codemirror/view': 6.36.5
 
-  '@xyflow/svelte@1.0.0(svelte@5.25.6)':
+  '@xyflow/svelte@1.1.1(svelte@5.25.6)':
     dependencies:
       '@svelte-put/shortcut': 4.1.0(svelte@5.25.6)
-      '@xyflow/system': 0.0.59
+      '@xyflow/system': 0.0.63
       svelte: 5.25.6
 
-  '@xyflow/system@0.0.59':
+  '@xyflow/system@0.0.63':
     dependencies:
       '@types/d3-drag': 3.0.7
+      '@types/d3-interpolate': 3.0.4
       '@types/d3-selection': 3.0.11
       '@types/d3-transition': 3.0.9
       '@types/d3-zoom': 3.0.8
       d3-drag: 3.0.0
+      d3-interpolate: 3.0.1
       d3-selection: 3.0.0
       d3-zoom: 3.0.0
 

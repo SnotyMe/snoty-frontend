@@ -97,7 +97,9 @@
         )).nodes
 
         nodesStore = layoutedNodes.map(d => ({ ...d, data: { ...d.data, initializing: false } }));
-        svelteFlow.fitView()
+        for (let i = 0; i < 10; i++) {
+            await svelteFlow.fitView();
+        }
     }
 
     const addNode: NodeCreatedHandler = async (node: StandaloneNode) => {
@@ -111,6 +113,7 @@
 <SvelteFlow proOptions={{hideAttribution: true}}
             {nodeTypes}
             {edgeTypes}
+            fitView
             bind:nodes={nodesStore}
             bind:edges={edgesStore}
             defaultEdgeOptions={{
