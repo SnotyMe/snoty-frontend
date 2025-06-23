@@ -59,7 +59,7 @@
     })
 
     const { edges } = useStore()
-    let hasOutputNode = $derived($edges.some(edge => edge.source === node._id))
+    let hasOutputNode = $derived(edges.some(edge => edge.source === node._id))
 
     const isHighlighted = page.url.searchParams.get("highlightedNode") === node._id;
 </script>
@@ -71,7 +71,7 @@
                 class={metadata?.position === "START" ? "bg-green-500!" : ""}/>
     {/if}
     <div class:max-w-3xl={data.initializing === true} class="h-full flex flex-col cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 border overflow-hidden">
-        <NodeResizeControl minWidth={150} minHeight={50}>
+        <NodeResizeControl minWidth={150} minHeight={50} autoScale={false}>
             <IconScaling size="1em" class="absolute -translate-x-2 -translate-y-2"/>
         </NodeResizeControl>
         {#if metadata}
