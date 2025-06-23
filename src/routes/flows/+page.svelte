@@ -13,6 +13,8 @@
     import ImportFlowButton from "$lib/components/flow/import/ImportFlowButton.svelte";
     import HandleError from "$lib/components/HandleError.svelte";
     import NodeName from "$lib/components/node/settings/NodeName.svelte";
+    import { establishGlobalStatusListener } from "$lib/api/flow_execution_listener";
+    import { onDestroy } from "svelte";
 
     interface Props {
         data: PageData;
@@ -34,19 +36,22 @@
 
         goto(`/flow/${flow._id}`);
     }
+
+    const statusListener = establishGlobalStatusListener(apiProps)
+    onDestroy(() => statusListener.close())
 </script>
 
 <Page pageName="Flows">
     {#await data.flows}
         <p>Loading...</p>
     {:then myFlows}
-        <List>
+        <List class="max-h-4/5 overflow-y-auto">
             <HandleError element={myFlows}>
                 {#snippet success(element)}
                     {#each element as flow}
                         <ListItem>
                             {#if flow.lastExecution?.status}
-                                <ExecutionStatusIcon status={flow.lastExecution.status}/>
+                                <ExecutionStatusIcon {statusListener} flowId={flow._id} status={flow.lastExecution.status}/>
                             {/if}
                             <NodeName
                                     onchange={value => renameFlow(apiProps, flow._id, value)}
@@ -65,15 +70,15 @@
                     {/each}
                 {/snippet}
             </HandleError>
-            <div class="flex justify-center gap-2">
-                <LoadingButton class="px-4 py-2" onclick={oncreateflow}>
-                    {#snippet idle()}
-                        <IconPlus/>
-                    {/snippet}
-                </LoadingButton>
-                <ImportFlowButton {apiProps} metadatas={data.metadatas} templates={data.templates}/>
-            </div>
         </List>
+        <div class="flex justify-center gap-2">
+            <LoadingButton class="px-4 py-2" onclick={oncreateflow}>
+                {#snippet idle()}
+                    <IconPlus/>
+                {/snippet}
+            </LoadingButton>
+            <ImportFlowButton {apiProps} metadatas={data.metadatas} templates={data.templates}/>
+        </div>
     {:catch error}
         <p>{error.message}</p>
     {/await}

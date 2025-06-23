@@ -27,16 +27,6 @@
         setColorScheme(document.documentElement.className as App.ColorScheme);
     }
 
-    const user = data.user;
-    function _fromFullName() {
-        if (user?.firstName == null || user.lastName[0] == null) return null;
-        return user.firstName[0] + user.lastName[0];
-    }
-    let initials = (_fromFullName() ?? user?.name?.split(" ").map((name) => name[0]).join("") ?? "??")
-        .substring(0, 2);
-
-    let profileMenuShown = $state(false);
-
     const tileProps = {
         "active": "bg-surface-300-700",
         "hover": "hover:preset-filled-surface-200-800",
@@ -84,21 +74,11 @@
         {/if}
         {/snippet}
         {#snippet footer()}
-        <UserMenu {profileMenuShown} {tileProps}/>
-        {#if user != null}
-            <Navigation.Tile id="avatar"
-                             labelExpanded={data.user?.name}
-                             onclick={() => profileMenuShown = !profileMenuShown}
-                             selected={profileMenuShown}
-                             {...tileProps}
-                             active={tileProps["hover"]}>
-                <Avatar src={undefined} classes="flex justify-center items-center">{initials}</Avatar>
-            </Navigation.Tile>
-        {/if}
+        <UserMenu {apiProps} user={data.user} {tileProps}/>
         {/snippet}
     </Navigation.Rail>
-    <Toaster {toaster}/>
-    <div class="flex gap-2 items-center justify-center h-full overflow-y-auto">
+    <Toaster {toaster} width="min-w-md"/>
+    <div class="flex flex-col gap-2 items-center justify-center h-full overflow-y-auto">
         {@render children()}
     </div>
 </div>

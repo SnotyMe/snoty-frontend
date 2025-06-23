@@ -1,7 +1,9 @@
 import type { NodeDescriptor } from "$lib/model/nodes"
+import type { WorkflowSettings } from "$lib/model/flows";
 
 export interface ExportedFlow {
     templateName: string
+    settings?: WorkflowSettings
     nodes: ExportedNode[]
 }
 
@@ -26,5 +28,6 @@ export interface ImportNodeDTO {
 
 export interface ImportFlowDTO {
     name: String
+    settings?: WorkflowSettings
     nodes: ImportNodeDTO[]
 }
