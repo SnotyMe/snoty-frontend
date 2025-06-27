@@ -41,7 +41,7 @@
 		"@xyflow/svelte": "^0.1.26",
 		"cron-parser": "^5.1.1",
 		"cronstrue": "^2.59.0",
-		"dotenv": "^16",
+		"dotenv": "^17.0.0",
 		"elkjs": "^0.10.0",
 		"eventsource": "^4.0.0",
 		"jwt-decode": "^4.0",
