@@ -10,11 +10,12 @@
 
     const { settings, onchange }: Props = $props();
 
-    let settingsName = $state(settings.name);
+    let settingsName = $derived(settings.name);
     let lastValue = $state.snapshot(settingsName);
     $effect(() => {
         if (settingsName !== lastValue) {
             lastValue = settingsName;
+            settings.name = settingsName;
             onchange?.(settingsName);
         }
     });

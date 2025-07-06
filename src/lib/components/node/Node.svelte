@@ -74,7 +74,7 @@
         {#if metadata}
             <div class="flex items-center">
                 <IconGripVertical class="drag-handle cursor-pointer"/>
-                <NodeName {settings}/>
+                <NodeName bind:settings/>
             </div>
             <div class="flow-node-options grow table-wrap border-y-4 my-1 pr-0.5 overflow-y-auto">
                 <NodeSettings bind:settings={settings} fields={removeBoilerplate(metadata.settings, hiddenSettings)}/>

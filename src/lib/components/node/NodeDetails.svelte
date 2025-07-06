@@ -24,7 +24,7 @@
 <NodePopup bind:dialog {instashow}>
     {#if metadata}
         <div class="flex items-center gap-2">
-            <NodeName {settings}/>
+            <NodeName bind:settings/>
             {#if nodeId}
                 <p class="text-nowrap">{nodeId}</p>
             {/if}
