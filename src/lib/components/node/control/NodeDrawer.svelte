@@ -20,6 +20,10 @@
 
         max-width: calc(100% - 2 * var(--x-padding));
         max-height: calc(100% - var(--y-padding) - var(--flow-control-padding));
+        
+        user-select: text;
+        -moz-user-select: text;
+        -webkit-user-select: text;
 
         resize: both;
 
