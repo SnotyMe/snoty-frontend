@@ -42,8 +42,8 @@ importers:
         specifier: ^2.59.0
         version: 2.59.0
       dotenv:
-        specifier: ^16
-        version: 16.5.0
+        specifier: ^17.0.0
+        version: 17.0.0
       elkjs:
         specifier: ^0.10.0
         version: 0.10.0
@@ -1401,8 +1401,8 @@ packages:
   devalue@5.1.1:
     resolution: {integrity: sha512-maua5KUiapvEwiEAe+XnlZ3Rh0GD+qI1J/nb9vrJc3muPXvcF/8gXYTWF76+5DAqHyDUtOIImEuo0YKE9mshVw==}
 
-  dotenv@16.5.0:
-    resolution: {integrity: sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==}
+  dotenv@17.0.0:
+    resolution: {integrity: sha512-A0BJ5lrpJVSfnMMXjmeO0xUnoxqsBHWCoqqTnGwGYVdnctqXXUEhJOO7LxmgxJon9tEZFGpe0xPRX0h2v3AANQ==}
     engines: {node: '>=12'}
 
   electron-to-chromium@1.5.136:
@@ -3126,7 +3126,7 @@ snapshots:
 
   devalue@5.1.1: {}
 
-  dotenv@16.5.0: {}
+  dotenv@17.0.0: {}
 
   electron-to-chromium@1.5.136: {}
 
