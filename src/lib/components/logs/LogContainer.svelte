@@ -59,7 +59,7 @@
 
 <ExecutionListener {apiProps} {flowId} bind:allExecutions/>
 
-<NodeDrawer horizontalAlign="right" width="70%" height="70%" {isOpen} innerClass="flex flex-col justify-between">
+<NodeDrawer horizontalAlign="right" width="80%" height="80%" {isOpen} innerClass="flex flex-col justify-between">
     {#await initialPromise}
         <div>Loading logs...</div>
     {:then _}

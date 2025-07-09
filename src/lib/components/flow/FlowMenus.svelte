@@ -54,7 +54,7 @@
 <Panel position="top-left" class="flex flex-row items-center">
     <div class="svelte-flow__controls flex-row!">
         <ControlButton
-                on:click={() => toggleOpen(ADD)}
+                onclick={() => toggleOpen(ADD)}
                 class="svelte-flow__controls-addnode"
                 title="add node"
                 aria-label="add node"
@@ -75,7 +75,7 @@
     <FlowTriggerButton apiProps={props.apiProps} flow={props.flow}/>
     <div>
         <ControlButton
-                on:click={() => toggleOpen(LOGS)}
+                onclick={() => toggleOpen(LOGS)}
                 class="svelte-flow__controls-showlogs no-fill"
                 title="show logs"
                 aria-label="show logs"
