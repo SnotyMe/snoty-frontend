@@ -97,6 +97,7 @@
         )).nodes
 
         nodesStore = layoutedNodes.map(d => ({ ...d, data: { ...d.data, initializing: false } }));
+        if (nodesStore.length == 0) return;
         for (let i = 0; i < 10; i++) {
             await svelteFlow.fitView();
         }
