@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Handle, type NodeProps, NodeResizeControl, Position, useStore } from "@xyflow/svelte";
+    import { Handle, type NodeProps, NodeResizeControl, Position, useEdges } from "@xyflow/svelte";
     import { type NodeMetadata, type StandaloneNode } from "$lib/model/nodes";
     import NodeSettings from "$lib/components/node/settings/NodeSettings.svelte";
     import NodeName from "$lib/components/node/settings/NodeName.svelte";
@@ -58,8 +58,8 @@
         }
     })
 
-    const { edges } = useStore()
-    let hasOutputNode = $derived(edges.some(edge => edge.source === node._id))
+    const edges = useEdges()
+    let hasOutputNode = $derived(edges.current.some(edge => edge.source === node._id))
 
     const isHighlighted = page.url.searchParams.get("highlightedNode") === node._id;
 </script>
