@@ -1,9 +1,12 @@
 <script lang="ts">
     import { BaseEdge, EdgeLabel, type EdgeProps, getBezierPath, useEdges } from '@xyflow/svelte';
     import IconX from 'lucide-svelte/icons/x';
+    import type { DisposeButtonEdgeData } from "./dispose_button_edge";
 
     const {
         id,
+        source,
+        target,
         sourceX,
         sourceY,
         sourcePosition,
@@ -13,7 +16,9 @@
         markerEnd,
         style,
         data,
-    }: EdgeProps = $props();
+    }: EdgeProps & {
+        data: DisposeButtonEdgeData
+    } = $props();
 
     let [edgePath, labelX, labelY] = $derived(
         getBezierPath({
@@ -29,15 +34,16 @@
     const edges = useEdges();
 
     function onEdgeClick() {
-        function del() {
+        function deleteFromEdges() {
             edges.update((eds) => eds.filter((edge) => edge.id !== id));
         }
 
         if (!data.ondisconnect) {
-            del();
+            console.error("No disconnect handler!")
+            deleteFromEdges();
         } else {
-            const promise = data.ondisconnect?.(new CustomEvent('disconnect', { detail: { id } })) as Promise<any>;
-            promise.then(del).catch(error => {
+            const promise = data?.ondisconnect?.(new CustomEvent('disconnect', { detail: { source, target } })) as Promise<any>;
+            promise.then(deleteFromEdges).catch(error => {
                 alert("Couldn't disconnect.")
                 console.error("Error while attempting to disconnect", error)
             });

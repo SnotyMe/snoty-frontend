@@ -25,6 +25,7 @@
     import type { NodeCreatedHandler } from "$lib/components/add";
     import type { WorkflowWithNodes } from "$lib/model/flows";
     import FlowMenus from "$lib/components/flow/FlowMenus.svelte";
+    import type { OnDisconnectEvent } from "$lib/components/flow/dispose_button_edge";
 
     type Props = {
         flow: WorkflowWithNodes
@@ -68,9 +69,6 @@
             id: `${node._id}:${next}`,
             source: node._id,
             target: next,
-            data: {
-                ondisconnect: () => disconnectNodes(apiProps, node._id, next)
-            }
         } as Edge))
     );
 
@@ -87,6 +85,7 @@
     })
 
     const svelteFlow = useSvelteFlow()
+
     async function updateLayout() {
         const layoutedNodes = (await getLayoutedElements(
             initialNodes,
@@ -125,6 +124,9 @@
                         height: 25
                     },
                     animated: true,
+                    data: {
+                        ondisconnect: ({ detail }: OnDisconnectEvent) => disconnectNodes(apiProps, detail.source, detail.target)
+                    }
                 }}
             class="svelte-flow"
             onconnect={(event) => connectNodes(apiProps, event.source, event.target)}
