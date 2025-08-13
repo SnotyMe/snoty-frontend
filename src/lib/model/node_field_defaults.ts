@@ -28,7 +28,7 @@ export function getDefaultValue(field: NodeField): any {
         case "Collection":
             return [];
         default:
-            return "";
+            return defaultValue;
     }
 }
 
