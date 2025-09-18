@@ -11,7 +11,7 @@
     import IconScaling from "lucide-svelte/icons/move-diagonal-2";
     import IconGripVertical from "lucide-svelte/icons/grip-vertical";
     import { browser } from "$app/environment";
-    import { setNodeAPI } from "$lib/components/template/node";
+    import { setNodeAPI, injectNodeUtils } from "$lib/components/template/node";
     import type { ApiProps } from "$lib/api/api";
     import NodeLogLevel from "$lib/components/node/NodeLogLevel.svelte";
     import DeleteButton from "$lib/components/delete/DeleteButton.svelte";
@@ -91,7 +91,7 @@
             {#if templates?.has("node_bottom")}
                 <details>
                     <summary class="cursor-pointer">Details</summary>
-                    <Liquid template={templates?.get("node_bottom")} inputs={{node, config, settings, metadata}}/>
+                    <Liquid template={templates?.get("node_bottom")} inputs={{node: injectNodeUtils(node), config, settings, metadata}}/>
                 </details>
             {/if}
             <div class="mt-2 w-full flex justify-between gap-2">

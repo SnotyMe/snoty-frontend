@@ -1,5 +1,6 @@
-import type { NodeId, NodeMetadata, NodeSettings, SettinglessNode } from "$lib/model/nodes";
+import type { NodeId, NodeMetadata, NodeSettings, SettinglessNode, StandaloneNode } from "$lib/model/nodes";
 import { TemplateAPI } from "$lib/components/template/api";
+import { config } from "$lib/components/template/config";
 
 const nodeAPI = "nodeAPI";
 
@@ -14,6 +15,26 @@ export function getNodeAPI(nodeId: NodeId) {
     return window[nodeAPI][nodeId];
 }
 
+function getHandlerApiPath(node: SettinglessNode) {
+    return `/wiring/nodeapi/${node.descriptor.name}/`
+}
+
+function getApiPath(node: SettinglessNode) {
+    return `${getHandlerApiPath(node)}/${node._id}/`
+}
+
+export function injectNodeUtils(node: StandaloneNode) {
+    const handlerApiPath = getHandlerApiPath(node);
+    const apiPath = getApiPath(node);
+    return {
+        ...node,
+        handlerApiPath,
+        handlerApiUrl: config.apiHost + handlerApiPath,
+        apiPath,
+        apiUrl: config.apiHost + apiPath,
+    };
+}
+
 export class NodeAPI {
     readonly node: SettinglessNode;
     readonly metadata: NodeMetadata;
@@ -26,6 +47,6 @@ export class NodeAPI {
     }
 
     apiFetch(url: string, init: RequestInit): Promise<Response> {
-        return (window.templateAPI as TemplateAPI).backendFetch(`wiring/node/${this.node._id}/${url}`, init);
+        return (window.templateAPI as TemplateAPI).backendFetch(`${getApiPath(this.node)}/${url}`, init);
     }
 }
