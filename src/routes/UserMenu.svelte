@@ -8,7 +8,7 @@
     import { isErrorJson } from "$lib/api/api.js";
     import NotificationBadge from "$lib/components/notification/NotificationBadge.svelte";
     import { twMerge } from "tailwind-merge";
-    import { notificationCount } from "$lib/components/notification/notification_store.js";
+    import { notificationCount } from "$lib/components/notification/notification_store";
 
     function logout() {
         fetch('/auth/logout', {
