@@ -3,14 +3,11 @@ import { authenticatedApiFetch, json_or_error } from "$lib/api/api";
 import type { Notification, NotificationAttributes } from "$lib/model/notification";
 
 export async function getNotificationCount(props: ApiProps): Promise<number | ErrorJson> {
-    return authenticatedApiFetch(props, "notification/count")
-        .then(r => {
-            if (r.ok) {
-                return r.text();
-            }
-
-            return json_or_error(r)
-        })
+    const r = await authenticatedApiFetch(props, "notification/count");
+    if (r.ok) {
+        return Number(await r.text());
+    }
+    return await json_or_error(r);
 }
 
 export async function getNotifications(props: ApiProps): Promise<Notification[] | ErrorJson> {
