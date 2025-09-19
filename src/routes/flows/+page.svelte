@@ -1,20 +1,19 @@
 <script lang="ts">
     import Page from "$lib/components/Page.svelte";
     import type { PageData } from "./$types";
-    import IconPlus from "lucide-svelte/icons/plus"
     import { createFlow, deleteFlow, renameFlow } from "$lib/api/flow_api";
     import { type ApiProps, isErrorJson } from "$lib/api/api";
     import { goto } from "$app/navigation";
     import ExecutionStatusIcon from "./ExecutionStatusIcon.svelte";
     import List from "$lib/components/list/List.svelte";
     import ListItem from "$lib/components/list/ListItem.svelte";
-    import LoadingButton from "$lib/components/LoadingButton.svelte";
     import DeleteButton from "$lib/components/delete/DeleteButton.svelte";
     import ImportFlowButton from "$lib/components/flow/import/ImportFlowButton.svelte";
     import HandleError from "$lib/components/HandleError.svelte";
     import NodeName from "$lib/components/node/settings/NodeName.svelte";
     import { establishGlobalStatusListener } from "$lib/api/flow_execution_listener";
     import { onDestroy } from "svelte";
+    import CreateFlowButton from "$lib/components/flow/create/CreateFlowButton.svelte";
 
     interface Props {
         data: PageData;
@@ -72,11 +71,7 @@
             </HandleError>
         </List>
         <div class="flex justify-center gap-2">
-            <LoadingButton class="px-4 py-2" onclick={oncreateflow}>
-                {#snippet idle()}
-                    <IconPlus/>
-                {/snippet}
-            </LoadingButton>
+            <CreateFlowButton {apiProps}/>
             <ImportFlowButton {apiProps} metadatas={data.metadatas} templates={data.templates}/>
         </div>
     {:catch error}
