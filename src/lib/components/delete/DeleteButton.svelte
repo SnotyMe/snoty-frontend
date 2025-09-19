@@ -13,7 +13,7 @@
     let openState = $state(false);
 </script>
 
-<LoadingButton class="" onclick={() => openState = true}>
+<LoadingButton emptyStyle onclick={() => openState = true}>
     {#snippet idle()}
         <IconTrash/>
     {/snippet}

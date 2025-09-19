@@ -1,9 +1,11 @@
 <script lang="ts">
     import type { NodePopupProps } from "$lib/components/node/popup/index";
     import { onMount } from "svelte";
+    import { twMerge } from "tailwind-merge";
 
     let {
         dialog = $bindable(),
+        class: clazz,
         instashow = false,
     }: NodePopupProps = $props();
 
@@ -63,7 +65,7 @@
         bind:this={dialog}
         onclick={close}
         onkeypress={closeKeypress}
-        class="w-8/12 max-w-4xl m-auto shadow-lg cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 overflow-x-hidden border"
+        class={twMerge("w-8/12 max-w-4xl m-auto shadow-lg cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 divide-surface-200-800 overflow-x-hidden border", clazz)}
 >
     <slot/>
 </dialog>

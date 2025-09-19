@@ -5,9 +5,11 @@
     import { twMerge } from "tailwind-merge";
 
     interface Props {
+        emptyStyle: boolean;
+        disabled: boolean;
         onclick: () => Promise<any>
         onloaddone?: () => void
-        clazz?: string
+        class?: string
         loading?: Snippet
         idle: Snippet
         done?: Snippet
@@ -16,9 +18,11 @@
 
     const props = $props();
     const {
+        emptyStyle = false,
+        disabled,
         onclick: handler,
         onloaddone,
-        clazz = "",
+        class: clazz = "",
         idle: idleSnippet,
         loading: loadingSnippet,
         done: doneSnippet,
@@ -44,7 +48,7 @@
     }
 </script>
 
-<button class={twMerge("btn preset-filled", clazz)} disabled={doing} {...props} {onclick}>
+<button disabled={disabled || doing} {...props} class={twMerge(!emptyStyle && "btn preset-filled", clazz)} {onclick}>
     {#if done && doneSnippet}
         {@render doneSnippet()}
     {:else if doing}
