@@ -18,7 +18,7 @@
     }: Props = $props();
 </script>
 
-<NodePopup bind:dialog>
+<NodePopup bind:dialog class="w-lg">
     <FlowSettings {apiProps} {flow} onclose={() => dialog?.close()}/>
 </NodePopup>
 

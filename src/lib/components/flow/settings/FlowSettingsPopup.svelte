@@ -25,7 +25,7 @@
     }
 </script>
 
-<div class="space-y-4">
+<div class="space-y-8">
     <h1 class="h1 text-center">Flow Settings</h1>
     <div>
         <div class="flex justify-between mb-2">
