@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Modal } from '@skeletonlabs/skeleton-svelte';
+    import { Dialog } from '@skeletonlabs/skeleton-svelte';
     import type { Snippet } from "svelte"
 
     interface Props {
@@ -21,7 +21,7 @@
     }
 </style>
 
-<Modal
+<Dialog
         bind:open
         contentBase="card bg-surface-100-900 p-4 space-y-4 shadow-xl max-w-(--breakpoint-sm)"
         backdropClasses="backdrop-blur-xs"
@@ -42,4 +42,4 @@
             <button type="button" class="btn preset-filled" onclick={onconfirmed}>Confirm</button>
         </footer>
     {/snippet}
-</Modal>
+</Dialog>
