@@ -6,10 +6,10 @@
     import Page from "$lib/components/Page.svelte";
 
     const { data } = $props();
-    const { tasks } = data;
+    const { tasks, accessToken } = data;
 
     const apiProps = {
-        token: data.access_token,
+        token: accessToken,
         fetch
     };
 </script>

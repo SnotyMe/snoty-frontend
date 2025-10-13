@@ -1,26 +1,32 @@
 import type { LayoutServerLoad } from "./$types";
 import { getRoles } from "$lib/api/user_api";
 import { redirect } from '@sveltejs/kit';
-import type { ApiProps } from "$lib/api/api";
+import { type ApiProps, isErrorJson } from "$lib/api/api";
 import { getTasks } from "$lib/api/task_api";
 
 export const load: LayoutServerLoad = async ({ locals, fetch }) => {
-    let groups = locals.access_token != null ? await getRoles({
-        token: locals.access_token,
+    const accessToken = locals.access_token;
+    if (accessToken == null) {
+        return redirect(307, "/auth/login");
+    }
+
+    const roles = locals.access_token != null ? await getRoles({
+        token: accessToken,
         fetch: fetch
     }) : null;
 
-    if (groups === null || groups.length == 0) {
+    if (roles === null || isErrorJson(roles) || roles.length == 0) {
         return redirect(307, "/auth/login");
     }
 
     const apiProps: ApiProps = {
-        token: locals.access_token,
+        token: accessToken,
         fetch: fetch
     };
 
     return {
-        groups,
+        accessToken,
+        roles,
         tasks: getTasks(apiProps)
     };
 }

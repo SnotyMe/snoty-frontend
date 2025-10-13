@@ -10,7 +10,7 @@ export function parseToken(jwt: string) {
             name: dataAny.name,
             firstName: dataAny.given_name,
             lastName: dataAny.family_name,
-            groups: dataAny.groups,
+            roles: dataAny.groups,
         } as User,
         exp: data.exp,
         iat: data.iat

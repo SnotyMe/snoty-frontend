@@ -1,6 +1,7 @@
 import { MAX_COOKIE_AGE } from "$lib/utils/cookie_utils";
+import type { Cookies } from "@sveltejs/kit";
 
-export function setAuthCookies(url: URL, res: any, cookies: any) {
+export function setAuthCookies(url: URL, res: any, cookies: Cookies) {
     const ops = {
         secure: url.protocol.includes("https"),
         expires: new Date(new Date().getTime() + res.expires_in * 1000),
