@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Modal, Switch } from "@skeletonlabs/skeleton-svelte";
+    import { Dialog, Switch } from "@skeletonlabs/skeleton-svelte";
     import IconUpload from "lucide-svelte/icons/upload";
     import IconRocket from "lucide-svelte/icons/rocket";
     import ImportFlow from "$lib/components/flow/import/ImportFlow.svelte";
@@ -41,7 +41,7 @@
     }
 </script>
 
-<Modal
+<Dialog
         open={shown}
         onOpenChange={(e) => shown = e.open}
         triggerBase="px-4 py-2"
@@ -77,4 +77,4 @@
             </div>
         </div>
     {/snippet}
-</Modal>
+</Dialog>

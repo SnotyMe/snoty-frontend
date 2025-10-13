@@ -9,6 +9,7 @@
     import NotificationBadge from "$lib/components/notification/NotificationBadge.svelte";
     import { twMerge } from "tailwind-merge";
     import { notificationCount } from "$lib/components/notification/notification_store";
+    import NavigationTile from "$lib/components/navigation/NavigationTile.svelte";
 
     function logout() {
         fetch('/auth/logout', {
@@ -16,7 +17,7 @@
         }).then(() => window.location.reload());
     }
 
-    const classes = "aspect-auto! flex justify-center"
+    const classes = "aspect-auto!"
 
     const { apiProps, user, tileProps } = $props();
 
@@ -43,35 +44,43 @@
         .substring(0, 2);
 </script>
 
-<Navigation.Tile {classes} id="settings" labelExpanded="Settings" href="/settings" selected={activeUrl === "/settings"} title="settings" {...tileProps}>
+<NavigationTile class={classes} id="settings" labelExpanded="Settings" href="/settings" selected={activeUrl === "/settings"} title="settings" {...tileProps}>
     <IconSettings/>
-</Navigation.Tile>
+</NavigationTile>
+
 {#if profileMenuShown}
-    <hr class="border-surface-300-700 w-full h-1 mt-2">
-    <Navigation.Tile id="notifications" labelExpanded="Notifications" href="/notifications" selected={activeUrl === "/notifications"} title="notifications" {...tileProps} classes={twMerge(classes, "relative justify-center")}>
-        {#if $notificationCount > 0 && profileMenuShown}
-            <NotificationBadge/>
-        {/if}
-        <div>
-            <IconBell/>
-        </div>
-    </Navigation.Tile>
-    <Navigation.Tile {classes} id="logout" labelExpanded="Logout" onclick={logout} title="logout" {...tileProps} active="">
-        <IconLogOut/>
-    </Navigation.Tile>
+    <div class="mt-2">
+        <hr class="border-surface-300-700 w-full h-1 mt-2">
+        <NavigationTile id="notifications" labelExpanded="Notifications" href="/notifications" selected={activeUrl === "/notifications"} title="notifications" {...tileProps} class={twMerge(classes, "relative")}>
+            {#if $notificationCount > 0 && profileMenuShown}
+                <NotificationBadge/>
+            {/if}
+            <div>
+                <IconBell/>
+            </div>
+        </NavigationTile>
+        <NavigationTile class={classes} id="logout" labelExpanded="Logout" onclick={logout} title="logout" {...tileProps} active="">
+            <IconLogOut/>
+        </NavigationTile>
+    </div>
 {/if}
 
 {#if user != null}
-    <Navigation.Tile id="avatar"
-                     labelExpanded={user?.name}
-                     onclick={() => profileMenuShown = !profileMenuShown}
-                     selected={profileMenuShown}
-                     {...tileProps}
-                     classes="relative justify-center"
-                     active={tileProps["hover"]}>
-        {#if $notificationCount > 0 && !profileMenuShown}
-            <NotificationBadge/>
-        {/if}
-        <Avatar src={undefined} classes="flex justify-center items-center">{initials}</Avatar>
-    </Navigation.Tile>
+    <NavigationTile
+        labelExpanded={user?.name}
+        onclick={() => profileMenuShown = !profileMenuShown}
+        selected={profileMenuShown}
+        class="relative mt-2"
+        active={tileProps["hover"]}
+        {...tileProps}
+    >
+        <div>
+            {#if $notificationCount > 0 && !profileMenuShown}
+                <NotificationBadge/>
+            {/if}
+            <Avatar class="size-16">
+                <Avatar.Fallback>SIM</Avatar.Fallback>
+            </Avatar>
+        </div>
+    </NavigationTile>
 {/if}

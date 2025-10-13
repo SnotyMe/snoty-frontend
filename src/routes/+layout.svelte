@@ -1,6 +1,7 @@
 <script lang="ts">
     import "../app.css";
-    import { Avatar, Navigation, Toaster, createToaster } from "@skeletonlabs/skeleton-svelte";
+    import { Avatar, Navigation, createToaster } from "@skeletonlabs/skeleton-svelte";
+    import NavigationTile from "$lib/components/navigation/NavigationTile.svelte";
     import IconHome from "lucide-svelte/icons/house";
     import IconWorkflow from "lucide-svelte/icons/workflow";
     import IconInfo from "lucide-svelte/icons/info";
@@ -12,6 +13,7 @@
     import { TemplateAPI } from "$lib/components/template/api";
     import { page } from "$app/state";
     import { initContext, setColorScheme, setToaster } from "$lib/context/layout_context.svelte";
+    import Toast from "$lib/components/ui/Toast.svelte";
 
     let expanded = $state(false);
 
@@ -27,11 +29,6 @@
         setColorScheme(document.documentElement.className as App.ColorScheme);
     }
 
-    const tileProps = {
-        "active": "bg-surface-300-700",
-        "hover": "hover:preset-filled-surface-200-800",
-    };
-
     const apiProps: ApiProps = {
         token: data.access_token!!,
         fetch: fetch
@@ -45,39 +42,46 @@
         placement: "bottom-end"
     });
     setToaster(toaster);
+
+    const tileProps = $derived({
+        expanded,
+        hover: "preset-filled-surface-200-800",
+    });
 </script>
 
 <div class="card border-surface-100-900 grid h-full w-full grid-cols-[auto_1fr] border-[1px]">
-    <Navigation.Rail value="nothing" classes="navbar overflow-y-auto" {expanded}>
-        {#snippet header()}
-        <Navigation.Tile labelExpanded="Menu" title="menu" selected={expanded} onclick={() => expanded = !expanded} {...tileProps}>
-            <IconMenu/>
-        </Navigation.Tile>
-        {/snippet}
-        {#snippet tiles()}
-        <Navigation.Tile id="home" labelExpanded="Home" label="Home" href="/" selected={activeUrl === "/"} {...tileProps}>
-            <IconHome/>
-        </Navigation.Tile>
-        {#if data.user != null}
-            <!-- matches /flows and /flow/:id -->
-            <Navigation.Tile id="flows" labelExpanded="My Flows" label="Flows" href="/flows" selected={activeUrl.startsWith("/flow")} {...tileProps}>
-                <IconWorkflow/>
-            </Navigation.Tile>
-        {/if}
-        <Navigation.Tile id="about" labelExpanded="About Snoty" label="About" href="/about" selected={activeUrl === "/about"} {...tileProps}>
-            <IconInfo/>
-        </Navigation.Tile>
-        {#if !isErrorJson(data.roles) && data.roles?.includes("admin")}
-            <Navigation.Tile id="admin" labelExpanded="Admin" label="Admin" href="/admin" selected={activeUrl === "/admin"} {...tileProps}>
-                <IconMonitorCog/>
-            </Navigation.Tile>
-        {/if}
-        {/snippet}
-        {#snippet footer()}
-        <UserMenu {apiProps} user={data.user} {tileProps}/>
-        {/snippet}
-    </Navigation.Rail>
-    <Toaster {toaster} width="min-w-md"/>
+    <Navigation layout={expanded ? "sidebar" : "rail"} class={`p-1 overflow-y-auto ${expanded ? "grid grid-rows-[1fr_auto_1fr] gap-4" : "w-auto"}`}>
+        <Navigation.Header>
+            <NavigationTile labelExpanded="Menu" selected={expanded} onclick={() => expanded = !expanded} {...tileProps}>
+                <IconMenu/>
+            </NavigationTile>
+        </Navigation.Header>
+        <Navigation.Content>
+            <Navigation.Menu class="gap-1">
+                <NavigationTile labelExpanded="Home" label="Home" href="/" selected={activeUrl === "/"} {...tileProps}>
+                    <IconHome/>
+                </NavigationTile>
+                {#if data.user != null}
+                    <!-- matches /flows and /flow/:id -->
+                    <NavigationTile labelExpanded="My Flows" label="Flows" href="/flows" selected={activeUrl.startsWith("/flow")} {...tileProps}>
+                        <IconWorkflow/>
+                    </NavigationTile>
+                {/if}
+                <NavigationTile labelExpanded="About Snoty" label="About" href="/about" selected={activeUrl === "/about"} {...tileProps}>
+                    <IconInfo/>
+                </NavigationTile>
+                {#if !isErrorJson(data.roles) && data.roles?.includes("admin")}
+                    <NavigationTile labelExpanded="Admin" label="Admin" href="/admin" selected={activeUrl === "/admin"} {...tileProps}>
+                        <IconMonitorCog/>
+                    </NavigationTile>
+                {/if}
+            </Navigation.Menu>
+        </Navigation.Content>
+        <Navigation.Footer class="flex flex-col justify-end">
+            <UserMenu {apiProps} user={data.user} {tileProps}/>
+        </Navigation.Footer>
+    </Navigation>
+    <Toast {toaster}/>
     <div class="flex flex-col gap-2 items-center justify-center h-full overflow-y-auto">
         {@render children()}
     </div>

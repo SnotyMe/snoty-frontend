@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { NodeDescriptor, NodeId, NodeSettings } from "$lib/model/nodes";
-    import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
+    import { Progress } from "@skeletonlabs/skeleton-svelte";
     import type { ApiProps } from "$lib/api/api";
     import { createNode, type NodeCreateDTO } from "$lib/api/node_api";
     import type { NodeCreatedHandler } from "$lib/components/add";
@@ -37,7 +37,7 @@
 
 <button class="btn preset-filled-primary-500 float-right px-10" onclick={submit} disabled={submitting}>
     {#if submitting}
-        <ProgressRing size="size-6" meterStroke="stroke-surface-900-100" trackStroke="stroke-surface-200-800" />
+        <Progress size="size-6" meterStroke="stroke-surface-900-100" trackStroke="stroke-surface-200-800" />
     {:else}
         Add this Node
     {/if}
