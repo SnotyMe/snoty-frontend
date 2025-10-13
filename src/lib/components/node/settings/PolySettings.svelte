@@ -1,10 +1,11 @@
 <script lang="ts">
-    import { COLLECTION, MAP, OBJECT, objectDetails } from "$lib/model/node_field_details";
+    import { COLLECTION, CREDENTIAL, MAP, OBJECT, objectDetails, credentialDetails } from "$lib/model/node_field_details";
+    import type { NodeField } from "$lib/model/nodes";
     import CollectionSettings from "./CollectionSettings.svelte";
     import MapSettings from "./MapSettings.svelte";
     import NodeSettings from "./NodeSettings.svelte";
     import SettingsField from "./SettingsField.svelte";
-    import type { NodeField } from "$lib/model/nodes";
+    import CredentialSelector from "$lib/components/node/settings/CredentialSelector.svelte";
 
     interface Props {
         value: any
@@ -22,6 +23,8 @@
         bind:settings={value}
         fields={objectDetails(field)?.schema ?? []}
     />
+{:else if field.type === CREDENTIAL}
+    <CredentialSelector bind:value={value} details={credentialDetails(field)} />
 {:else}
     <SettingsField bind:value metadata={field}/>
 {/if}

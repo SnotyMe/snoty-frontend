@@ -82,3 +82,14 @@ export interface MapDetails extends Details<TMap> {
 export function mapDetails(field: NodeField | undefined) {
     return casted<TMap, MapDetails>(field?.details, MAP);
 }
+
+export const CREDENTIAL = "Credential"
+type TCredential = typeof CREDENTIAL
+export interface CredentialDetails extends Details<TCredential> {
+    credentialType: string
+    schema: NodeField[]
+}
+
+export function credentialDetails(field: NodeField | undefined) {
+    return casted<TCredential, CredentialDetails>(field?.details, CREDENTIAL);
+}
