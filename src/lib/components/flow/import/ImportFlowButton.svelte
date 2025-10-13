@@ -89,21 +89,3 @@
         </Dialog.Positioner>
     </Portal>
 </Dialog>
-
-<Dialog
-        open={shown}
-        onOpenChange={(e) => shown = e.open}
-        triggerBase="px-4 py-2"
-        contentBase=""
-        positionerJustify="justify-end"
-        positionerAlign=""
-        positionerPadding=""
-        transitionsPositionerIn={{ x: -480, duration: 200 }}
-        transitionsPositionerOut={{ x: -480, duration: 200 }}
->
-    {#snippet trigger()}
-        <IconUpload/>
-    {/snippet}
-    {#snippet content()}
-    {/snippet}
-</Dialog>
