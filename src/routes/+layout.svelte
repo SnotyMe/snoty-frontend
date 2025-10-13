@@ -13,6 +13,7 @@
     import { TemplateAPI } from "$lib/components/template/api";
     import { page } from "$app/state";
     import { initContext, setColorScheme, setToaster } from "$lib/context/layout_context.svelte";
+    import { setContext } from "svelte";
     import Toast from "$lib/components/ui/Toast.svelte";
 
     let expanded = $state(false);
@@ -33,6 +34,7 @@
         token: data.access_token!!,
         fetch: fetch
     };
+    setContext("apiProps", apiProps);
 
     // load template API to global context
     if (browser)
