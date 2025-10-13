@@ -72,7 +72,7 @@
                 <NavigationTile labelExpanded="About Snoty" label="About" href="/about" selected={activeUrl === "/about"} {...tileProps}>
                     <IconInfo/>
                 </NavigationTile>
-                {#if !isErrorJson(data.roles) && data.roles?.includes("admin")}
+                {#if !isErrorJson(data.roles) && data.roles != null && hasAnyRole(data.roles, ["admin"])}
                     <NavigationTile labelExpanded="Admin" label="Admin" href="/admin" selected={activeUrl === "/admin"} {...tileProps}>
                         <IconMonitorCog/>
                     </NavigationTile>
