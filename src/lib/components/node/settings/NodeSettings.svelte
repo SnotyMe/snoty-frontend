@@ -1,11 +1,11 @@
 <script lang="ts">
-    import type { NodeField, NodeSettings } from "$lib/model/nodes";
+    import type { NodeField, SchemaValues } from "$lib/model/nodes";
     import { COLLECTION, CREDENTIAL, MAP, OBJECT } from "$lib/model/node_field_details";
     import SettingsField from "./SettingsField.svelte";
     import PolySettings from "$lib/components/node/settings/PolySettings.svelte";
 
     interface Props {
-        settings: NodeSettings
+        settings: SchemaValues
 
         fields: NodeField[]
     }

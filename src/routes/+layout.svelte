@@ -7,6 +7,7 @@
     import IconInfo from "lucide-svelte/icons/info";
     import IconMenu from "lucide-svelte/icons/menu";
     import IconMonitorCog from "lucide-svelte/icons/monitor-cog";
+    import IconKeyRound from "lucide-svelte/icons/key-round";
     import UserMenu from "./UserMenu.svelte";
     import { browser } from "$app/environment";
     import { type ApiProps, isErrorJson } from "$lib/api/api";
@@ -15,6 +16,7 @@
     import { initContext, setColorScheme, setToaster } from "$lib/context/layout_context.svelte";
     import { setContext } from "svelte";
     import Toast from "$lib/components/ui/Toast.svelte";
+    import { hasAnyRole } from "$lib/utils/user_utils";
 
     let expanded = $state(false);
 
@@ -67,6 +69,9 @@
                     <!-- matches /flows and /flow/:id -->
                     <NavigationTile labelExpanded="My Flows" label="Flows" href="/flows" selected={activeUrl.startsWith("/flow")} {...tileProps}>
                         <IconWorkflow/>
+                    </NavigationTile>
+                    <NavigationTile labelExpanded="Credentials" label="Creds" href="/credentials" selected={activeUrl === "/credentials"} {...tileProps}>
+                        <IconKeyRound/>
                     </NavigationTile>
                 {/if}
                 <NavigationTile labelExpanded="About Snoty" label="About" href="/about" selected={activeUrl === "/about"} {...tileProps}>

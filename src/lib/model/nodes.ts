@@ -2,7 +2,8 @@ import type { Details } from "$lib/model/node_field_details";
 import type { LogLevel } from "$lib/model/node_logs";
 
 export type NodeId = string
-export type NodeSettings = Record<string, any> & { name: string }
+export type SchemaValues = Record<string, any>
+export type NodeSettings = SchemaValues & { name: string }
 
 export interface SettinglessNode extends Record<string, any> {
     _id: NodeId
@@ -31,7 +32,7 @@ export interface NodeField {
     description: string
     hidden: boolean
     censored: boolean
-    details?: Details
+    details?: Details<never>
 }
 
 type NodePosition = "START" | "MIDDLE" | "END"
