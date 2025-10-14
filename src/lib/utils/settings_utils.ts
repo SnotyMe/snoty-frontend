@@ -2,14 +2,18 @@ import type { NodeField, NodeMetadata, NodeSettings } from "$lib/model/nodes";
 import { getDefaultValue } from "$lib/model/node_field_defaults";
 
 export function nodeSettingsFromMetadata(nodeMetadata: NodeMetadata): NodeSettings {
-    const fields = nodeMetadata.settings;
+    return {
+        ...defaultRecordFromSchema(nodeMetadata.settings),
+        name: nodeMetadata.displayName,
+    };
+}
 
-    const settings: NodeSettings = {};
+export function defaultRecordFromSchema(fields: NodeField[]): Record<string, any> {
+    const record: Record<string, any> = {};
     for (const field of fields) {
-        settings[field.name] = getDefaultValue(field);
+        record[field.name] = getDefaultValue(field);
     }
-    settings.name = nodeMetadata.displayName;
-    return settings;
+    return record;
 }
 
 export function removeBoilerplate(fields: NodeField[], fieldsToRemove?: string[]): NodeField[] {

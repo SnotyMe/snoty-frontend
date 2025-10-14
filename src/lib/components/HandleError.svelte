@@ -1,14 +1,14 @@
-<script lang="ts">
+<script lang="ts" generics="T">
     import { type ErrorJson, isErrorJson } from "$lib/api/api";
     import type { Snippet } from "svelte";
     import Alert from "$lib/components/ui/alert/Alert.svelte";
 
-    interface Props<T> {
+    interface Props {
         element?: T | ErrorJson
         elements?: (T | ErrorJson)[]
         success: Snippet<[T, T[]?]>
     }
-    const { element, elements, success }: Props<any> = $props();
+    const { element, elements, success }: Props = $props();
 
     const firstErrorElement = isErrorJson(element) ? element : elements?.find(isErrorJson);
 </script>
