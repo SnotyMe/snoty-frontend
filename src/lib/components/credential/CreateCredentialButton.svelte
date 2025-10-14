@@ -1,0 +1,64 @@
+<script lang="ts">
+    import { type ApiProps, isErrorJson } from "$lib/api/api";
+    import NodePopup from "$lib/components/node/popup/NodePopup.svelte";
+    import IconPlus from "lucide-svelte/icons/plus";
+    import LoadingButton from "$lib/components/LoadingButton.svelte";
+    import { getContext } from "svelte";
+    import { createCredential } from "$lib/api/credential_api";
+    import type { CredentialCreateDto, CredentialDefinitionWithStatisticsDto } from "$lib/model/credential";
+    import { defaultRecordFromSchema } from "$lib/utils/settings_utils";
+
+    interface Props {
+        version: number
+        definition: CredentialDefinitionWithStatisticsDto
+    }
+    let { definition, version = $bindable() }: Props = $props();
+
+    const apiProps: ApiProps = getContext<ApiProps>("apiProps");
+
+    let dialog: HTMLDialogElement;
+
+    const createDto: CredentialCreateDto = $state({
+        type: definition.type,
+        name: "",
+        data: defaultRecordFromSchema(definition.schema),
+    });
+
+    async function create() {
+        if (!createDto) {
+            console.error("Credential is null");
+            return;
+        }
+
+        const createdCredential = await createCredential(apiProps, createDto);
+        if (isErrorJson(createdCredential)) {
+            throw createdCredential;
+        }
+
+        version++
+    }
+</script>
+
+<button class="block mx-auto px-4 py-2" onclick={() => dialog.showModal()}>
+    <IconPlus/>
+</button>
+
+<NodePopup bind:dialog class="w-lg">
+    {#snippet children()}
+        <h1 class="h1">Create Credential</h1>
+        <form class="space-y-2 p-2">
+            <div class="flex justify-between mb-2">
+                <label class="label">
+                    <span class="label-text">Name <span class="text-red-500">*</span></span>
+                    <input class="input" placeholder="Enter Credential Name" bind:value={createDto.name}/>
+                    <small class="whitespace-pre-line">You can always change this later.</small>
+                </label>
+            </div>
+            <LoadingButton class="float-right mt-4!" onclick={create} disabled={createDto.name === ""}>
+                {#snippet idle()}
+                    Create
+                {/snippet}
+            </LoadingButton>
+        </form>
+    {/snippet}
+</NodePopup>

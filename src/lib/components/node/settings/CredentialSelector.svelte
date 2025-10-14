@@ -2,7 +2,7 @@
     import type { CredentialRef } from "$lib/model/credential";
     import { type ApiProps, isErrorJson } from "$lib/api/api";
     import { getContext } from "svelte";
-    import { enumerateCredentials } from "$lib/api/credential_api";
+    import { credentialsOverview } from "$lib/api/credential_api";
     import type { CredentialDetails } from "$lib/model/node_field_details";
 
     interface Props {
@@ -14,7 +14,7 @@
 
     const apiProps = getContext<ApiProps>("apiProps");
 
-    const availableValues = enumerateCredentials(apiProps, details.credentialType)
+    const availableValues = credentialsOverview(apiProps, details.credentialType)
         .then(res => {
             if (isErrorJson(res)) {
                 console.error(res);
