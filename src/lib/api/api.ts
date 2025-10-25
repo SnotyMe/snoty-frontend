@@ -48,6 +48,11 @@ export function isErrorJson(obj: any): obj is ErrorJson {
     return obj && obj.error === true;
 }
 
+export function unwrapOrNull<T>(obj: T | ErrorJson): T | null {
+    if (isErrorJson(obj)) return null;
+    return obj;
+}
+
 export async function json_or_error(res: Response): Promise<any> {
     if (res.ok) {
         return res.json();

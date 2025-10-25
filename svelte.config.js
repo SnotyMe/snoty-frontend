@@ -18,6 +18,11 @@ const config = {
 		if (warning.code === "element_invalid_self_closing_tag") return;
 		handler(warning)
 	},
+	compilerOptions: {
+		experimental: {
+			async: true
+		}
+	}
 };
 
 process.on('unhandledRejection', (reason, promise) => {

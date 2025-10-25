@@ -9,20 +9,21 @@
     import { defaultRecordFromSchema } from "$lib/utils/settings_utils";
 
     interface Props {
-        version: number
         definition: CredentialDefinitionWithStatisticsDto
+        oncreate: () => void
     }
-    let { definition, version = $bindable() }: Props = $props();
+    let { definition, oncreate }: Props = $props();
 
     const apiProps: ApiProps = getContext<ApiProps>("apiProps");
 
     let dialog: HTMLDialogElement;
 
-    const createDto: CredentialCreateDto = $state({
+    const initialValue = {
         type: definition.type,
         name: "",
         data: defaultRecordFromSchema(definition.schema),
-    });
+    };
+    let createDto: CredentialCreateDto = $state(initialValue);
 
     async function create() {
         if (!createDto) {
@@ -35,7 +36,10 @@
             throw createdCredential;
         }
 
-        version++
+        oncreate()
+
+        dialog.close()
+        createDto = initialValue;
     }
 </script>
 
