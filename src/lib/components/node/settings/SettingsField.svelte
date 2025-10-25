@@ -1,7 +1,14 @@
 <script lang="ts">
     import type { NodeField } from "$lib/model/nodes";
-    import { enumDetails, isNumberType, plaintextDetails } from "$lib/model/node_field_details";
+    import {
+        CREDENTIAL,
+        credentialDetails,
+        enumDetails,
+        isNumberType,
+        plaintextDetails
+    } from "$lib/model/node_field_details";
     import CodemirrorSettingsField from "$lib/components/node/editor/codemirror/CodemirrorSettingsField.svelte";
+    import CredentialSelector from "$lib/components/node/settings/CredentialSelector.svelte";
 
     const CENSORED = "********";
 
@@ -105,6 +112,8 @@
         </select>
     {:else if isNumberType(type)}
         <input class="input-field" type="number" value={actualValue} onfocusin={clicked} onfocusout={changed} onchange={changed}/>
+    {:else if type === CREDENTIAL}
+        <CredentialSelector bind:value={actualValue} details={credentialDetails(metadata)} />
     {:else}
         {@const plain = plaintextDetails(metadata)}
         {#if expanded || (plain?.lines ?? 1) > 1 || plain?.language}

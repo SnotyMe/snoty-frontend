@@ -1,30 +1,53 @@
 <script lang="ts">
-    import { type ApiProps } from "$lib/api/api";
+    import { type ApiProps, type ErrorJson, unwrapOrNull } from "$lib/api/api";
     import { getContext } from "svelte";
-    import { listCredentials } from "$lib/api/credential_api";
+    import { listCredentials, updateCredential } from "$lib/api/credential_api";
     import HandleError from "$lib/components/HandleError.svelte";
+    import IconTrash from "lucide-svelte/icons/trash";
+    import { deleteCredential } from "$lib/api/credential_api";
     import {
         CredentialAccess,
         type CredentialDefinitionWithStatisticsDto,
-        type CredentialDto
+        type CredentialDto, type CredentialUpdateDto
     } from "$lib/model/credential";
-    import NodeSettings from "$lib/components/node/settings/NodeSettings.svelte";
-    import NodeName from "$lib/components/node/settings/NodeName.svelte";
     import CreateCredentialButton from "$lib/components/credential/CreateCredentialButton.svelte";
+    import Credential from "./Credential.svelte";
 
     const apiProps = getContext<ApiProps>("apiProps");
 
     interface Props {
-        selectedCredentialType: string | null
-        credentialDefinition: CredentialDefinitionWithStatisticsDto | null
+        selectedCredentialType: string
+        credentialDefinition: CredentialDefinitionWithStatisticsDto
+        searchQuery: string
     }
-    const { selectedCredentialType, credentialDefinition }: Props = $props();
+    const { selectedCredentialType, credentialDefinition, searchQuery }: Props = $props();
 
-    function groupByAccess(credentials: CredentialDto[]) {
+    let credentials: ErrorJson | CredentialDto[] = $state([])
+
+    async function refreshCredentials() {
+        if (selectedCredentialType) credentials = await listCredentials(apiProps, selectedCredentialType)
+        else credentials = []
+    }
+
+    await refreshCredentials()
+
+    async function onchange(credentialId: string, newValue: CredentialUpdateDto) {
+        await updateCredential(apiProps, credentialId, newValue);
+    }
+
+    async function ondelete(credentialId: string, index: number) {
+        await deleteCredential(apiProps, credentialId);
+        unwrapOrNull(credentials)?.splice(index, 1)
+    }
+
+    function processCredentials(credentials: CredentialDto[]) {
         const grouped: Record<CredentialAccess, CredentialDto[]> = {
             [CredentialAccess.USER]: [],
         };
         for (const credential of credentials) {
+            if (searchQuery && !credential.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+                continue;
+            }
             const access = credential.access || "unknown";
             if (!grouped[access]) {
                 grouped[access] = [];
@@ -33,52 +56,38 @@
         }
         return Object.entries(grouped).map(([access, creds]) => ({ access, creds }));
     }
-
-    let version = $state(0)
-    const fetchCredentials = $derived(async () => {
-        version
-        if (selectedCredentialType) return listCredentials(apiProps, selectedCredentialType)
-        else return Promise.resolve([] as CredentialDto[])
-    })
+    const processedCredentials = $derived(processCredentials(credentials))
 </script>
 
-<div id="col-right" class="h-full overflow-y-auto p-4">
-    {#if selectedCredentialType != null}
-        {#await fetchCredentials() then credentials}
-            <h2 class="text-center h2 mb-4">{credentialDefinition?.displayName ?? selectedCredentialType}</h2>
-            <HandleError element={credentials}>
-                {#snippet success(successCredentials)}
-                    <ul class="divide-y-2 divide-surface-800-200">
-                        {#each groupByAccess(successCredentials) as { access, creds: credentials }}
-                            <li class="py-4">
-                                <h4 class="h4">{access[0].toUpperCase() + access.slice(1).toLowerCase()}</h4>
-                                <hr class="p-1">
-                                <ul class="list-disc list-inside h-full space-y-2">
-                                    {#each credentials as credential}
-                                        <li class="list-none flex flex-col cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 border">
-                                            <div class="flex items-center">
-                                                <NodeName settings={credential}/>
-                                            </div>
-                                            <div class="flow-node-options grow table-wrap border-y-4 border-surface-200-800 my-1 pr-0.5 overflow-y-auto">
-                                                {#if credentialDefinition == null}
-                                                    <p class="text-error-400">Credential definition not found.</p>
-                                                {:else}
-                                                    <NodeSettings settings={credential.data} fields={credentialDefinition.schema}/>
-                                                {/if}
-                                            </div>
-                                        </li>
-                                    {/each}
-                                </ul>
-                                {#if credentialDefinition != null}
-                                    <CreateCredentialButton bind:version definition={credentialDefinition}/>
-                                {/if}
-                            </li>
-                        {/each}
-                    </ul>
-                {/snippet}
-            </HandleError>
-        {/await}
-    {:else}
-        <p class="text-center text-surface-500">Select a credential type to view details.</p>
-    {/if}
+<div id="col-right" class="h-full overflow-y-auto">
+    <h2 class="text-center h2 pt-0 mb-4 leading-none">{credentialDefinition.displayName}</h2>
+    <HandleError element={credentials}>
+        {#snippet success()}
+            <ul class="divide-y-2 divide-surface-800-200">
+                {#each processedCredentials as { access, creds: credentials } (credentials)}
+                    <li class="py-4">
+                        {#if access !== CredentialAccess.USER}
+                            <h4 class="h4">{access[0].toUpperCase() + access.slice(1).toLowerCase()}</h4>
+                            <hr class="p-1">
+                        {/if}
+                        <ul class="list-disc list-inside h-full space-y-2">
+                            {#each credentials as credential, index}
+                                <li class="list-none flex flex-row items-center gap-2">
+                                    <Credential {credential} {credentialDefinition} {onchange}/>
+                                    <div class="inline-block">
+                                        <button onclick={() => ondelete(credential.id, index)}>
+                                            <IconTrash/>
+                                        </button>
+                                    </div>
+                                </li>
+                            {/each}
+                        </ul>
+                        {#if credentialDefinition != null}
+                            <CreateCredentialButton definition={credentialDefinition} oncreate={() => refreshCredentials()}/>
+                        {/if}
+                    </li>
+                {/each}
+            </ul>
+        {/snippet}
+    </HandleError>
 </div>
