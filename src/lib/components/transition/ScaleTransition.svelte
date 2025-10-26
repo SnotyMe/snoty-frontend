@@ -7,7 +7,7 @@
     const ogProps: ScaleTransitionProps = $props();
     const transitionProps = {
         ...ogProps,
-        duration: 400
+        duration: 300
     };
 </script>
 

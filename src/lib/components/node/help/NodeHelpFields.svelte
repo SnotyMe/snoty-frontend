@@ -11,20 +11,20 @@
 </script>
 
 <Accordion.Item value={name}>
-    {#snippet control()}
-    <p class="h5">{name}</p>
-    {/snippet}
-    {#snippet panel()}
-    <div class="flex flex-col gap-2">
-        {#if fields.length > 0}
-            {#each fields as field}
-                <div>
-                    <NodeFieldDetails {field}/>
-                </div>
-            {/each}
-        {:else}
-            <div class="chip preset-filled-surface-500">Dynamic</div>
-        {/if}
-    </div>
-    {/snippet}
+    <Accordion.ItemTrigger>
+        <p class="h5">{name}</p>
+    </Accordion.ItemTrigger>
+    <Accordion.ItemContent>
+        <div class="flex flex-col gap-2">
+            {#if fields.length > 0}
+                {#each fields as field}
+                    <div>
+                        <NodeFieldDetails {field}/>
+                    </div>
+                {/each}
+            {:else}
+                <div class="chip preset-filled-surface-500">Dynamic</div>
+            {/if}
+        </div>
+    </Accordion.ItemContent>
 </Accordion.Item>

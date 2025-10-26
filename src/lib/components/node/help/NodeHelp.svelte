@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Accordion } from "@skeletonlabs/skeleton-svelte";
-    import { type NodeMetadata, descriptorAsString } from "$lib/model/nodes";
+    import { type NodeMetadata } from "$lib/model/nodes";
     import NodeHelpFields from "$lib/components/node/help/NodeHelpFields.svelte";
     import { removeBoilerplate } from "$lib/utils/settings_utils";
 
@@ -13,10 +13,7 @@
 </script>
 
 <div class="mt-0 m-1">
-    <div class="flex justify-between mb-4">
-        <h1 class="leading-none h1" style="vertical-align: top">{metadata.displayName}</h1>
-        <p>{descriptorAsString(metadata.descriptor)}</p>
-    </div>
+    <h1 class="leading-none h1 mb-4" style="vertical-align: top">{metadata.displayName}</h1>
     <Accordion {value} onValueChange={e => (value = e.value)} multiple>
         <NodeHelpFields name="Settings" fields={removeBoilerplate(metadata.settings)}/>
         {#if metadata.input}

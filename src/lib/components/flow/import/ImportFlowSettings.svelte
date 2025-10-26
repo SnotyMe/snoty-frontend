@@ -28,12 +28,11 @@
     };
 </script>
 
-<div class="flex flex-col px-2 space-y-4">
-    <div class="flex flex-col space-y-2">
-        <label for="name">Flow Name</label>
-        <input type="text" id="name" bind:value={flow.name} class="input"/>
-    </div>
+<div class="flex flex-col space-y-2">
+    <label class="mb-0" for="name">Flow Name</label>
+    <input type="text" id="name" bind:value={flow.name} class="input"/>
 
+    <label class="mb-0">Nodes</label>
     {#each flow.nodes.filter(node => showIntermediate || getNodeMetadata(metadatas, node.descriptor)?.position !== "MIDDLE") as node}
         {@const nodeTemplates = getNodeTemplates(templates, node.descriptor)}
         {@const metadata = getNodeMetadata(metadatas, node.descriptor)}

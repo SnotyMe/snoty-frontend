@@ -18,17 +18,14 @@
 </style>
 
 {#if fields != null}
-    <div class="flex items-center gap-2">
-        <span>{name}</span>
+    <span>{name}</span>
+    <div class="flex items-center gap-1 overflow-x-auto py-2">
         {#if fields.length === 0}
             <div class="chip preset-filled-surface-500">Dynamic</div>
         {:else}
-            {#each fields.slice(0, 5) as field}
+            {#each fields as field}
                 <div class="chip preset-filled">{field.name}</div>
             {/each}
-            {#if fields.length > 5}
-                <div class="chip preset-filled">...</div>
-            {/if}
         {/if}
     </div>
 {/if}

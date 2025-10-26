@@ -1,7 +1,6 @@
 <script lang="ts">
     import IconTrash from "lucide-svelte/icons/trash-2"
-    import LoadingButton from "$lib/components/LoadingButton.svelte";
-    import Confirmation from "$lib/components/confirm/Confirmation.svelte";
+    import { Dialog, Portal } from "@skeletonlabs/skeleton-svelte";
     import type { Snippet } from "svelte";
 
     interface Props {
@@ -9,20 +8,24 @@
         onconfirmed: () => Promise<void>
     }
     const { body, onconfirmed }: Props = $props();
-
-    let openState = $state(false);
 </script>
 
-<LoadingButton emptyStyle onclick={() => openState = true}>
-    {#snippet idle()}
+<Dialog>
+    <Dialog.Trigger>
         <IconTrash/>
-    {/snippet}
-</LoadingButton>
-
-{#if openState}
-    <Confirmation
-            {body}
-            bind:open={openState}
-            {onconfirmed}
-    />
-{/if}
+    </Dialog.Trigger>
+    <Portal>
+        <Dialog.Backdrop class="fixed inset-0 z-50 data-[state=open]:backdrop-blur-xs" />
+        <Dialog.Positioner class="fixed inset-0 z-50 flex justify-center items-center">
+            <Dialog.Content class="card bg-surface-100-900 w-md p-4 space-y-2 shadow-xl">
+                <Dialog.Title class="text-2xl font-bold">Are you sure?</Dialog.Title>
+                <Dialog.Description>{@render body()}</Dialog.Description>
+                <small class="text-surface-700-300">This action cannot be undone.</small>
+                <footer class="flex justify-end gap-4">
+                    <Dialog.CloseTrigger>Cancel</Dialog.CloseTrigger>
+                    <button type="button" class="btn preset-filled" onclick={onconfirmed}>Confirm</button>
+                </footer>
+            </Dialog.Content>
+        </Dialog.Positioner>
+    </Portal>
+</Dialog>
