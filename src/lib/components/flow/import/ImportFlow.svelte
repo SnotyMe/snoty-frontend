@@ -1,10 +1,7 @@
 <script lang="ts">
-    import { FileUpload } from "@skeletonlabs/skeleton-svelte";
-    import IconDropzone from "lucide-svelte/icons/cloud-upload";
+    import { FileUpload, type FileUploadRootProps } from "@skeletonlabs/skeleton-svelte";
     import IconFile from "lucide-svelte/icons/cloud-upload";
-    import IconRemove from "lucide-svelte/icons/circle-x";
     import type { ExportedFlow, ImportFlowDTO } from "$lib/model/flow_import_export";
-    import type { FileChangeDetails } from "@zag-js/file-upload"
     import ImportFlowSettings from "$lib/components/flow/import/ImportFlowSettings.svelte";
     import type { NodeMetadataMap, NodeTemplatesMap } from "$lib/model/nodes";
 
@@ -14,12 +11,13 @@
         flow: ImportFlowDTO | null
         showIntermediate?: boolean
     }
-    let { metadatas, templates, flow = $bindable(), showIntermediate }: Props = $props();
+
+    let {metadatas, templates, flow = $bindable(), showIntermediate}: Props = $props();
     let template: ExportedFlow | null = $state(null);
 
     let file: File | null = null;
 
-    async function fileChanged(change: FileChangeDetails) {
+    const fileChanged: FileUploadRootProps['onFileChange'] = async (change) => {
         if (change.acceptedFiles.length === 0) {
             file = null;
             flow = null;
@@ -33,17 +31,25 @@
 </script>
 
 <div class="space-y-4 overflow-y-auto">
-    <FileUpload
-            name="exported_flow"
-            accept="application/json"
-            maxFiles={1}
-            subtext=""
-            onFileChange={fileChanged}
-            classes="w-full p-2"
-    >
-        {#snippet iconInterface()}<IconDropzone class="size-8" />{/snippet}
-        {#snippet iconFile()}<IconFile class="size-4" />{/snippet}
-        {#snippet iconFileRemove()}<IconRemove class="size-4" />{/snippet}
+    <FileUpload onFileChange={fileChanged} accept="application/json">
+        <FileUpload.Dropzone>
+            <IconFile class="size-10 pointer-events-none"/>
+            <span class="pointer-events-none">Select file or drag here</span>
+            <FileUpload.HiddenInput/>
+        </FileUpload.Dropzone>
+        <FileUpload.ItemGroup>
+            <FileUpload.Context>
+                {#snippet children(fileUpload)}
+                    {#each fileUpload().acceptedFiles as file (file.name)}
+                        <FileUpload.Item {file}>
+                            <FileUpload.ItemName>{file.name}</FileUpload.ItemName>
+                            <FileUpload.ItemSizeText>{file.size} bytes</FileUpload.ItemSizeText>
+                            <FileUpload.ItemDeleteTrigger/>
+                        </FileUpload.Item>
+                    {/each}
+                {/snippet}
+            </FileUpload.Context>
+        </FileUpload.ItemGroup>
     </FileUpload>
 
     {#if template}

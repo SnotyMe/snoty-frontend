@@ -15,6 +15,7 @@
     import NodeHelp from "$lib/components/node/help/NodeHelp.svelte";
     import ScaleTransition from "$lib/components/transition/ScaleTransition.svelte";
     import IconArrowLeft from "lucide-svelte/icons/arrow-left"
+    import { descriptorAsString } from "$lib/model/nodes";
 
     let { isOpen: ogOpen = $bindable(), flow, apiProps, metadatas, onnodecreated: onnodecreatedupstream }: FlowMenusProps = $props()
     let isOpen = $state(ogOpen);
@@ -59,9 +60,12 @@
             </ScaleTransition>
         {:else}
             <ScaleTransition>
-                <button onclick={() => currentHelpMetadata = null}>
-                    <IconArrowLeft/>
-                </button>
+                <div class="w-full flex justify-between">
+                    <button onclick={() => currentHelpMetadata = null}>
+                        <IconArrowLeft/>
+                    </button>
+                    <p>{descriptorAsString(currentHelpMetadata.descriptor)}</p>
+                </div>
                 <NodeHelp metadata={currentHelpMetadata}/>
             </ScaleTransition>
         {/if}
