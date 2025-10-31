@@ -2,20 +2,21 @@
     import type { CredentialRef } from "$lib/model/credential";
     import { type ApiProps, isErrorJson } from "$lib/api/api";
     import { getContext } from "svelte";
-    import { listCredentials } from "$lib/api/credential_api";
+    import { enumerateCredentials } from "$lib/api/credential_api";
     import type { CredentialDetails } from "$lib/model/node_field_details";
     import { Combobox, type ComboboxRootProps, Portal, useListCollection } from "@skeletonlabs/skeleton-svelte";
 
     interface Props {
         details: CredentialDetails
         value: CredentialRef | null
+        onchange: (value: CredentialRef | null) => void
     }
 
-    let {details, value = $bindable()}: Props = $props();
+    let { details, value, onchange }: Props = $props();
 
     const apiProps = getContext<ApiProps>("apiProps");
 
-    const credentials = await listCredentials(apiProps, details.credentialType)
+    const credentials = await enumerateCredentials(apiProps, details.credentialType)
         .then(res => {
             if (isErrorJson(res)) {
                 console.error(res);
@@ -37,16 +38,17 @@
 
     const onValueChange: ComboboxRootProps['onValueChange'] = (event) => {
         value = { credentialId: event.value[0] }
+        onchange(value)
     }
 </script>
 
-<Combobox {collection} {onValueChange}>
+<Combobox defaultValue={value?.credentialId ? [value.credentialId] : undefined} {collection} {onValueChange}>
     <Combobox.Control>
         <Combobox.Input />
         <Combobox.Trigger />
     </Combobox.Control>
     <Portal>
-        <Combobox.Positioner class="z-[1]!">
+        <Combobox.Positioner class="z-30!">
             <Combobox.Content class="bg-surface-100-900">
                 {#each collection.group() as [type, items] (type)}
                     <Combobox.ItemGroup>
