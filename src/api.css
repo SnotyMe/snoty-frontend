@@ -16,3 +16,11 @@
     }
   }
 }
+
+.btn-icon-clear {
+  padding: var(--spacing);
+
+  @variant hover {
+    opacity: 0.7;
+  }
+}

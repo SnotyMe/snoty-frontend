@@ -1,9 +1,8 @@
 <script lang="ts">
     import Page from "$lib/components/Page.svelte";
     import type { PageData } from "./$types";
-    import { createFlow, deleteFlow, renameFlow } from "$lib/api/flow_api";
-    import { type ApiProps, isErrorJson } from "$lib/api/api";
-    import { goto } from "$app/navigation";
+    import { deleteFlow, renameFlow } from "$lib/api/flow_api";
+    import { type ApiProps } from "$lib/api/api";
     import ExecutionStatusIcon from "./ExecutionStatusIcon.svelte";
     import List from "$lib/components/list/List.svelte";
     import ListItem from "$lib/components/list/ListItem.svelte";
@@ -25,16 +24,6 @@
         token: data.access_token!!,
         fetch: fetch
     };
-
-    async function oncreateflow() {
-        const flow = await createFlow(apiProps, { name: "New Flow" });
-        if (isErrorJson(flow)) {
-            alert("Failed to create flow: " + flow.message);
-            return;
-        }
-
-        goto(`/flow/${flow._id}`);
-    }
 
     const statusListener = establishGlobalStatusListener(apiProps)
     onDestroy(() => statusListener.close())

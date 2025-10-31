@@ -43,7 +43,7 @@
 </script>
 
 <Dialog>
-    <Dialog.Trigger class="px-4 py-2">
+    <Dialog.Trigger class="btn-icon-clear">
         <IconUpload/>
     </Dialog.Trigger>
     <Portal>

@@ -1,6 +1,9 @@
+import type { Snippet } from "svelte"
+
 export interface NodePopupProps {
-    dialog: HTMLDialogElement
-    instashow?: boolean
+    defaultOpen?: boolean
     class?: string
-    children: any
+    trigger: Snippet<[]>
+    content: Snippet<[]>
+    actions?: Snippet<[]>
 }
