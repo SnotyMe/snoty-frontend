@@ -5,8 +5,8 @@
     import { twMerge } from "tailwind-merge";
 
     interface Props {
-        emptyStyle: boolean;
-        disabled: boolean;
+        variant?: "button" | "icon-clear" | "empty"
+        disabled?: boolean;
         onclick: () => Promise<any>
         onloaddone?: () => void
         class?: string
@@ -16,10 +16,10 @@
         error?: Snippet<[string]>
     }
 
-    const props = $props();
+    const props: Props = $props();
     const {
-        emptyStyle = false,
-        disabled,
+        variant = "button",
+        disabled = false,
         onclick: handler,
         onloaddone,
         class: clazz = "",
@@ -27,7 +27,7 @@
         loading: loadingSnippet,
         done: doneSnippet,
         error: errorSnippet,
-    }: Props = props;
+    } = props;
 
     let doing = $state(false);
     let done = $state(false);
@@ -46,9 +46,20 @@
         }
         doing = false;
     }
+
+    const baseStyle = $derived.by(() => {
+        switch (variant) {
+            case "button":
+                return "btn preset-filled";
+            case "icon-clear":
+                return "btn-icon-clear";
+            case "empty":
+                return "";
+        }
+    });
 </script>
 
-<button disabled={disabled || doing} {...props} class={twMerge(!emptyStyle && "btn preset-filled", clazz)} {onclick}>
+<button {...props} disabled={disabled || doing} class={twMerge(baseStyle, clazz)} {onclick}>
     {#if done && doneSnippet}
         {@render doneSnippet()}
     {:else if doing}

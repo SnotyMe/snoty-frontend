@@ -5,6 +5,7 @@
     import { updateFlowSettings } from "$lib/api/flow_api";
     import LoadingButton from "$lib/components/LoadingButton.svelte";
     import CronScheduleForm from "$lib/components/flow/settings/CronScheduleForm.svelte";
+    import { Dialog } from "@skeletonlabs/skeleton-svelte";
 
     interface Props {
         apiProps: ApiProps
@@ -25,11 +26,11 @@
     }
 </script>
 
+<Dialog.Title class="h1 text-center">Flow Settings</Dialog.Title>
 <div class="space-y-8">
-    <h1 class="h1 text-center">Flow Settings</h1>
     <div>
         <div class="flex justify-between mb-2">
-            <h3 class="h3">Schedule</h3>
+            <h4 class="h4">Schedule</h4>
             <select class="select w-min"
                     onchange={e => { settings.schedule = { type: e.target.value } }}
                     value={settings.schedule.type}

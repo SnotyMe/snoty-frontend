@@ -113,7 +113,7 @@
     {:else if isNumberType(type)}
         <input class="input-field" type="number" value={actualValue} onfocusin={clicked} onfocusout={changed} onchange={changed}/>
     {:else if type === CREDENTIAL}
-        <CredentialSelector bind:value={actualValue} details={credentialDetails(metadata)} />
+        <CredentialSelector value={actualValue} details={credentialDetails(metadata)} {onchange} />
     {:else}
         {@const plain = plaintextDetails(metadata)}
         {#if expanded || (plain?.lines ?? 1) > 1 || plain?.language}

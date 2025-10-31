@@ -1,23 +1,23 @@
 <script lang="ts">
     import type { NodeDescriptor, NodeId, NodeSettings } from "$lib/model/nodes";
-    import { Progress } from "@skeletonlabs/skeleton-svelte";
     import type { ApiProps } from "$lib/api/api";
     import { createNode, type NodeCreateDTO } from "$lib/api/node_api";
     import type { NodeCreatedHandler } from "$lib/components/add";
+    import { getContext } from "svelte";
+    import LoadingButton from "$lib/components/LoadingButton.svelte";
+    import IconDiamondPlus from "lucide-svelte/icons/diamond-plus";
+
+    const apiProps = getContext<ApiProps>("apiProps");
 
     interface Props {
         flowId: NodeId
-        apiProps: ApiProps
         descriptor: NodeDescriptor
         settings: NodeSettings
         onnodecreated: NodeCreatedHandler
     }
-    const { flowId, apiProps, descriptor, settings, onnodecreated }: Props = $props()
-
-    let submitting = $state(false);
+    const { flowId, descriptor, settings, onnodecreated }: Props = $props()
 
     async function submit() {
-        submitting = true;
         try {
             const nodeCreateDTO: NodeCreateDTO = {
                 descriptor,
@@ -31,14 +31,11 @@
             console.error(e);
             alert(`Failed to create node: ${e.message}`);
         }
-        submitting = false;
     }
 </script>
 
-<button class="btn preset-filled-primary-500 float-right px-10" onclick={submit} disabled={submitting}>
-    {#if submitting}
-        <Progress size="size-6" meterStroke="stroke-surface-900-100" trackStroke="stroke-surface-200-800" />
-    {:else}
-        Add this Node
-    {/if}
-</button>
+<LoadingButton variant="icon-clear" onclick={submit}>
+    {#snippet idle()}
+        <IconDiamondPlus/>
+    {/snippet}
+</LoadingButton>

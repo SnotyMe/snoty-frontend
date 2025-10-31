@@ -1,18 +1,22 @@
 <script lang="ts">
-    import type { NodeDescriptor, NodeMetadata, NodeMetadataMap } from "$lib/model/nodes";
+    import { type NodeMetadata, type NodeMetadataMap } from "$lib/model/nodes";
     import { Accordion } from "@skeletonlabs/skeleton-svelte";
     import NodeFieldChips from "$lib/components/add/NodeFieldChips.svelte";
     import IconCircleHelp from "lucide-svelte/icons/circle-help";
     import IconMinus from "lucide-svelte/icons/minus";
     import IconPlus from "lucide-svelte/icons/plus";
-    import { removeBoilerplate } from "$lib/utils/settings_utils";
+    import { nodeSettingsFromMetadata, removeBoilerplate } from "$lib/utils/settings_utils";
+    import type { Workflow } from "$lib/model/flows";
+    import AddNodeButton from "$lib/components/add/AddNodeButton.svelte";
+    import type { NodeCreatedHandler } from "$lib/components/add/index";
 
     interface Props {
+        flow: Workflow
         metadatas: NodeMetadataMap
         onshowhelp: (metadata: NodeMetadata) => void
-        onnodeadd: (nodeDescriptor: NodeDescriptor) => void
+        onnodecreated: NodeCreatedHandler
     }
-    const { metadatas, onshowhelp, onnodeadd }: Props = $props();
+    const { flow, metadatas, onshowhelp, onnodecreated }: Props = $props();
     let filteredMetadatas = $state(metadatas);
 
     function updateFilter(event: Event) {
@@ -44,13 +48,17 @@
                         <NodeFieldChips name="Output" fields={metadata.output}/>
                         <div class="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-r from-transparent to-surface-100-900"></div>
                     </div>
-                    <div class="flex justify-right items-center gap-2">
-                        <button type="button" onclick={() => onshowhelp(metadata)}>
+                    <div class="flex flex-col gap-1">
+                        <button class="btn-icon-clear" onclick={() => onshowhelp(metadata)}>
                             <IconCircleHelp/>
                         </button>
-                        <button type="button" class="btn preset-filled" onclick={() => onnodeadd(metadata.descriptor)}>
-                            Add
-                        </button>
+
+                        <AddNodeButton
+                            flowId={flow._id}
+                            {onnodecreated}
+                            descriptor={metadata.descriptor}
+                            settings={nodeSettingsFromMetadata(metadata)}
+                        />
                     </div>
                 </div>
             </Accordion.ItemContent>
