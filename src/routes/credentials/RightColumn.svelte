@@ -16,20 +16,11 @@
     const apiProps = getContext<ApiProps>("apiProps");
 
     interface Props {
-        selectedCredentialType: string
         credentialDefinition: CredentialDefinitionWithStatisticsDto
         searchQuery: string
+        credentials: CredentialDto[]
     }
-    const { selectedCredentialType, credentialDefinition, searchQuery }: Props = $props();
-
-    let credentials: ErrorJson | CredentialDto[] = $state([])
-
-    async function refreshCredentials() {
-        if (selectedCredentialType) credentials = await listCredentials(apiProps, selectedCredentialType)
-        else credentials = []
-    }
-
-    await refreshCredentials()
+    const { credentials, credentialDefinition, searchQuery }: Props = $props();
 
     async function onchange(credentialId: string, newValue: CredentialUpdateDto) {
         await updateCredential(apiProps, credentialId, newValue);
