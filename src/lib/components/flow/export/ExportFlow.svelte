@@ -4,6 +4,7 @@
     import { type ApiProps, isErrorJson } from "$lib/api/api";
     import type { Workflow } from "$lib/model/flows";
     import { exportFlow, type ExportOptions } from "$lib/api/flow_export_import_api";
+    import { Dialog } from "@skeletonlabs/skeleton-svelte";
 
     let options: ExportOptions = $state({
         withSensitiveData: false
@@ -43,7 +44,7 @@
     }
 </style>
 
-<h1 class="h1">Export Flow</h1>
+<Dialog.Title class="h1 text-center">Export Flow</Dialog.Title>
 <form class="space-y-2 p-2">
     <div class="space-y-1">
         <label class="option">
@@ -58,7 +59,7 @@
             </Alert>
         </div>
     </div>
-    <LoadingButton clazz="mt-4!" onclick={download}>
+    <LoadingButton onclick={download}>
         {#snippet idle()}
             Download
         {/snippet}

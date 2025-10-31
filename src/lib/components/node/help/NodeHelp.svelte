@@ -3,6 +3,7 @@
     import { type NodeMetadata } from "$lib/model/nodes";
     import NodeHelpFields from "$lib/components/node/help/NodeHelpFields.svelte";
     import { removeBoilerplate } from "$lib/utils/settings_utils";
+    import { Dialog } from "@skeletonlabs/skeleton-svelte";
 
     interface Props {
         metadata: NodeMetadata
@@ -13,7 +14,7 @@
 </script>
 
 <div class="mt-0 m-1">
-    <h1 class="leading-none h1 mb-4" style="vertical-align: top">{metadata.displayName}</h1>
+    <Dialog.Title class="h1 text-center">{metadata.displayName}</Dialog.Title>
     <Accordion {value} onValueChange={e => (value = e.value)} multiple>
         <NodeHelpFields name="Settings" fields={removeBoilerplate(metadata.settings)}/>
         {#if metadata.input}

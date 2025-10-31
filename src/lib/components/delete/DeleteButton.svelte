@@ -18,7 +18,7 @@
         <Dialog.Backdrop class="fixed inset-0 z-50 data-[state=open]:backdrop-blur-xs" />
         <Dialog.Positioner class="fixed inset-0 z-50 flex justify-center items-center">
             <Dialog.Content class="card bg-surface-100-900 w-md p-4 space-y-2 shadow-xl">
-                <Dialog.Title class="text-2xl font-bold">Are you sure?</Dialog.Title>
+                <Dialog.Title class="h1 text-center">Are you sure?</Dialog.Title>
                 <Dialog.Description>{@render body()}</Dialog.Description>
                 <small class="text-surface-700-300">This action cannot be undone.</small>
                 <footer class="flex justify-end gap-4">

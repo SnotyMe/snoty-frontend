@@ -3,7 +3,6 @@
     import { type NodeMetadata, type StandaloneNode } from "$lib/model/nodes";
     import NodeSettings from "$lib/components/node/settings/NodeSettings.svelte";
     import NodeName from "$lib/components/node/settings/NodeName.svelte";
-    import NodeDetailsButton from "$lib/components/node/NodeDetailsButton.svelte";
     import Liquid from "$lib/components/template/Liquid.svelte";
     import { config } from "$lib/components/template/config";
     import NodeHelpButton from "$lib/components/node/help/NodeHelpButton.svelte";
@@ -27,6 +26,7 @@
             onsettingschange?: (settings: Record<string, any>) => void
             ondelete?: () => void
             initializing: boolean
+            highlight?: boolean
             heights: Record<string, number>
             widths: Record<string, number>
         }
@@ -61,7 +61,7 @@
     const edges = useEdges()
     let hasOutputNode = $derived(edges.current.some(edge => edge.source === node._id))
 
-    const isHighlighted = page.url.searchParams.get("highlightedNode") === node._id;
+    const isHighlighted = data.highlight || page.url.searchParams.get("highlightedNode") === node._id;
 </script>
 
 <div bind:clientWidth={widths[node._id]} bind:clientHeight={heights[node._id]} class="h-full" class:animate-highlight={isHighlighted}>
@@ -103,7 +103,6 @@
                 <div class="flex gap-1">
                     <NodeLogLevel {node} {apiProps}/>
                     <NodeHelpButton {metadata}/>
-                    <NodeDetailsButton nodeId={node._id} {settings} {metadata}/>
                 </div>
             </div>
         {:else}

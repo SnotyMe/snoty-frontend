@@ -7,6 +7,7 @@
     import { createCredential } from "$lib/api/credential_api";
     import type { CredentialCreateDto, CredentialDefinitionWithStatisticsDto } from "$lib/model/credential";
     import { defaultRecordFromSchema } from "$lib/utils/settings_utils";
+    import { Dialog } from "@skeletonlabs/skeleton-svelte";
 
     interface Props {
         definition: CredentialDefinitionWithStatisticsDto
@@ -15,8 +16,6 @@
     let { definition, oncreate }: Props = $props();
 
     const apiProps: ApiProps = getContext<ApiProps>("apiProps");
-
-    let dialog: HTMLDialogElement;
 
     const initialValue = {
         type: definition.type,
@@ -38,18 +37,18 @@
 
         oncreate()
 
-        dialog.close()
         createDto = initialValue;
     }
 </script>
 
-<button class="block mx-auto px-4 py-2" onclick={() => dialog.showModal()}>
-    <IconPlus/>
-</button>
-
-<NodePopup bind:dialog class="w-lg">
-    {#snippet children()}
-        <h1 class="h1">Create Credential</h1>
+<NodePopup class="w-lg">
+    {#snippet trigger()}
+        <Dialog.Trigger class="block mx-auto mt-4">
+            <IconPlus/>
+        </Dialog.Trigger>
+    {/snippet}
+    {#snippet content()}
+        <Dialog.Title class="h1 text-center">Create Credential</Dialog.Title>
         <form class="space-y-2 p-2">
             <div class="flex justify-between mb-2">
                 <label class="label">
@@ -58,11 +57,13 @@
                     <small class="whitespace-pre-line">You can always change this later.</small>
                 </label>
             </div>
-            <LoadingButton class="float-right mt-4!" onclick={create} disabled={createDto.name === ""}>
-                {#snippet idle()}
-                    Create
-                {/snippet}
-            </LoadingButton>
         </form>
+    {/snippet}
+    {#snippet actions()}
+        <LoadingButton onclick={create} disabled={createDto.name === ""}>
+            {#snippet idle()}
+                Create
+            {/snippet}
+        </LoadingButton>
     {/snippet}
 </NodePopup>

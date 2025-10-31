@@ -1,18 +1,17 @@
 <script lang="ts">
-    import {type ApiProps, isErrorJson} from "$lib/api/api";
-    import {goto} from "$app/navigation";
+    import { type ApiProps, isErrorJson } from "$lib/api/api";
+    import { goto } from "$app/navigation";
     import NodePopup from "$lib/components/node/popup/NodePopup.svelte";
-    import {createFlow, type CreateFlowDTO} from "$lib/api/flow_api";
+    import { createFlow, type CreateFlowDTO } from "$lib/api/flow_api";
     import IconPlus from "lucide-svelte/icons/plus";
     import LoadingButton from "$lib/components/LoadingButton.svelte";
+    import { Dialog } from "@skeletonlabs/skeleton-svelte"
 
     interface Props {
         apiProps: ApiProps
     }
 
     let {apiProps}: Props = $props();
-
-    let dialog: HTMLDialogElement;
 
     const flow: CreateFlowDTO = $state({name: ""});
 
@@ -30,13 +29,14 @@
     }
 </script>
 
-<button class="px-4 py-2" onclick={() => dialog.showModal()}>
-    <IconPlus/>
-</button>
-
-<NodePopup bind:dialog class="w-lg">
-    {#snippet children()}
-        <h1 class="h1">Create Flow</h1>
+<NodePopup class="w-lg">
+    {#snippet trigger()}
+        <Dialog.Trigger class="btn-icon-clear">
+            <IconPlus/>
+        </Dialog.Trigger>
+    {/snippet}
+    {#snippet content()}
+        <Dialog.Title class="h1 text-center">Create Flow</Dialog.Title>
         <form class="space-y-2 p-2">
             <div class="flex justify-between mb-2">
                 <label class="label">
@@ -48,11 +48,13 @@
                     </small>
                 </label>
             </div>
-            <LoadingButton class="float-right mt-4!" onclick={create} disabled={flow.name === ""}>
-                {#snippet idle()}
-                    Create
-                {/snippet}
-            </LoadingButton>
         </form>
+    {/snippet}
+    {#snippet actions()}
+        <LoadingButton onclick={create} disabled={flow.name === ""}>
+            {#snippet idle()}
+                Create
+            {/snippet}
+        </LoadingButton>
     {/snippet}
 </NodePopup>
