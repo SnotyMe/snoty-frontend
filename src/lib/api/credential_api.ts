@@ -16,6 +16,11 @@ export async function listCredentials(props: ApiProps, credentialType: string): 
         .then(json_or_error);
 }
 
+export async function enumerateCredentials(props: ApiProps, credentialType: string): Promise<CredentialDto[] | ErrorJson> {
+    return authenticatedApiFetch(props, `wiring/credential/${credentialType}/enumerate`)
+        .then(json_or_error);
+}
+
 export async function createCredential(props: ApiProps, credentialCreateDto: CredentialCreateDto): Promise<CredentialDto | ErrorJson> {
     return authenticatedApiFetch(props, `wiring/credential`, {
         method: "POST",
