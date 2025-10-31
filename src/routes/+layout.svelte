@@ -49,7 +49,6 @@
 
     const tileProps = $derived({
         expanded,
-        hover: "preset-filled-surface-200-800",
     });
 </script>
 
