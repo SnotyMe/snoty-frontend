@@ -1,13 +1,14 @@
 <script lang="ts">
     import { twMerge } from "tailwind-merge";
+    import type { Snippet } from "svelte";
 
     interface Props {
-        label: string
-        labelExpanded: string
+        children: Snippet<[]>;
 
         class?: string
-        hover?: string
-        active?: string
+
+        label: string
+        labelExpanded: string
 
         selected: boolean
         expanded: boolean
@@ -16,27 +17,29 @@
         onclick?: () => void
     }
 
-    const { label, labelExpanded, class: userClass, hover: userHover, active: userActive, selected, expanded, href, onclick }: Props = $props();
+    const { children, class: userClass, label, labelExpanded, selected, expanded, href, onclick }: Props = $props();
 
-    const element = $derived(href ? "a" : "button");
     const classes = $derived(twMerge(
-        "btn filter-none!",
+        "btn filter-none! hover:preset-filled-surface-200-800 data-active:bg-surface-300-700",
         expanded
             ? "justify-start px-4 py-2 w-full"
             : "flex items-center w-18 rounded-container aspect-square p-2 gap-1 flex-col justify-center",
-        userHover?.split(" ")?.map(x => `hover:${x}`)?.join(" ") ?? "hover:preset-filled-surface-200-800",
-        selected ? userActive ?? "bg-surface-300-700" : "",
         userClass
     ))
     const actualLabel = $derived(expanded ? labelExpanded : label);
 </script>
 
-<svelte:element
-    this={element}
-    class={classes}
-    href={href}
-    onclick={onclick}
->
-    <slot/>
+{#snippet content()}
+    {@render children()}
     {#if actualLabel}<span class={expanded ? "text-md" : "text-xs"}>{actualLabel}</span>{/if}
-</svelte:element>
+{/snippet}
+
+{#if href}
+    <a class={classes} {href} data-active={selected || null}>
+        {@render content()}
+    </a>
+{:else}
+    <button class={classes} {onclick} type="button">
+        {@render content()}
+    </button>
+{/if}
