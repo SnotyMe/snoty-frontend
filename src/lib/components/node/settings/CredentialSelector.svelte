@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { CredentialRef } from "$lib/model/credential";
+    import type { CredentialDto, CredentialRef } from "$lib/model/credential";
     import { type ApiProps, isErrorJson } from "$lib/api/api";
     import { getContext } from "svelte";
     import { enumerateCredentials } from "$lib/api/credential_api";
@@ -16,13 +16,14 @@
 
     const apiProps = getContext<ApiProps>("apiProps");
 
-    const credentials = await enumerateCredentials(apiProps, details.credentialType)
+    let credentials: CredentialDto[] = $state([]);
+    const credentialPromise = enumerateCredentials(apiProps, details.credentialType)
         .then(res => {
             if (isErrorJson(res)) {
                 console.error(res);
                 throw new Error(res.message);
             }
-            return res;
+            credentials = res;
         });
 
     let query = $state("");
@@ -42,26 +43,35 @@
     }
 </script>
 
-<Combobox defaultValue={value?.credentialId ? [value.credentialId] : undefined} {collection} {onValueChange}>
-    <Combobox.Control>
-        <Combobox.Input />
-        <Combobox.Trigger />
-    </Combobox.Control>
-    <Portal>
-        <Combobox.Positioner class="z-30!">
-            <Combobox.Content class="bg-surface-100-900">
-                {#each collection.group() as [type, items] (type)}
-                    <Combobox.ItemGroup>
-                        <Combobox.ItemGroupLabel>{type}</Combobox.ItemGroupLabel>
-                        {#each items as item (item.id)}
-                            <Combobox.Item {item}>
-                                <Combobox.ItemText>{item.name}</Combobox.ItemText>
-                                <Combobox.ItemIndicator />
-                            </Combobox.Item>
-                        {/each}
-                    </Combobox.ItemGroup>
-                {/each}
-            </Combobox.Content>
-        </Combobox.Positioner>
-    </Portal>
-</Combobox>
+{#await credentialPromise}
+    <Combobox>
+        <Combobox.Control>
+            <Combobox.Input />
+            <Combobox.Trigger />
+        </Combobox.Control>
+    </Combobox>
+{:then _}
+    <Combobox defaultValue={value?.credentialId ? [value.credentialId] : undefined} {collection} {onValueChange}>
+        <Combobox.Control>
+            <Combobox.Input />
+            <Combobox.Trigger />
+        </Combobox.Control>
+        <Portal>
+            <Combobox.Positioner class="z-30!">
+                <Combobox.Content class="bg-surface-100-900">
+                    {#each collection.group() as [type, items] (type)}
+                        <Combobox.ItemGroup>
+                            <Combobox.ItemGroupLabel>{type}</Combobox.ItemGroupLabel>
+                            {#each items as item (item.id)}
+                                <Combobox.Item {item}>
+                                    <Combobox.ItemText>{item.name}</Combobox.ItemText>
+                                    <Combobox.ItemIndicator />
+                                </Combobox.Item>
+                            {/each}
+                        </Combobox.ItemGroup>
+                    {/each}
+                </Combobox.Content>
+            </Combobox.Positioner>
+        </Portal>
+    </Combobox>
+{/await}
