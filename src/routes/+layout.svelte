@@ -13,10 +13,9 @@
     import { type ApiProps, isErrorJson } from "$lib/api/api";
     import { TemplateAPI } from "$lib/components/template/api";
     import { page } from "$app/state";
-    import { initContext, setColorScheme, setToaster } from "$lib/context/layout_context.svelte";
-    import { setContext } from "svelte";
+    import { initContext, setApiProps, setColorScheme, setRoles, setToaster } from "$lib/context/layout_context.svelte";
     import Toast from "$lib/components/ui/Toast.svelte";
-    import { hasAnyRole } from "$lib/utils/user_utils";
+    import { hasAnyRole, ROLE_ADMIN } from "$lib/utils/user_utils";
 
     let expanded = $state(false);
 
@@ -36,7 +35,8 @@
         token: data.access_token!!,
         fetch: fetch
     };
-    setContext("apiProps", apiProps);
+    setApiProps(apiProps);
+    setRoles(data.roles)
 
     // load template API to global context
     if (browser)
@@ -76,7 +76,7 @@
                 <NavigationTile labelExpanded="About Snoty" label="About" href="/about" selected={activeUrl === "/about"} {...tileProps}>
                     <IconInfo/>
                 </NavigationTile>
-                {#if !isErrorJson(data.roles) && data.roles != null && hasAnyRole(data.roles, ["admin"])}
+                {#if !isErrorJson(data.roles) && data.roles != null && hasAnyRole(data.roles, ROLE_ADMIN)}
                     <NavigationTile labelExpanded="Admin" label="Admin" href="/admin" selected={activeUrl === "/admin"} {...tileProps}>
                         <IconMonitorCog/>
                     </NavigationTile>
