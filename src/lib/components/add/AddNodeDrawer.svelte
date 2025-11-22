@@ -7,11 +7,7 @@
     import ScaleTransition from "$lib/components/transition/ScaleTransition.svelte";
     import IconArrowLeft from "lucide-svelte/icons/arrow-left"
 
-    let { isOpen: ogOpen = $bindable(), flow, metadatas, onnodecreated: upstreamonnodecreated }: FlowMenusProps = $props()
-    let isOpen = $state(ogOpen);
-    $effect(() => {
-        isOpen = ogOpen;
-    })
+    let { isOpen = $bindable(), flow, metadatas, onnodecreated: upstreamonnodecreated }: FlowMenusProps = $props()
 
     let currentHelpMetadata: NodeMetadata | null = $state(null);
     function showHelp(metadata: NodeMetadata) {
