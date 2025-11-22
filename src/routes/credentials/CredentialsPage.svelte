@@ -33,7 +33,7 @@
             {#await listCredentials(apiProps, selectedCredentialType) then credentials}
                 <HandleError element={credentials}>
                     {#snippet success(credentials)}
-                        <RightColumn {credentials} {selectedCredentialType} {credentialDefinition} {searchQuery}/>
+                        <RightColumn {credentials} {credentialDefinition} {searchQuery}/>
                     {/snippet}
                 </HandleError>
             {/await}
