@@ -40,7 +40,7 @@
     <div class="flow-node-options grow table-wrap border-y-4 border-surface-200-800 my-1 pr-0.5 overflow-y-auto">
         {#if credentialDefinition == null}
             <p class="text-error-400">Credential definition not found.</p>
-        {:else}
+        {:else if credential.data != null}
             <NodeSettings settings={credential.data} fields={credentialDefinition.schema}/>
         {/if}
     </div>

@@ -1,17 +1,16 @@
 <script lang="ts">
-    import { type ApiProps, type ErrorJson, isErrorJson, unwrapOrNull } from "$lib/api/api";
+    import { type ApiProps, isErrorJson, unwrapOrNull } from "$lib/api/api";
     import { getContext } from "svelte";
-    import { listCredentials, updateCredential } from "$lib/api/credential_api";
-    import HandleError from "$lib/components/HandleError.svelte";
-    import IconTrash from "lucide-svelte/icons/trash";
-    import { deleteCredential } from "$lib/api/credential_api";
+    import { deleteCredential, updateCredential } from "$lib/api/credential_api";
     import {
-        CredentialAccess,
+        CredentialScope,
         type CredentialDefinitionWithStatisticsDto,
-        type CredentialDto, type CredentialUpdateDto
+        type CredentialDto,
+        type CredentialUpdateDto
     } from "$lib/model/credential";
     import CreateCredentialButton from "$lib/components/credential/CreateCredentialButton.svelte";
     import Credential from "./Credential.svelte";
+    import DeleteButton from "$lib/components/delete/DeleteButton.svelte";
 
     const apiProps = getContext<ApiProps>("apiProps");
 
@@ -20,7 +19,8 @@
         searchQuery: string
         credentials: CredentialDto[]
     }
-    const { credentials, credentialDefinition, searchQuery }: Props = $props();
+    const { credentials: initialCredentials, credentialDefinition, searchQuery }: Props = $props();
+    let credentials: CredentialDto[] = $state(initialCredentials);
 
     async function onchange(credentialId: string, newValue: CredentialUpdateDto) {
         await updateCredential(apiProps, credentialId, newValue);
@@ -34,53 +34,64 @@
     const processedCredentials = $derived.by(() => {
         if (isErrorJson(credentials)) return [];
 
-        const grouped: Record<CredentialAccess, CredentialDto[]> = {
-            [CredentialAccess.USER]: [],
+        const grouped: Partial<Record<CredentialScope, CredentialDto[]>> = {
+            [CredentialScope.USER]: []
         };
 
         for (const credential of credentials) {
             if (searchQuery && !credential.name.toLowerCase().includes(searchQuery.toLowerCase())) {
                 continue;
             }
-            const access = credential.access || "unknown";
-            if (!grouped[access]) {
-                grouped[access] = [];
+
+            let scope = credential.scope || "unknown";
+            if (scope == CredentialScope.ROLE && credential.requiredRole) {
+                scope = credential.requiredRole.name;
             }
-            grouped[access].push(credential);
+
+            if (!grouped[scope]) {
+                grouped[scope] = [];
+            }
+            grouped[scope].push(credential);
         }
-        return Object.entries(grouped).map(([access, creds]) => ({ access, creds }));
+
+        return Object.entries(grouped)
+            .map(([scope, credentials]) => ({ scope, credentials: credentials }))
+            .filter(({ credentials }) => credentials.length > 0);
     })
 </script>
 
 <div id="col-right" class="h-full overflow-y-auto">
-    <h2 class="text-center h2 pt-0 mb-4 leading-none">{credentialDefinition.displayName}</h2>
-    <HandleError element={credentials}>
-        {#snippet success()}
-            <ul class="divide-y-2 divide-surface-800-200">
-                {#each processedCredentials as { access, creds: credentials } (credentials)}
-                    <li class="py-4">
-                        {#if access !== CredentialAccess.USER}
-                            <h4 class="h4">{access[0].toUpperCase() + access.slice(1).toLowerCase()}</h4>
-                            <hr class="p-1">
-                        {/if}
-                        <ul class="list-disc list-inside h-full space-y-2">
-                            {#each credentials as credential, index}
-                                <li class="list-none flex flex-row items-center gap-2">
-                                    <Credential {credential} {credentialDefinition} {onchange}/>
-                                    <div class="inline-block">
-                                        <button onclick={() => ondelete(credential.id, index)}>
-                                            <IconTrash/>
-                                        </button>
-                                    </div>
-                                </li>
-                            {/each}
-                        </ul>
-                        {#if credentialDefinition != null}
-                            <CreateCredentialButton definition={credentialDefinition} oncreate={() => refreshCredentials()}/>
-                        {/if}
-                    </li>
-                {/each}
-            </ul>
-        {/snippet}
-    </HandleError>
+    <div class="relative flex justify-center items-center mb-4">
+        <CreateCredentialButton definition={credentialDefinition} oncreate={c => credentials.push(c)}/>
+        <h2 class="h2 pt-0 leading-none">{credentialDefinition.displayName}</h2>
+    </div>
+    <ul>
+        {#each processedCredentials as { scope, credentials } (credentials)}
+            <li class="py-4">
+                {#if scope === CredentialScope.GLOBAL}
+                    <h4 class="h4">{scope[0].toUpperCase() + scope.slice(1).toLowerCase()}</h4>
+                    <hr class="p-1">
+                {:else if scope !== CredentialScope.USER}
+                    <h4 class="h4">Role: {scope}</h4>
+                    <hr class="p-1">
+                {/if}
+                <ul class="list-disc list-inside h-full space-y-2">
+                    {#each credentials as credential, index}
+                        <li class="list-none flex flex-row items-center gap-2">
+                            <Credential {credential} {credentialDefinition} {onchange}/>
+                            {#if credential.data != null} <!-- if we can read, we can delete -->
+                                <div class="inline-block">
+                                    <DeleteButton onconfirmed={() => ondelete(credential.id, index)}>
+                                        {#snippet body()}
+                                            <b>{credential.name}</b> will be gone forever. Are you sure?
+                                        {/snippet}
+                                    </DeleteButton>
+                                </div>
+                            {/if}
+                        </li>
+                    {/each}
+                </ul>
+            </li>
+        {/each}
+    </ul>
 </div>

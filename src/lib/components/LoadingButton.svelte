@@ -16,7 +16,6 @@
         error?: Snippet<[string]>
     }
 
-    const props: Props = $props();
     const {
         variant = "button",
         disabled = false,
@@ -27,7 +26,8 @@
         loading: loadingSnippet,
         done: doneSnippet,
         error: errorSnippet,
-    } = props;
+        ...others
+    }: Props = $props();
 
     let doing = $state(false);
     let done = $state(false);
@@ -59,7 +59,7 @@
     });
 </script>
 
-<button {...props} disabled={disabled || doing} class={twMerge(baseStyle, clazz)} {onclick}>
+<button {...others} disabled={disabled || doing} class={twMerge(baseStyle, clazz)} {onclick}>
     {#if done && doneSnippet}
         {@render doneSnippet()}
     {:else if doing}
