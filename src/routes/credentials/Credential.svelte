@@ -19,6 +19,8 @@
         onchange,
     }: Props = $props();
 
+    const isAccessible = $derived(credential.data != null)
+
     let previousSettings = $state.snapshot(credential);
     $effect(() => {
         const newSettings = $state.snapshot(credential);
@@ -35,12 +37,16 @@
 
 <div class="grow flex flex-col cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 border">
     <div class="flex items-center">
-        <NodeName settings={credential}/>
+        {#if isAccessible}
+            <NodeName settings={credential}/>
+        {:else}
+            <h5 class="input-field">{credential.name}</h5>
+        {/if}
     </div>
     <div class="flow-node-options grow table-wrap border-y-4 border-surface-200-800 my-1 pr-0.5 overflow-y-auto">
         {#if credentialDefinition == null}
             <p class="text-error-400">Credential definition not found.</p>
-        {:else if credential.data != null}
+        {:else if isAccessible}
             <NodeSettings settings={credential.data} fields={credentialDefinition.schema}/>
         {/if}
     </div>
