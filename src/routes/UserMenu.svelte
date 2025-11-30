@@ -79,7 +79,7 @@
                 <NotificationBadge/>
             {/if}
             <Avatar class="size-16">
-                <Avatar.Fallback>SIM</Avatar.Fallback>
+                <Avatar.Fallback>{initials}</Avatar.Fallback>
             </Avatar>
         </div>
     </NavigationTile>
