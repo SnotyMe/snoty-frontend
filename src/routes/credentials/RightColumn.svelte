@@ -60,12 +60,12 @@
     })
 </script>
 
-<div id="col-right" class="h-full overflow-y-auto">
+<div id="col-right" class="flex flex-col">
     <div class="relative flex justify-center items-center mb-4">
         <CreateCredentialButton definition={credentialDefinition} oncreate={c => credentials.push(c)}/>
         <h2 class="h2 pt-0 leading-none">{credentialDefinition.displayName}</h2>
     </div>
-    <ul>
+    <ul class="grow overflow-y-auto">
         {#each processedCredentials as { scope, credentials } (credentials)}
             <li class="py-4">
                 {#if scope === CredentialScope.GLOBAL}
@@ -75,19 +75,18 @@
                     <h4 class="h4">Role: {scope}</h4>
                     <hr class="p-1">
                 {/if}
-                <ul class="list-disc list-inside h-full space-y-2">
+                <ul class="list-disc list-inside size-full grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {#each credentials as credential, index}
                         <li class="list-none flex flex-row items-center gap-2">
-                            <Credential {credential} {credentialDefinition} {onchange}/>
-                            {#if credential.data != null} <!-- if we can read, we can delete -->
-                                <div class="inline-block">
+                            <Credential wrapperClass="grow" {credential} {credentialDefinition} {onchange}>
+                                {#if credential.data != null} <!-- if we can read, we can delete -->
                                     <DeleteButton onconfirmed={() => ondelete(credential.id, index)}>
                                         {#snippet body()}
                                             <b>{credential.name}</b> will be gone forever. Are you sure?
                                         {/snippet}
                                     </DeleteButton>
-                                </div>
-                            {/if}
+                                {/if}
+                            </Credential>
                         </li>
                     {/each}
                 </ul>

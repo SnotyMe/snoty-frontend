@@ -11,8 +11,8 @@
 	},
 	"prepare": "svelte-kit sync",
 	"devDependencies": {
-		"@skeletonlabs/skeleton": "^4.5.0",
-		"@skeletonlabs/skeleton-svelte": "^4.5.0",
+		"@skeletonlabs/skeleton": "^4.7.1",
+		"@skeletonlabs/skeleton-svelte": "^4.7.1",
 		"@sveltejs/adapter-auto": "^6.1.1",
 		"@sveltejs/adapter-cloudflare": "^7.2.4",
 		"@sveltejs/adapter-node": "^5.4.0",
@@ -34,6 +34,7 @@
 		"@codemirror/lang-json": "^6.0.2",
 		"@codemirror/lang-liquid": "^6.3.0",
 		"@codemirror/view": "^6.38.6",
+		"@lucide/svelte": "^0.555.0",
 		"@tailwindcss/postcss": "^4.1.16",
 		"@tailwindcss/vite": "^4.1.16",
 		"@uiw/codemirror-theme-dracula": "^4.25.2",

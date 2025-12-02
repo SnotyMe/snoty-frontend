@@ -11,10 +11,13 @@ export enum CredentialScope {
     GLOBAL = "GLOBAL",
 }
 
-export interface CredentialDefinitionWithStatisticsDto {
-    type: string
+export interface CredentialDefinition {
+    type: string;
+    schema: NodeField[];
+}
+
+export interface CredentialDefinitionWithStatisticsDto extends CredentialDefinition {
     displayName: string
-    schema: NodeField[]
     count: number
 }
 

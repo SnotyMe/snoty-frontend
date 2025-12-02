@@ -1,11 +1,19 @@
 <script lang="ts">
-    import { type CredentialDto, type CredentialRef, CredentialScope } from "$lib/model/credential";
+    import {
+        type CredentialDto,
+        type CredentialRef,
+        CredentialScope,
+        type CredentialUpdateDto
+    } from "$lib/model/credential";
     import { type ApiProps, isErrorJson } from "$lib/api/api";
     import { getContext } from "svelte";
     import { enumerateCredentials } from "$lib/api/credential_api";
     import type { CredentialDetails } from "$lib/model/node_field_details";
-    import { Combobox, type ComboboxRootProps, Portal, useListCollection } from "@skeletonlabs/skeleton-svelte";
+    import { FloatingPanel, Combobox, Portal, useListCollection } from "@skeletonlabs/skeleton-svelte";
     import IconMinus from "lucide-svelte/icons/minus";
+    import IconGrid2x2Plus from "lucide-svelte/icons/grid-2x2-plus";
+    import CredentialManagePanel from "$lib/components/credential/CredentialManagePanel.svelte";
+    import { SquareAsterisk } from "@lucide/svelte"
 
     interface Props {
         details: CredentialDetails
@@ -18,14 +26,17 @@
     const apiProps = getContext<ApiProps>("apiProps");
 
     let credentials: CredentialDto[] = $state([]);
-    const credentialPromise = enumerateCredentials(apiProps, details.credentialType)
-        .then(res => {
-            if (isErrorJson(res)) {
-                console.error(res);
-                throw new Error(res.message);
-            }
-            credentials = res;
-        });
+
+    async function refresh() {
+        const res = await enumerateCredentials(apiProps, details.credentialType);
+        if (isErrorJson(res)) {
+            console.error(res);
+            throw new Error(res.message);
+        }
+        credentials = res;
+    }
+
+    const credentialPromise = refresh();
 
     let query = $state("");
 
@@ -44,14 +55,28 @@
         }),
     );
 
-    const onValueChange: ComboboxRootProps['onValueChange'] = (event) => {
-        value = { credentialId: event.value[0] }
+    const onValueChange = (id: string) => {
+        value = { credentialId: id }
         onchange(value)
     }
 
     function clearValue() {
         value = null
         onchange(value)
+    }
+
+    async function onCredentialCreated(credentialId: string) {
+        await refresh();
+        onValueChange(credentialId);
+    }
+
+    async function onCredentialChanged(credentialId: string, newValue: CredentialUpdateDto) {
+        const credential = credentials
+            .find(c => c.id === credentialId)
+        console.log("changed cred", credential)
+        if (!credential) return;
+        credential.name = newValue.name ?? credential.name;
+        value = { credentialId: credentialId, _timer: Date.now() } as CredentialRef;
     }
 </script>
 
@@ -63,18 +88,27 @@
         </Combobox.Control>
     </Combobox>
 {:then _}
-    <Combobox value={value?.credentialId ? [value.credentialId] : []} {collection} {onValueChange}>
+    <Combobox value={value?.credentialId ? [value.credentialId] : []} {collection} onValueChange={e => onValueChange(e.value[0])}>
         <Combobox.Control class="w-full">
-            <Combobox.Input />
+            <Combobox.Input/>
             {#if value?.credentialId}
                 <button
-                    class="skb:btn-icon skb:btn-icon-sm skb:preset-tonal skb:absolute skb:end-8.5 skb:top-1/2 skb:-translate-y-1/2"
+                    class="skb:btn-icon skb:btn-icon-sm skb:preset-tonal skb:absolute skb:end-15.5 skb:top-1/2 skb:-translate-y-1/2"
                     onclick={clearValue}
                 >
                     <IconMinus/>
                 </button>
             {/if}
-            <Combobox.Trigger class="skb:btn-icon skb:btn-icon-sm skb:preset-tonal skb:absolute skb:end-1.5 skb:top-1/2 skb:-translate-y-1/2"/>
+            <Combobox.Trigger class="skb:btn-icon skb:btn-icon-sm skb:preset-tonal skb:absolute skb:end-8.5 skb:top-1/2 skb:-translate-y-1/2"/>
+            <CredentialManagePanel {details} credentialId={value?.credentialId ?? undefined} oncreate={onCredentialCreated} onchange={onCredentialChanged}>
+                <FloatingPanel.Trigger class="skb:btn-icon skb:btn-icon-sm skb:preset-tonal skb:absolute skb:end-1.5 skb:top-1/2 skb:-translate-y-1/2">
+                    {#if value?.credentialId}
+                        <SquareAsterisk/>
+                    {:else}
+                        <IconGrid2x2Plus/>
+                    {/if}
+                </FloatingPanel.Trigger>
+            </CredentialManagePanel>
         </Combobox.Control>
         <Portal>
             <Combobox.Positioner class="z-30!">

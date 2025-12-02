@@ -2,18 +2,21 @@
     import NodeName from "$lib/components/node/settings/NodeName.svelte";
     import NodeSettings from "$lib/components/node/settings/NodeSettings.svelte";
     import type {
-        CredentialDefinitionWithStatisticsDto,
+        CredentialDefinition,
         CredentialDto,
         CredentialUpdateDto
     } from "$lib/model/credential";
+    import { twMerge } from "tailwind-merge";
 
     interface Props {
+        wrapperClass?: string
         credential: CredentialDto
-        credentialDefinition: CredentialDefinitionWithStatisticsDto
+        credentialDefinition: CredentialDefinition
         onchange?: (credentialId: string, newSettings: CredentialUpdateDto) => void
     }
 
     const {
+        wrapperClass,
         credential,
         credentialDefinition,
         onchange,
@@ -35,15 +38,16 @@
     })
 </script>
 
-<div class="grow flex flex-col cursor-auto flow-node p-2 card preset-filled-surface-100-900 border-surface-200-800 border">
-    <div class="flex items-center">
+<div class={twMerge("flex flex-col cursor-auto flow-node p-2 pb-1 card preset-filled-surface-100-900 border-surface-200-800 border", wrapperClass)}>
+    <div class="flex justify-between">
         {#if isAccessible}
             <NodeName settings={credential}/>
         {:else}
             <h5 class="input-field">{credential.name}</h5>
         {/if}
+        <slot/>
     </div>
-    <div class="flow-node-options grow table-wrap border-y-4 border-surface-200-800 my-1 pr-0.5 overflow-y-auto">
+    <div class="flow-node-options grow table-wrap border-t-4 border-surface-200-800 mt-1 pr-0.5 overflow-y-auto">
         {#if credentialDefinition == null}
             <p class="text-error-400">Credential definition not found.</p>
         {:else if isAccessible}
