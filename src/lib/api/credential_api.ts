@@ -6,6 +6,11 @@ import type {
     CredentialUpdateDto
 } from "$lib/model/credential";
 
+export async function getCredential(props: ApiProps, credentialId: string): Promise<CredentialDto | ErrorJson> {
+    return authenticatedApiFetch(props, `wiring/credential/${credentialId}`)
+        .then(json_or_error);
+}
+
 export async function credentialsOverview(props: ApiProps): Promise<CredentialDefinitionWithStatisticsDto[] | ErrorJson> {
     return authenticatedApiFetch(props, `wiring/credential/overview`)
         .then(json_or_error);
