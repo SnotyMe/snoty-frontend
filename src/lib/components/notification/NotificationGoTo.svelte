@@ -2,6 +2,8 @@
     import { Popover, Portal } from "@skeletonlabs/skeleton-svelte";
     import IconLink from "lucide-svelte/icons/external-link";
     import type { NotificationAttributes } from "$lib/model/notification";
+    import { ArrowRightIcon, WorkflowIcon } from "@lucide/svelte";
+    import NodeIcon from "$lib/components/icon/NodeIcon.svelte";
 
     interface Props {
         attributes: NotificationAttributes;
@@ -12,6 +14,7 @@
         [key: string]: {
             getUrl: (value: string, attributes: NotificationAttributes) => string;
             getLabel: (value: string) => string;
+            icon?: any;
         };
     }
 
@@ -19,10 +22,12 @@
         "flow.id": {
             getUrl: (id: string) => `/flow/${id}`,
             getLabel: (_: string) => "Flow",
+            icon: WorkflowIcon,
         },
         "node.id": {
             getUrl: (id: string, attributes: NotificationAttributes) => `/flow/${attributes["flow.id"]}?highlightedNode=${id}`,
             getLabel: (_: string) => "Node",
+            icon: NodeIcon,
         }
     };
 
@@ -41,9 +46,14 @@
                 {#each Object.entries(attributes) as [key, value]}
                     {@const link = attributeLinks[key]}
                     {#if link}
-                        <a href={link.getUrl(value, attributes)} class="btn preset-filled">
-                            <span>{link.getLabel(value)}</span>
-                            <span>&rarr;</span>
+                        <a href={link.getUrl(value, attributes)} class="btn preset-filled px-2 grid grid-cols-[1fr_2fr_1fr]">
+                            {#if link.icon}
+                                <link.icon />
+                            {:else}
+                                <div></div>
+                            {/if}
+                            <span class="text-center">{link.getLabel(value)}</span>
+                            <ArrowRightIcon/>
                         </a>
                     {/if}
                 {/each}
