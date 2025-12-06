@@ -29,7 +29,7 @@
             </ControlButton>
         </Dialog.Trigger>
     {/snippet}
-    {#snippet content()}
-        <FlowSettings {apiProps} {flow}/>
+    {#snippet content(dialog)}
+        <FlowSettings {apiProps} {flow} onclose={() => dialog().setOpen(false)}/>
     {/snippet}
 </NodePopup>
