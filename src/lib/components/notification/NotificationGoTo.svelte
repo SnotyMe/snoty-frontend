@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Popover } from "@skeletonlabs/skeleton-svelte";
+    import { Popover, Portal } from "@skeletonlabs/skeleton-svelte";
     import IconLink from "lucide-svelte/icons/external-link";
     import type { NotificationAttributes } from "$lib/model/notification";
 
@@ -33,19 +33,21 @@
     {open}
     onOpenChange={e => (open = e.open)}
     positioning={{placement: "bottom"}}
-    contentBase="card bg-surface-200-800 max-w-[320px] flex flex-col gap-2 p-2 ring-2 shadow-secondary-950-50"
-    classes="flex items-center"
 >
-    {#snippet trigger()}<IconLink/>{/snippet}
-    {#snippet content()}
-        {#each Object.entries(attributes) as [key, value]}
-            {@const link = attributeLinks[key]}
-            {#if link}
-                <a href={link.getUrl(value, attributes)} class="btn preset-filled">
-                    <span>{link.getLabel(value)}</span>
-                    <span>&rarr;</span>
-                </a>
-            {/if}
-        {/each}
-    {/snippet}
+    <Popover.Trigger><IconLink/></Popover.Trigger>
+    <Portal>
+        <Popover.Positioner>
+            <Popover.Content class="card bg-surface-200-800 max-w-[320px] flex flex-col gap-2 p-2 ring-2 shadow-secondary-950-50">
+                {#each Object.entries(attributes) as [key, value]}
+                    {@const link = attributeLinks[key]}
+                    {#if link}
+                        <a href={link.getUrl(value, attributes)} class="btn preset-filled">
+                            <span>{link.getLabel(value)}</span>
+                            <span>&rarr;</span>
+                        </a>
+                    {/if}
+                {/each}
+            </Popover.Content>
+        </Popover.Positioner>
+    </Portal>
 </Popover>
