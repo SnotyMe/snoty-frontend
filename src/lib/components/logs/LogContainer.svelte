@@ -8,12 +8,8 @@
     import { formatDate } from "$lib/utils/date_utils";
     import { Pagination } from "@skeletonlabs/skeleton-svelte";
     import type { FlowExecution } from "$lib/model/flows";
-    import IconArrowLeft from 'lucide-svelte/icons/arrow-left';
-    import IconArrowRight from 'lucide-svelte/icons/arrow-right';
-    import IconEllipsis from 'lucide-svelte/icons/ellipsis';
-    import IconFirst from 'lucide-svelte/icons/chevrons-left';
-    import IconLast from 'lucide-svelte/icons/chevron-right';
     import type { PageChangeDetails } from "@zag-js/pagination"
+    import { ArrowLeftIcon, ArrowRightIcon } from "@lucide/svelte";
     import LogLevelSelector from "$lib/components/logs/LogLevelSelector.svelte";
     import { LogLevel, type NodeLogEntry } from "$lib/model/node_logs";
     import { getLevelIndex } from "$lib/components/logs/log_utils";
@@ -86,12 +82,26 @@
             </div>
         </div>
 
-        <Pagination classes="shrink-0 mt-1 justify-center" data={allExecutions} bind:page bind:pageSize onPageChange={pageChanged}>
-            {#snippet labelEllipsis()}<IconEllipsis class="size-4" />{/snippet}
-            {#snippet labelNext()}<IconArrowRight class="size-4" />{/snippet}
-            {#snippet labelPrevious()}<IconArrowLeft class="size-4" />{/snippet}
-            {#snippet labelFirst()}<IconFirst class="size-4" />{/snippet}
-            {#snippet labelLast()}<IconLast class="size-4" />{/snippet}
+        <Pagination class="w-full shrink-0 mt-1 justify-center" {page} {pageSize} count={allExecutions.length} onPageChange={pageChanged}>
+            <Pagination.PrevTrigger>
+                <ArrowLeftIcon class="size-4" />
+            </Pagination.PrevTrigger>
+            <Pagination.Context>
+                {#snippet children(pagination)}
+                    {#each pagination().pages as page, index (page)}
+                        {#if page.type === 'page'}
+                            <Pagination.Item {...page}>
+                                {page.value}
+                            </Pagination.Item>
+                        {:else}
+                            <Pagination.Ellipsis {index}>&#8230;</Pagination.Ellipsis>
+                        {/if}
+                    {/each}
+                {/snippet}
+            </Pagination.Context>
+            <Pagination.NextTrigger>
+                <ArrowRightIcon class="size-4" />
+            </Pagination.NextTrigger>
         </Pagination>
     {:catch error}
         <p>{error.message}</p>
