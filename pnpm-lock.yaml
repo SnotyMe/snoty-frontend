@@ -96,6 +96,9 @@ importers:
       '@tailwindcss/forms':
         specifier: ^0.5.10
         version: 0.5.10(tailwindcss@4.1.16)
+      '@zag-js/pagination':
+        specifier: ^1.26.5
+        version: 1.30.0
       '@zag-js/toast':
         specifier: ^1.26.5
         version: 1.26.5
