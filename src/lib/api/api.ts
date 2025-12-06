@@ -53,7 +53,7 @@ export function unwrapOrNull<T>(obj: T | ErrorJson): T | null {
     return obj;
 }
 
-export async function json_or_error(res: Response): Promise<any> {
+export async function json_or_error(res: Response): Promise<any | ErrorJson> {
     if (res.ok) {
         return res.json();
     }
