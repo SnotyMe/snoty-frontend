@@ -65,6 +65,7 @@
 
 <LoadingButton
         onclick={trigger}
+        variant="empty"
         class="svelte-flow__controls-button svelte-flow__controls-trigger no-fill"
         title="trigger run"
         aria-label="trigger run"
