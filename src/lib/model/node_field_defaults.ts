@@ -28,7 +28,7 @@ export function getDefaultValue(field: NodeField): any {
         case "Collection":
             return [];
         case "Credential":
-            return undefined; // undefined = omit on creation (uses backend default)
+            return {};
         default:
             return defaultValue;
     }
