@@ -42,7 +42,7 @@
 		"@uiw/codemirror-theme-github": "^4.25.2",
 		"@xyflow/svelte": "^1.4.1",
 		"cron-parser": "^5.4.0",
-		"cronstrue": "^2.59.0",
+		"cronstrue": "^3.0.0",
 		"dotenv": "^16.6.1",
 		"elkjs": "^0.10.2",
 		"eventsource": "^3.0.7",
