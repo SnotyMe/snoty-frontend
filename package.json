@@ -35,7 +35,7 @@
 		"@codemirror/lang-json": "^6.0.2",
 		"@codemirror/lang-liquid": "^6.3.0",
 		"@codemirror/view": "^6.38.6",
-		"@lucide/svelte": "^0.555.0",
+		"@lucide/svelte": "^0.563.0",
 		"@tailwindcss/postcss": "^4.1.16",
 		"@tailwindcss/vite": "^4.1.16",
 		"@uiw/codemirror-theme-dracula": "^4.25.2",
@@ -48,7 +48,7 @@
 		"eventsource": "^3.0.7",
 		"jwt-decode": "^4.0.0",
 		"liquidjs": "^10.24.0",
-		"lucide-svelte": "^0.475.0",
+		"lucide-svelte": "^0.563.0",
 		"svelte-codemirror-editor": "^1.4.2",
 		"tailwind-merge": "^2.6.0",
 		"temporal-polyfill": "^0.3.0"
