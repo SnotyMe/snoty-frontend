@@ -11,7 +11,7 @@
 	},
 	"prepare": "svelte-kit sync",
 	"devDependencies": {
-		"@skeletonlabs/skeleton": "^4.7.1",
+		"@skeletonlabs/skeleton": "^5.0.0",
 		"@skeletonlabs/skeleton-svelte": "^4.7.1",
 		"@sveltejs/adapter-auto": "^6.1.1",
 		"@sveltejs/adapter-cloudflare": "^7.2.4",
