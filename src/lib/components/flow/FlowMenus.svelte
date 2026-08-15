@@ -33,7 +33,7 @@
     let lastFlowName = $state.snapshot(flowName);
     $effect(() => {
         if (lastFlowName !== flowName) {
-            renameFlow(props.apiProps, props.flow._id, flowName);
+            renameFlow(props.apiProps, props.flow.id, flowName);
             lastFlowName = flowName;
         }
     })
@@ -90,4 +90,4 @@
     </div>
 </Panel>
 
-<LogContainer flowId={props.flow._id} isOpen={openStates[LOGS]} {...props}/>
+<LogContainer flowId={props.flow.id} isOpen={openStates[LOGS]} {...props}/>

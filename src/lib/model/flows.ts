@@ -2,7 +2,7 @@ import type { FlowNode, NodeId } from "$lib/model/nodes";
 import type { NodeLogEntry } from "$lib/model/node_logs";
 
 export interface Workflow {
-    _id: string
+    id: string
     name: string
     settings: WorkflowSettings
 }

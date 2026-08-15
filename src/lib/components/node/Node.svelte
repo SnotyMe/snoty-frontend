@@ -46,7 +46,7 @@
     const hiddenSettings = filterKeysHidden(true);
     const unhiddenSettings = filterKeysHidden(false);
     if (browser) {
-        setNodeAPI(node._id, { node, metadata, settings });
+        setNodeAPI(node.id, { node, metadata, settings });
     }
 
     let previousSettings = $state.snapshot(settings);
@@ -59,12 +59,12 @@
     })
 
     const edges = useEdges()
-    let hasOutputNode = $derived(edges.current.some(edge => edge.source === node._id))
+    let hasOutputNode = $derived(edges.current.some(edge => edge.source === node.id))
 
-    const isHighlighted = data.highlight || page.url.searchParams.get("highlightedNode") === node._id;
+    const isHighlighted = data.highlight || page.url.searchParams.get("highlightedNode") === node.id;
 </script>
 
-<div bind:clientWidth={widths[node._id]} bind:clientHeight={heights[node._id]} class="h-full" class:animate-highlight={isHighlighted}>
+<div bind:clientWidth={widths[node.id]} bind:clientHeight={heights[node.id]} class="h-full" class:animate-highlight={isHighlighted}>
     {#if metadata?.input !== null}
         <Handle type="target"
                 position={Position.Left}

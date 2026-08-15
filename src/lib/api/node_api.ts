@@ -30,7 +30,7 @@ async function updateNodeConnection(props: ApiProps, action: "connect" | "discon
         .then((res) => res.json());
 }
 
-export type NodeCreateDTO = Omit<StandaloneNode, "_id"> & { flowId: string }
+export type NodeCreateDTO = Omit<StandaloneNode, "id"> & { flowId: string }
 export async function createNode(props: ApiProps, node: NodeCreateDTO): Promise<StandaloneNode> {
     return authenticatedApiFetch(props, `wiring/node/create`, {
         method: "POST",

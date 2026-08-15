@@ -54,7 +54,7 @@
                         </button>
 
                         <AddNodeButton
-                            flowId={flow._id}
+                            flowId={flow.id}
                             {onnodecreated}
                             descriptor={metadata.descriptor}
                             settings={nodeSettingsFromMetadata(metadata)}

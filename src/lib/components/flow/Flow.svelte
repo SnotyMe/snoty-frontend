@@ -40,18 +40,18 @@
 
     function createNodeFromNode(node: StandaloneNode, extraData: any = {}) {
         return {
-            id: node._id,
+            id: node.id,
             position: { x: 0, y: 0 },
             data: {
                 apiProps,
                 node,
                 metadata: getNodeMetadata(metadatas, node.descriptor)!,
                 templates: templates ? getNodeTemplates(templates, node.descriptor) : undefined,
-                onsettingschange: (newSettings: NodeSettings) => updateSettings(apiProps, node._id, newSettings),
+                onsettingschange: (newSettings: NodeSettings) => updateSettings(apiProps, node.id, newSettings),
                 ondelete: () => {
-                    deleteNode(apiProps, node._id)
+                    deleteNode(apiProps, node.id)
                         .then(() => {
-                            nodesStore = nodesStore.filter(n => n.id !== node._id);
+                            nodesStore = nodesStore.filter(n => n.id !== node.id);
                         });
                 },
                 heights,
@@ -66,8 +66,8 @@
     const initialNodes = flow.nodes.map(n => createNodeFromNode(n, { initializing: true }));
     const initialEdges = flow.nodes.flatMap(node =>
         (node.next ?? []).map(next => ({
-            id: `${node._id}:${next}`,
-            source: node._id,
+            id: `${node.id}:${next}`,
+            source: node.id,
             target: next,
         } as Edge))
     );

@@ -13,7 +13,7 @@
 
     function onchange(level: LogLevel | null) {
         node.logLevel = level;
-        updateLogLevel(apiProps, node._id, level)
+        updateLogLevel(apiProps, node.id, level)
     }
 </script>
 

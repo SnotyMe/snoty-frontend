@@ -21,7 +21,7 @@
     let settings = $state(flow.settings)
 
     async function update() {
-        const response = await updateFlowSettings(apiProps, flow._id, settings)
+        const response = await updateFlowSettings(apiProps, flow.id, settings)
         if (!response.ok) throw Error(`updating settings: ${await response.text()}`)
 
         onclose()

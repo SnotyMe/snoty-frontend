@@ -20,7 +20,7 @@ function getHandlerApiPath(node: SettinglessNode) {
 }
 
 function getApiPath(node: SettinglessNode) {
-    return `${getHandlerApiPath(node)}/${node._id}/`
+    return `${getHandlerApiPath(node)}/${node.id}/`
 }
 
 export function injectNodeUtils(node: StandaloneNode) {

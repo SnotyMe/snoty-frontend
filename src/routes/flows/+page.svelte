@@ -39,17 +39,17 @@
                     {#each element as flow}
                         <ListItem>
                             {#if flow.lastExecution?.status}
-                                <ExecutionStatusIcon {statusListener} flowId={flow._id} status={flow.lastExecution.status}/>
+                                <ExecutionStatusIcon {statusListener} flowId={flow.id} status={flow.lastExecution.status}/>
                             {/if}
                             <NodeName
-                                    onchange={value => renameFlow(apiProps, flow._id, value)}
+                                    onchange={value => renameFlow(apiProps, flow.id, value)}
                                     settings={flow}
                             />
-                            <a href={`/flow/${flow._id}`} class="btn preset-filled">
+                            <a href={`/flow/${flow.id}`} class="btn preset-filled">
                                 <span>View</span>
                                 <span>&rarr;</span>
                             </a>
-                            <DeleteButton onconfirmed={async () => { await deleteFlow(apiProps, flow._id); window.location.reload() }}>
+                            <DeleteButton onconfirmed={async () => { await deleteFlow(apiProps, flow.id); window.location.reload() }}>
                                 {#snippet body()}
                                     The flow will be deleted, along with all its nodes, data, logs, just, everything!
                                 {/snippet}

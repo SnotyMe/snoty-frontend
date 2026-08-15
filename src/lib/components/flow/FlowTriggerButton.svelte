@@ -25,7 +25,7 @@
     }
     reinitPromise()
 
-    const executionListener = establishListener(apiProps, flow._id, ["FlowEnded"])
+    const executionListener = establishListener(apiProps, flow.id, ["FlowEnded"])
     onDestroy(() => executionListener.close())
     executionListener.addEventListener("FlowEnded", (event) => {
         const { status }: FlowEndedEvent = JSON.parse(event.data)
@@ -36,7 +36,7 @@
     const toaster = getToaster()
 
     async function trigger() {
-        await triggerFlow(apiProps, flow._id)
+        await triggerFlow(apiProps, flow.id)
         toaster.info({
             title: "Flow triggered!",
             description: "Flows may take a while before running."

@@ -26,7 +26,7 @@ export const load: PageServerLoad = async ({ locals, fetch }): Promise<App.Local
 
                 return flows.map(flow => ({
                     ...flow,
-                    lastExecution: executions.find(exec => exec.flowId === flow._id)
+                    lastExecution: executions.find(exec => exec.flowId === flow.id)
                 }));
             })
     };

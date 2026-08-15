@@ -49,7 +49,7 @@
                         <summary class="cursor-pointer">Details</summary>
                         <Liquid
                                 template={nodeTemplates.get("node_bottom")}
-                                inputs={{node: {...node, _id: node.id}, config, metadata, settings: node.settings}}
+                                inputs={{node, config, metadata, settings: node.settings}}
                         />
                     </details>
                 {/if}

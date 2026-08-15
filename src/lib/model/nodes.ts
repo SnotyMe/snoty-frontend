@@ -6,7 +6,7 @@ export type SchemaValues = Record<string, any>
 export type NodeSettings = SchemaValues & { name: string }
 
 export interface SettinglessNode extends Record<string, any> {
-    _id: NodeId
+    id: NodeId
     descriptor: NodeDescriptor
     logLevel: LogLevel | null
 }

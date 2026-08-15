@@ -25,7 +25,7 @@
         if (isErrorJson(createdFlow)) {
             throw createdFlow;
         }
-        await goto(`/flow/${createdFlow._id}`);
+        await goto(`/flow/${createdFlow.id}`);
     }
 </script>
 

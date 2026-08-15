@@ -17,7 +17,7 @@
     const { apiProps, flow }: Props = $props();
     
     async function download() {
-        const exported = await exportFlow(apiProps, flow._id, options)
+        const exported = await exportFlow(apiProps, flow.id, options)
         
         if (isErrorJson(exported)) {
             alert("Something went wrong!")
