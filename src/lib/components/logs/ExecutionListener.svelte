@@ -30,7 +30,7 @@
         allExecutions.unshift({
             ...data,
             logs: [],
-            startDate: new Date(data.timestamp),
+            timestamp: new Date(data.timestamp),
             status: FlowExecutionStatus.RUNNING,
         })
     })

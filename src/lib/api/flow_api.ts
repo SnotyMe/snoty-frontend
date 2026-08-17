@@ -70,11 +70,11 @@ export async function getFlowLogs(props: ApiProps, id: string): Promise<NodeLogE
 
 export async function getFlowExecutions(props: ApiProps, id: string, startFrom: null | String = null, limit: number = 20): Promise<FlowExecution[]> {
     return authenticatedApiFetch(props, `wiring/flow/${id}/executions?startFrom=${startFrom ?? ""}&limit=${limit}`)
-        .then((res) => res.json() as Promise<({ startDate: string, logs: ({ timestamp: string } & NodeLogEntry)[] } & FlowExecution)[]>)
+        .then((res) => res.json() as Promise<({ timestamp: string, logs: ({ timestamp: string } & NodeLogEntry)[] } & FlowExecution)[]>)
         .then((executions) => executions.map(execution => (
                 {
                     ...execution,
-                    startDate: new Date(execution.startDate),
+                    timestamp: new Date(execution.timestamp),
                     logs: execution.logs.map(line => (
                         {
                             ...line,
@@ -83,7 +83,7 @@ export async function getFlowExecutions(props: ApiProps, id: string, startFrom: 
                     )),
                 }
             ))
-                .toSorted((a, b) => b.startDate.getTime() - a.startDate.getTime())
+                .toSorted((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
         );
 }
 

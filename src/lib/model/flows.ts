@@ -31,7 +31,7 @@ export interface FlowExecution {
     jobId: string
     flowId: NodeId
     triggeredBy: TriggerReason
-    startDate: Date
+    timestamp: Date
     status: FlowExecutionStatus
     logs: NodeLogEntry[]
 }
